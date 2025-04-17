@@ -1,0 +1,53 @@
+<app-header title="Dashboard"></app-header>
+
+<ion-content>
+  <ion-card class="ion-no-margin" color="fav" style="border-radius: 0px">
+    <ion-card-header>
+      <ion-card-title> List of accounts </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row style="display: flex; justify-content: center">
+          @if (items.length > 0) { @for (item of items; track $index) {
+          <ion-col size="12" [sizeMd]="4">
+            <ion-card class="ion-no-margin">
+              <ion-card-content>
+                <div style="text-align: center">
+                  <h2><b>Title here</b></h2>
+                  <p>item here</p>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          } }@else{
+          <ion-col size="12" [sizeMd]="12" style="text-align: center; color: lightgray" >
+            You dont have any account.Let's create new one.
+          </ion-col>
+          }
+          <ion-col size="8" [sizeMd]="2">
+            <ion-card class="ion-no-margin btn-add-acc" button="true">
+              <ion-card-content>
+                <div style="text-align: center">
+                  <div style="display: flex;align-items: center;justify-content: center;">
+                    <b>Add Account</b>
+                    <ion-icon [ios]="'add-circle-sharp'" [md]="'add-circle'" style="font-size: 24px; margin-left: 8px"></ion-icon>
+                  </div>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card color="sub-fav" class="m-card">
+    <ion-card-header>
+      <ion-card-title>Expenses Structure</ion-card-title>
+    </ion-card-header>
+    <ion-card-content style="display: flex;justify-content: center;">
+      <canvas #doughnutCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<app-fab></app-fab>

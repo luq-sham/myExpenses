@@ -2,10 +2,14 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
+        <img src="assets\icon\icon.png" id="custom-img" alt="Ionic Logo" />
+        <!-- <ion-card class="ion-no-margin">
+          <ion-card-content class="">
+              <ion-list-header>Welcome</ion-list-header>
+              <ion-note style="overflow-wrap: break-word; word-break: break-all; white-space: normal;">example&#64;gmail.com</ion-note>
+          </ion-card-content>
+        </ion-card> -->
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi&#64;ionicframework.com</ion-note>
-
           @for (p of appPages; track p; let i = $index) {
             <ion-menu-toggle auto-hide="false">
               <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
@@ -13,17 +17,6 @@
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
-          }
-        </ion-list>
-
-        <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
-
-          @for (label of labels; track label) {
-            <ion-item lines="none">
-              <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-              <ion-label>{{ label }}</ion-label>
-            </ion-item>
           }
         </ion-list>
       </ion-content>

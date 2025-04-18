@@ -8,24 +8,26 @@
     <ion-card-content>
       <ion-grid>
         <ion-row style="display: flex; justify-content: center">
-          @if (items.length > 0) { @for (item of items; track $index) {
-          <ion-col size="12" [sizeMd]="4">
-            <ion-card class="ion-no-margin">
-              <ion-card-content>
-                <div style="text-align: center">
-                  <h2><b>Title here</b></h2>
-                  <p>item here</p>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-          } }@else{
+          @if (items.length > 0) { 
+            @for (item of items; track $index) {
+              <ion-col size="12" [sizeMd]="4">
+                <ion-card class="ion-no-margin">
+                  <ion-card-content>
+                    <div style="text-align: center">
+                      <h2 style="text-transform: capitalize;"><b>{{item.account_name}}</b></h2>
+                      <p>RM {{item.balance}}</p>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            }
+          }@else{
           <ion-col size="12" [sizeMd]="12" style="text-align: center; color: lightgray" >
             You dont have any account.Let's create new one.
           </ion-col>
           }
           <ion-col size="8" [sizeMd]="2">
-            <ion-card class="ion-no-margin btn-add-acc" button="true">
+            <ion-card class="ion-no-margin btn-add-acc" button="true" (click)="modalAddAccount()">
               <ion-card-content>
                 <div style="text-align: center">
                   <div style="display: flex;align-items: center;justify-content: center;">

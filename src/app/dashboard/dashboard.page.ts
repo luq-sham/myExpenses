@@ -1,19 +1,22 @@
 import { Component, OnInit,} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular'
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol, IonIcon , ModalController} from '@ionic/angular/standalone';
-import { addCircleOutline, addCircleSharp, addCircle } from 'ionicons/icons';
-import { addIcons } from 'ionicons';
+import { ModalController} from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';
-
+import { AddModalComponent } from '../components/add-modal/add-modal.component';
+import { addIcons } from 'ionicons';
+import { addCircle,addCircleSharp } from 'ionicons/icons';
+import { ApiService } from '../services/api.service';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonCol, IonRow, IonGrid, IonCardContent, IonCardTitle, IonCardHeader, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent],
+  imports: [IonicModule, CommonModule, FormsModule, HeaderComponent, FabComponent],
 })
 export class DashboardPage implements OnInit {
   
@@ -27,13 +30,51 @@ export class DashboardPage implements OnInit {
   items: any[] = [];
   
   constructor(
-    private modal: ModalController 
-  ) { 
-    addIcons({addCircleOutline, addCircleSharp, addCircle});
+    private modal: ModalController,
+    private api: ApiService,
+    private loading: LoadingService
+  ) {
+    addIcons({addCircle,addCircleSharp})
   }
   
   ngOnInit() {
-    
+    this.getAccountData()
+  }
+
+  getAccountData(){
+    this.loading.showLoading();
+    this.api.getAccount().subscribe(res=>{
+      if(res.status_code == 200){
+        this.loading.hide();
+        this.items = res.return_data
+      }
+
+    })
+  }
+
+  async modalAddAccount(){
+    console.log('hello')
+    const modal = await this.modal.create({
+      component:AddModalComponent,
+      componentProps: {title:"Add Account"}
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss()
+
+    if(data){
+      this.refreshPage()
+    }
+  }
+
+  refreshPage(){
+    this.loading.showLoading();
+    this.api.getAccount().subscribe(res=>{
+      if(res.status_code == 200){
+        this.loading.hide();
+        this.items = res.return_data
+      }
+
+    })
   }
 
   

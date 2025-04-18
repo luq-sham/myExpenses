@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="fav">
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <p>Account Name:</p>
+        <ion-input fill="outline" placeholder="Enter Account Name" [(ngModel)]="params.account_name"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p>Account Type:</p>
+        <ion-select label-placement="floating" fill="outline" [value]="" [(ngModel)]="params.account_type">
+          <ion-select-option value="">Select Type</ion-select-option>
+          @for (type of types; track $index) {
+            <ion-select-option value={{type.type}}>{{type.type}}</ion-select-option>
+          }
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p>Initial Balance:</p>
+        <ion-input label="RM" type="number" fill="outline" placeholder="Enter Initial Balance" [(ngModel)]="params.balance" step="any"> </ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar style="padding: 0px 16px;">
+    <ion-buttons>
+      <ion-button (click)="dismiss()">Dismiss</ion-button>
+    </ion-buttons>
+    <ion-button slot="end" (click)="onSubmit()">Submit</ion-button>
+  </ion-toolbar>
+</ion-footer>

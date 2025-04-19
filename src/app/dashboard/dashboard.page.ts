@@ -52,7 +52,6 @@ export class DashboardPage implements OnInit {
   }
 
   async modalAddAccount(){
-    console.log('hello')
     const modal = await this.modal.create({
       component:AddModalComponent,
       componentProps: {title:"Add Account"}

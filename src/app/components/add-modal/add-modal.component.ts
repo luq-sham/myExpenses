@@ -12,6 +12,7 @@ import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonCon
   selector: 'app-add-modal',
   templateUrl: './add-modal.component.html',
   styleUrls: ['./add-modal.component.scss'],
+  standalone:true,
   imports: [IonFooter, IonRow, IonCol, IonGrid, IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonToolbar, IonHeader, FormsModule, IonSelect, IonSelectOption]
 })
 export class AddModalComponent  implements OnInit {

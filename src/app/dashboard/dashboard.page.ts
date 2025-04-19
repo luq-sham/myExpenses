@@ -1,13 +1,13 @@
-import { Component, OnInit,} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ModalController, IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardContent, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/angular/standalone';
+import { ModalController } from '@ionic/angular/standalone';
+import { IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardContent, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';
 import { AddModalComponent } from '../components/add-modal/add-modal.component';
 import { addIcons } from 'ionicons';
-import { addCircle,addCircleSharp } from 'ionicons/icons';
+import { addCircle, addCircleSharp } from 'ionicons/icons';
 import { ApiService } from '../services/api.service';
 import { LoadingService } from '../services/loading.service';
 
@@ -15,8 +15,15 @@ import { LoadingService } from '../services/loading.service';
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
-  standalone:true,
-  imports: [CommonModule, FormsModule, HeaderComponent, FabComponent, IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardContent, IonGrid, IonRow, IonCol, IonIcon],
+  standalone: true,
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    HeaderComponent, 
+    FabComponent, 
+    IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardContent, 
+    IonGrid, IonRow, IonCol, IonIcon
+  ],
 })
 export class DashboardPage implements OnInit {
   

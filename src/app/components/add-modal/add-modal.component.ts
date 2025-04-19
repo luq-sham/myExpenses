@@ -1,20 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/services/api.service';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
+import { ApiService } from 'src/app/services/api.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { addIcons } from 'ionicons';
 import { close } from 'ionicons/icons';
-import { LoadingService } from 'src/app/services/loading.service';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonGrid, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption } from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonGrid, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-add-modal',
   templateUrl: './add-modal.component.html',
   styleUrls: ['./add-modal.component.scss'],
-  imports: [IonicModule, FormsModule]
+  standalone: true,
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, 
+    IonGrid, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption,IonInput
+  ],
 })
+
 export class AddModalComponent  implements OnInit {
 
   title = "";

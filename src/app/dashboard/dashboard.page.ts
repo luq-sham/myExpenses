@@ -52,7 +52,6 @@ export class DashboardPage implements OnInit {
     this.loading.showLoading();
     this.api.getAccount().subscribe(res=>{
       if(res.status_code == 200){
-        this.loading.hide();
         this.items = res.return_data
       }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { AlertService } from 'src/app/services/alert.service';
 import { addIcons } from 'ionicons';
@@ -12,8 +13,7 @@ import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonCon
   selector: 'app-add-modal',
   templateUrl: './add-modal.component.html',
   styleUrls: ['./add-modal.component.scss'],
-  standalone:true,
-  imports: [IonFooter, IonRow, IonCol, IonGrid, IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonToolbar, IonHeader, FormsModule, IonSelect, IonSelectOption]
+  imports: [IonicModule, FormsModule]
 })
 export class AddModalComponent  implements OnInit {
 

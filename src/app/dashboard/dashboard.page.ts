@@ -1,6 +1,7 @@
 import { Component, OnInit,} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 import { ModalController, IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardContent, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';
@@ -14,8 +15,8 @@ import { LoadingService } from '../services/loading.service';
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
-  standalone: true,
-  imports: [IonIcon, IonCol, IonRow, IonGrid, IonCardContent, IonCardHeader, IonCardTitle, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent],
+  standalone:true,
+  imports: [IonicModule, CommonModule, FormsModule, HeaderComponent, FabComponent],
 })
 export class DashboardPage implements OnInit {
   

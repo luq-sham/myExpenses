@@ -16,7 +16,7 @@ import { LoadingService } from '../services/loading.service';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone:true,
-  imports: [IonicModule, CommonModule, FormsModule, HeaderComponent, FabComponent],
+  imports: [CommonModule, FormsModule, HeaderComponent, FabComponent, IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardContent, IonGrid, IonRow, IonCol, IonIcon],
 })
 export class DashboardPage implements OnInit {
   

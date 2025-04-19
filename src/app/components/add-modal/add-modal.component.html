@@ -20,7 +20,7 @@
     <ion-row>
       <ion-col>
         <p>Account Type:</p>
-        <ion-select label-placement="floating" fill="outline" [value]="" [(ngModel)]="params.account_type">
+        <ion-select label-placement="floating" fill="outline" [(ngModel)]="params.account_type">
           <ion-select-option value="">Select Type</ion-select-option>
           @for (type of types; track $index) {
             <ion-select-option value={{type.type}}>{{type.type}}</ion-select-option>

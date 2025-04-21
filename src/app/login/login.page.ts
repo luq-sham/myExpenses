@@ -7,6 +7,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MenuController } from '@ionic/angular/standalone'
 import { addIcons } from 'ionicons';
 import { eyeOffOutline, eyeOutline, lockClosed, logInOutline, mail } from 'ionicons/icons';
+import { ApiService } from '../services/api.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +31,9 @@ export class LoginPage implements OnInit {
     private loadingController: LoadingController,
     private alertController: AlertController,
     private toastController: ToastController,
-    private menu: MenuController
+    private menu: MenuController,
+    private api: ApiService,
+    private alert: AlertService
   ) { 
     addIcons({mail,lockClosed, logInOutline, eyeOutline,eyeOffOutline})
   }
@@ -72,21 +76,25 @@ export class LoginPage implements OnInit {
       // Example: await this.authService.login(this.loginForm.value);
       
       // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      await loading.dismiss();
-      
-      // Show success toast
-      const toast = await this.toastController.create({
-        message: 'Login successful!',
-        duration: 2000,
-        color: 'success',
-        position: 'bottom'
-      });
-      await toast.present();
-      
-      // Navigate to home page
-      this.router.navigate(['/home']);
+      const userData = {
+        "email": this.loginForm.value.email,
+        "password": this.loginForm.value.password
+      }
+      this.api.postLoginUsers(userData).subscribe(async res => {
+        await loading.dismiss();
+        if(res.status_code == 200){
+          const toast = await this.toastController.create({
+            message: 'Login successful!',
+            duration: 2000,
+            color: 'success',
+            position: 'bottom'
+          });
+          await toast.present();
+          this.router.navigate(['/dashboard']);
+        }else{
+          this.alert.customAlert('Try Again',res.error)
+        }
+      })
     } catch (error) {
       await loading.dismiss();
       
@@ -138,7 +146,7 @@ export class LoginPage implements OnInit {
   // }
 
   goToSignup() {
-    this.router.navigate(['/signup']);
+    this.router.navigate(['/register']);
   }
 
   async presentToast(message: string) {

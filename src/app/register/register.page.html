@@ -1,13 +1,131 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>register</ion-title>
+<!-- <ion-header>
+  <ion-toolbar color="fav">
+    <ion-title></ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">register</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="register-container">
+    <!-- Logo area -->
+    <div class="logo-container">
+      <img alt="Logo" src="assets/icon/favicon3-removebg.png" />
+      <h1>My Expenses</h1>
+      <p>Create a new account</p>
+    </div>
+
+    <!-- Register form -->
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <ion-card>
+        <ion-card-content>
+
+
+          <!-- Name input -->
+          <ion-item>
+            <ion-icon name="person" slot="start"></ion-icon>
+            <ion-input type="text" formControlName="name" placeholder="Full Name"></ion-input>
+          </ion-item>
+
+          <div class="validation-error" *ngIf="(name?.invalid && (name?.dirty || name?.touched))">
+            <div *ngIf="name?.errors?.['required']">Name is required</div>
+          </div>
+
+
+          <!-- Email input -->
+          <ion-item>
+            <ion-icon name="mail" slot="start"></ion-icon>
+            <ion-input type="email" formControlName="email" placeholder="your@email.com"></ion-input>
+          </ion-item>
+
+          <div class="validation-error" *ngIf="(email?.invalid && (email?.dirty || email?.touched))">
+            <div *ngIf="email?.errors?.['required']">Email is required</div>
+            <div *ngIf="email?.errors?.['email']">Please enter a valid email</div>
+          </div>
+
+
+          <!-- Phone input -->
+          <ion-item>
+            <ion-icon name="call" slot="start"></ion-icon>
+            <ion-input type="tel" formControlName="phone" placeholder="Phone Number(012-34567890)"></ion-input>
+          </ion-item>
+
+          <div class="validation-error" *ngIf="(phone?.invalid && (phone?.dirty || phone?.touched))">
+            <div *ngIf="phone?.errors?.['required']">Phone number is required</div>
+            <div *ngIf="phone?.errors?.['pattern']">Please enter a valid phone number</div>
+          </div>
+
+
+          <!-- Password input -->
+          <ion-item>
+            <ion-icon name="lock-closed" slot="start"></ion-icon>
+            <ion-icon [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" slot="end" (click)="togglePasswordVisibility('password')"></ion-icon>
+            <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Password"></ion-input>
+          </ion-item>
+
+          <div class="validation-error" *ngIf="(password?.invalid && (password?.dirty || password?.touched))">
+            <div *ngIf="password?.errors?.['required']">Password is required</div>
+            <div *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</div>
+          </div>
+
+
+          <!-- Confirm Password input -->
+          <ion-item>
+            <ion-icon name="checkmark-done" slot="start"></ion-icon>
+            <ion-icon [name]="showConfirmPassword ? 'eye-outline' : 'eye-off-outline'" slot="end" (click)="togglePasswordVisibility('confirmPassword')"></ion-icon>
+            <ion-input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Confirm Password"></ion-input>
+          </ion-item>
+
+          <div class="validation-error" *ngIf="(confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched))">
+            <div *ngIf="confirmPassword?.errors?.['required']">Please confirm your password</div>
+            <div *ngIf="confirmPassword?.errors?.['notMatching']">Passwords do not match</div>
+          </div>
+
+
+          <!-- Currency selection -->
+          <ion-item>
+            <ion-icon name="cash" slot="start"></ion-icon>
+            <ion-select formControlName="currency" placeholder="Select Currency" interface="action-sheet">
+              <ion-select-option value="MYR">MYR (RM)</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <div class="validation-error" *ngIf="(currency?.invalid && (currency?.dirty || currency?.touched))">
+            <div *ngIf="currency?.errors?.['required']">Currency is required</div>
+          </div>
+
+
+          <!-- Terms and conditions -->
+          <div class="terms-container">
+            <ion-checkbox formControlName="termsAccepted" labelPlacement="end">I agree to the <a (click)="showTerms()">Terms & Conditions</a></ion-checkbox>
+          </div>
+
+          <div class="validation-error" *ngIf="(termsAccepted?.invalid && (termsAccepted?.dirty || termsAccepted?.touched))">
+            <div *ngIf="termsAccepted?.errors?.['requiredTrue']">You must accept the terms and conditions</div>
+          </div>
+
+          <ion-button expand="block" type="submit" [disabled]="registerForm.invalid" color="fav">
+            <ion-icon name="person-add" slot="start"></ion-icon>
+            Create Account
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </form>
+
+    <!-- Login link -->
+    <div class="login-link">
+      <p>Already have an account? <a (click)="goToLogin()">Sign In</a></p>
+    </div>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title size="small" class="ion-text-center">
+      © 2025 My Expenses - All rights reserved
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

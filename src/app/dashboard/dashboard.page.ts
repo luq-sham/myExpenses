@@ -69,20 +69,7 @@ export class DashboardPage implements OnInit {
     const { data } = await modal.onDidDismiss()
 
     if(data){
-      this.refreshPage()
+      this.getAccountData()
     }
   }
-
-  refreshPage(){
-    this.loading.showLoading();
-    this.api.getAccount().subscribe(res=>{
-      if(res.status_code == 200){
-        this.loading.hide();
-        this.items = res.return_data
-      }
-
-    })
-  }
-
-  
 }

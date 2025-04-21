@@ -10,6 +10,7 @@ import { addIcons } from 'ionicons';
 import { addCircle, addCircleSharp } from 'ionicons/icons';
 import { ApiService } from '../services/api.service';
 import { LoadingService } from '../services/loading.service';
+import { TwoDecimalPipe } from '../pipes/two-decimal-pipe.pipe';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,7 @@ import { LoadingService } from '../services/loading.service';
     HeaderComponent, 
     FabComponent, 
     IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardContent, 
-    IonGrid, IonRow, IonCol, IonIcon
+    IonGrid, IonRow, IonCol, IonIcon, TwoDecimalPipe
   ],
 })
 export class DashboardPage implements OnInit {

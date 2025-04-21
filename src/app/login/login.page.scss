@@ -1,0 +1,19 @@
+.full-height {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  ion-grid {
+    height: 100%;
+  }
+  
+  ion-row.full-height {
+    height: 100%;
+  }
+  
+  ion-card {
+    margin: 0;
+    width: 100%;
+  }
+  

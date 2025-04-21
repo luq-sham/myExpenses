@@ -13,5 +13,9 @@ export const routes: Routes = [
   {
     path: 'folder1',
     loadComponent: () => import('./dashboard/dashboard.page').then( m => m.DashboardPage)
+  },  {
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
   },
+
 ];

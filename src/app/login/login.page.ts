@@ -7,6 +7,8 @@ import { IonicModule,} from '@ionic/angular';
 import { MenuController, AlertController, LoadingController, ToastController} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { eyeOffOutline, eyeOutline, lockClosed, logInOutline, mail} from 'ionicons/icons';
+import * as CryptoJS from 'crypto-js'
+
 
 import { ApiService } from '../services/api.service';
 import { AlertService } from '../services/alert.service';
@@ -55,6 +57,18 @@ export class LoginPage implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
+  encryptPassword(password: string): string {
+    const secretKey = 'myExpenses';
+    const hashedKey = CryptoJS.enc.Hex.parse(CryptoJS.SHA256(secretKey).toString());
+  
+    const encrypted = CryptoJS.AES.encrypt(password, hashedKey, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7
+    });
+  
+    return encrypted.toString();  // This will be the encrypted password string
+  }
+
   async onSubmit() {
     if (!this.loginForm.valid) return;
 
@@ -66,7 +80,7 @@ export class LoginPage implements OnInit {
 
     const userData = {
       email: this.email?.value,
-      password: this.password?.value,
+      password: this.encryptPassword(this.password?.value),
     };
 
     this.api.postLoginUsers(userData).subscribe({

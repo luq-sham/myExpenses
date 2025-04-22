@@ -107,7 +107,7 @@
             <div *ngIf="termsAccepted?.errors?.['requiredTrue']">You must accept the terms and conditions</div>
           </div>
 
-          <ion-button expand="block" type="submit" (click)="onSubmit()" [disabled]="registerForm.invalid" color="fav">
+          <ion-button expand="block" type="submit" [disabled]="registerForm.invalid" color="fav">
             <ion-icon name="person-add" slot="start"></ion-icon>
             Create Account
           </ion-button>

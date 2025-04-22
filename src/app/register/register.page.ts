@@ -7,6 +7,7 @@ import { IonicModule,} from '@ionic/angular';
 import { MenuController, AlertController, LoadingController, ToastController} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { eyeOffOutline, eyeOutline, lockClosed, mail, person, personAdd, call, checkmarkDone, cash } from 'ionicons/icons';
+import * as CryptoJS from 'crypto-js'
 
 import { ApiService } from '../services/api.service';
 
@@ -87,6 +88,18 @@ export class RegisterPage implements OnInit {
     }
   }
 
+  encryptPassword(password: string): string {
+    const secretKey = 'myExpenses';
+    const hashedKey = CryptoJS.enc.Hex.parse(CryptoJS.SHA256(secretKey).toString());
+  
+    const encrypted = CryptoJS.AES.encrypt(password, hashedKey, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7
+    });
+  
+    return encrypted.toString();  // This will be the encrypted password string
+  }
+
   async onSubmit() {
     if (!this.registerForm.valid) return;
 
@@ -101,7 +114,7 @@ export class RegisterPage implements OnInit {
       email: this.email?.value,
       phone: this.phone?.value,
       currency: this.currency?.value,
-      password: this.password?.value,
+      password: this.encryptPassword(this.password?.value),
     };
 
     this.api.postRegisterUsers(userData).subscribe(

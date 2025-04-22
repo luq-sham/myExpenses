@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalController } from '@ionic/angular/standalone';
+import { MenuController } from '@ionic/angular/standalone';
 import { IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardContent, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';
@@ -10,6 +11,7 @@ import { addIcons } from 'ionicons';
 import { addCircle, addCircleSharp } from 'ionicons/icons';
 import { ApiService } from '../services/api.service';
 import { LoadingService } from '../services/loading.service';
+import { TwoDecimalPipe } from '../pipes/two-decimal-pipe.pipe';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +24,7 @@ import { LoadingService } from '../services/loading.service';
     HeaderComponent, 
     FabComponent, 
     IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardContent, 
-    IonGrid, IonRow, IonCol, IonIcon
+    IonGrid, IonRow, IonCol, IonIcon, TwoDecimalPipe
   ],
 })
 export class DashboardPage implements OnInit {
@@ -39,7 +41,8 @@ export class DashboardPage implements OnInit {
   constructor(
     private modal: ModalController,
     private api: ApiService,
-    private loading: LoadingService
+    private loading: LoadingService,
+    private menu: MenuController
   ) {
     addIcons({addCircle,addCircleSharp})
   }
@@ -49,12 +52,16 @@ export class DashboardPage implements OnInit {
   }
 
   getAccountData(){
+    const token ={
+      user: sessionStorage.getItem('email') 
+    } 
+
     this.loading.showLoading();
-    this.api.getAccount().subscribe(res=>{
+    this.api.postAccountByUser(token).subscribe(res=>{
       if(res.status_code == 200){
-        this.loading.hide();
         this.items = res.return_data
       }
+      this.loading.hide();
 
     })
   }
@@ -68,20 +75,15 @@ export class DashboardPage implements OnInit {
     const { data } = await modal.onDidDismiss()
 
     if(data){
-      this.refreshPage()
+      this.getAccountData()
     }
   }
 
-  refreshPage(){
-    this.loading.showLoading();
-    this.api.getAccount().subscribe(res=>{
-      if(res.status_code == 200){
-        this.loading.hide();
-        this.items = res.return_data
-      }
-
-    })
+  async logout(){
+    await sessionStorage.clear()
   }
 
-  
+  ionViewDidEnter(): void {
+    this.menu.enable(true);
+  }
 }

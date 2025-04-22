@@ -14,8 +14,8 @@
                 <ion-card class="ion-no-margin">
                   <ion-card-content>
                     <div style="text-align: center">
-                      <h2 style="text-transform: capitalize;"><b>{{item.account_name}}</b></h2>
-                      <p>MYR {{item.balance}}</p>
+                      <h2 style="text-transform: capitalize;"><b class="ion-text-capitalize">{{item.account_name}}</b></h2>
+                      <p>MYR {{item.balance | twoDecimal}}</p>
                     </div>
                   </ion-card-content>
                 </ion-card>

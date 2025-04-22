@@ -2,23 +2,41 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-        <img src="assets\icon\icon.png" id="custom-img" alt="Ionic Logo" />
-        <!-- <ion-card class="ion-no-margin">
-          <ion-card-content class="">
-              <ion-list-header>Welcome</ion-list-header>
-              <ion-note style="overflow-wrap: break-word; word-break: break-all; white-space: normal;">example&#64;gmail.com</ion-note>
-          </ion-card-content>
-        </ion-card> -->
-        <ion-list id="inbox-list">
-          @for (p of appPages; track p; let i = $index) {
+        <div style="display: flex;flex-direction: column;height: 100%;">
+          <img src="assets\icon\icon.png" id="custom-img" alt="Ionic Logo" />
+          <!-- <ion-card class="ion-no-margin">
+            <ion-card-content class="">
+                <ion-list-header>Welcome</ion-list-header>
+                <ion-note style="overflow-wrap: break-word; word-break: break-all; white-space: normal;">example&#64;gmail.com</ion-note>
+            </ion-card-content>
+          </ion-card> -->
+          <ion-list id="inbox-list">
+            @for (p of appPages; track p; let i = $index) {
+              <ion-menu-toggle auto-hide="false">
+                <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                  <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                  <ion-label>{{ p.title }}</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+            }
+          </ion-list>
+          <div style="margin-top: auto; display: flex; flex-direction: column; gap: 8px;">
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-                <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-                <ion-label>{{ p.title }}</ion-label>
+              <ion-item routerDirection="root" [routerLink]="'/login'" lines="none" detail="false" style="cursor: pointer;" routerLinkActive="selected">
+                <ion-icon aria-hidden="true" slot="start" name="settings"></ion-icon>
+                <ion-label>Setting</ion-label>
               </ion-item>
             </ion-menu-toggle>
-          }
-        </ion-list>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerDirection="root" (click)="logout()" lines="none" detail="false" class="logout" style="cursor: pointer;">
+                <ion-icon aria-hidden="true" slot="start" name="log-out-outline"></ion-icon>
+                <ion-label>Logout</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </div>
+
+          
+        </div>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

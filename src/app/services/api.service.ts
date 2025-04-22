@@ -13,6 +13,17 @@ export class ApiService {
     private http:HttpClient
   ) { }
 
+
+  postRegisterUsers(data:any): Observable <any> {
+    const api = this.url + "api/register";
+    return this.http.post(api,data)
+  }
+
+  postLoginUsers(data:any): Observable <any> {
+    const api = this.url + "api/login";
+    return this.http.post(api,data)
+  }
+
   getAccountType(): Observable <any> {
     const api = this.url + "api/get_acc_type";
     return this.http.get(api)
@@ -21,6 +32,11 @@ export class ApiService {
   getAccount(): Observable <any> {
     const api = this.url + "api/get_acc";
     return this.http.get(api)
+  }
+
+  postAccountByUser(data:any): Observable <any> {
+    const api = this.url + "api/get_acc_by_user";
+    return this.http.post(api,data)
   }
 
   postAddAccount(data:any): Observable <any> {

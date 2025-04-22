@@ -52,6 +52,9 @@ ion-menu ion-content {
 ion-menu.md ion-item.selected {
   --background: #33658A;
 }
+ion-menu.md ion-item.logout {
+  --background: #C1121F;
+}
 ion-item.selected {
   --color: #d7d8da;
   font-weight: bold;
@@ -74,6 +77,9 @@ ion-menu.md ion-item:hover ion-label {
 //icon  
 ion-menu.md ion-item.selected ion-icon {
   color: #06D6A0;
+}
+ion-menu.md ion-item.logout ion-icon {
+  color: #fff
 }
 ion-menu.md ion-item ion-icon {
   color: #616e7e;

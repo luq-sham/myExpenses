@@ -85,8 +85,13 @@ export class LoginPage implements OnInit {
 
     this.api.postLoginUsers(userData).subscribe({
       next:async (res) => {
+        await sessionStorage.clear()
         await loading.dismiss();
+
         if (res.status_code === 200) {
+          sessionStorage.setItem('email',res.userData.email)
+          sessionStorage.setItem('userDetails', JSON.stringify(res.userData));
+
           const toast = await this.toastController.create({
             message: 'Login successful!',
             duration: 2000,

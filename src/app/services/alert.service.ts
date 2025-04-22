@@ -10,10 +10,11 @@ export class AlertService {
     private alert: AlertController
   ) { }
 
-  async customComfirmationAlert(header:string, msg:string, confirmMsg?:string, cancleMsg?:string){
+  async customComfirmationAlert(header:string, msg:string, confirmMsg?:string, cancleMsg?:string, css?:string){
     const alert = await this.alert.create({
       header: header,
       message: msg,
+      cssClass: css ? css : 'custom-alert',
       buttons:[
         {
           text: cancleMsg ? cancleMsg : 'Cancel',
@@ -21,7 +22,8 @@ export class AlertService {
         },
         {
           text: confirmMsg ? confirmMsg : 'Confirm',
-          role: 'confirm'
+          role: 'confirm',
+          cssClass: 'confirm-red'
         },
       ]
     })

@@ -24,7 +24,7 @@ import { TwoDecimalPipe } from '../pipes/two-decimal-pipe.pipe';
     HeaderComponent, 
     FabComponent, 
     IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardContent, 
-    IonGrid, IonRow, IonCol, IonIcon, TwoDecimalPipe,
+    IonGrid, IonRow, IonCol, IonIcon, TwoDecimalPipe
   ],
 })
 export class DashboardPage implements OnInit {
@@ -73,6 +73,10 @@ export class DashboardPage implements OnInit {
     if(data){
       this.getAccountData()
     }
+  }
+
+  async logout(){
+    await sessionStorage.clear()
   }
 
   ionViewDidEnter(): void {

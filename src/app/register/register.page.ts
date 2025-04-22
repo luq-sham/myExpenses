@@ -117,8 +117,8 @@ export class RegisterPage implements OnInit {
       password: this.encryptPassword(this.password?.value),
     };
 
-    this.api.postRegisterUsers(userData).subscribe(
-      async (res) => {
+    this.api.postRegisterUsers(userData).subscribe({
+      next: async (res) => {
         await loading.dismiss();
 
         if (res.status_code === 200) {
@@ -131,14 +131,14 @@ export class RegisterPage implements OnInit {
           await toast.present();
           this.router.navigate(['/login']);
         } else {
-          this.showErrorAlert('Registration Failed', 'Please try again later.');
+          this.showErrorAlert('Registration Failed', res.error || 'Unexpected error.');
         }
       },
-      async () => {
+      error: async () => {
         await loading.dismiss();
         this.showErrorAlert('Registration Failed', 'There was an error creating your account. Please try again.');
       }
-    );
+    });
   }
 
   private async showErrorAlert(header: string, message: string) {

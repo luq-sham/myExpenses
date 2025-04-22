@@ -2,11 +2,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MenuController, AlertController, LoadingController, ToastController } from '@ionic/angular/standalone';
+import { IonicModule,} from '@ionic/angular';
+import { MenuController, AlertController, LoadingController, ToastController} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { eyeOffOutline, eyeOutline, lockClosed, mail, person, personAdd, call, checkmarkDone, cash, } from 'ionicons/icons';
+import { eyeOffOutline, eyeOutline, lockClosed, mail, person, personAdd, call, checkmarkDone, cash } from 'ionicons/icons';
+
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -14,7 +15,7 @@ import { ApiService } from '../services/api.service';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonicModule,CommonModule,ReactiveFormsModule]
+  imports: [IonicModule, CommonModule, ReactiveFormsModule],
 })
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
@@ -29,64 +30,54 @@ export class RegisterPage implements OnInit {
     private toastController: ToastController,
     private menu: MenuController,
     private api: ApiService
-  ) { 
-    addIcons({mail, lockClosed, eyeOutline, eyeOffOutline, person, personAdd, call, checkmarkDone,cash});
+  ) {
+    addIcons({ mail, lockClosed, eyeOutline, eyeOffOutline, person, personAdd, call, checkmarkDone, cash });
   }
 
   ngOnInit() {
     this.initForm();
   }
 
-  initForm() {
-    this.registerForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$')]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]],
-      currency: ['USD', [Validators.required]],
-      termsAccepted: [false, [Validators.requiredTrue]]
-    }, { validator: this.passwordMatchValidator });
+  private initForm() {
+    this.registerForm = this.formBuilder.group(
+      {
+        name: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        phone: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('^[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$'),
+          ],
+        ],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]],
+        currency: ['USD', [Validators.required]],
+        termsAccepted: [false, [Validators.requiredTrue]],
+      },
+      { validators: this.passwordMatchValidator }
+    );
   }
 
-  passwordMatchValidator(group: FormGroup) {
+  private passwordMatchValidator(group: FormGroup) {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
-    
+
     if (password && confirmPassword && password !== confirmPassword) {
       group.get('confirmPassword')?.setErrors({ notMatching: true });
     }
-    
+
     return null;
   }
 
-  get name() {
-    return this.registerForm.get('name');
-  }
-
-  get email() {
-    return this.registerForm.get('email');
-  }
-
-  get phone() {
-    return this.registerForm.get('phone');
-  }
-
-  get password() {
-    return this.registerForm.get('password');
-  }
-
-  get confirmPassword() {
-    return this.registerForm.get('confirmPassword');
-  }
-
-  get currency() {
-    return this.registerForm.get('currency');
-  }
-
-  get termsAccepted() {
-    return this.registerForm.get('termsAccepted');
-  }
+  // Getters for cleaner template bindings
+  get name() { return this.registerForm.get('name'); }
+  get email() { return this.registerForm.get('email'); }
+  get phone() { return this.registerForm.get('phone'); }
+  get password() { return this.registerForm.get('password'); }
+  get confirmPassword() { return this.registerForm.get('confirmPassword'); }
+  get currency() { return this.registerForm.get('currency'); }
+  get termsAccepted() { return this.registerForm.get('termsAccepted'); }
 
   togglePasswordVisibility(field: string) {
     if (field === 'password') {
@@ -101,53 +92,57 @@ export class RegisterPage implements OnInit {
 
     const loading = await this.loadingController.create({
       message: 'Creating account...',
-      spinner: 'crescent'
+      spinner: 'crescent',
     });
     await loading.present();
 
-    try {
-      const userData = {
-        name: this.registerForm.value.name,
-        email: this.registerForm.value.email,
-        phone: this.registerForm.value.phone,
-        currency: this.registerForm.value.currency,
-        password: this.registerForm.value.password
-      };
+    const userData = {
+      name: this.name?.value,
+      email: this.email?.value,
+      phone: this.phone?.value,
+      currency: this.currency?.value,
+      password: this.password?.value,
+    };
 
-      this.api.postRegisterUsers(userData).subscribe(async res =>{
-        if(res.status_code == 200){
-          await loading.dismiss();
+    this.api.postRegisterUsers(userData).subscribe(
+      async (res) => {
+        await loading.dismiss();
+
+        if (res.status_code === 200) {
           const toast = await this.toastController.create({
             message: 'Registration successful!',
             duration: 2000,
             color: 'success',
-            position: 'bottom'
+            position: 'bottom',
           });
           await toast.present();
-          
-          // Navigate to login page
           this.router.navigate(['/login']);
+        } else {
+          this.showErrorAlert('Registration Failed', 'Please try again later.');
         }
-      })
-      
-      // Show success toast
-    } catch (error) {
-      await loading.dismiss();
-      
-      const alert = await this.alertController.create({
-        header: 'Registration Failed',
-        message: 'There was an error creating your account. Please try again.',
-        buttons: ['OK']
-      });
-      await alert.present();
-    }
+      },
+      async () => {
+        await loading.dismiss();
+        this.showErrorAlert('Registration Failed', 'There was an error creating your account. Please try again.');
+      }
+    );
+  }
+
+  private async showErrorAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 
   async showTerms() {
     const alert = await this.alertController.create({
       header: 'Terms & Conditions',
-      message: 'By creating an account, you agree to our Terms of Service and Privacy Policy. We will process your personal information in accordance with these terms.',
-      buttons: ['OK']
+      message:
+        'By creating an account, you agree to our Terms of Service and Privacy Policy. We will process your personal information in accordance with these terms.',
+      buttons: ['OK'],
     });
     await alert.present();
   }
@@ -156,7 +151,7 @@ export class RegisterPage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  ionViewDidEnter(): void {
+  ionViewDidEnter() {
     this.menu.enable(false);
   }
 }

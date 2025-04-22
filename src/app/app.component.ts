@@ -22,14 +22,7 @@ export class AppComponent {
   constructor(
     private alert:AlertService
   ) {
-    addIcons({
-      paperPlaneOutline,
-      paperPlaneSharp,
-      statsChartOutline,
-      statsChartSharp,
-      logOutOutline,
-      settings
-    });
+    addIcons({ paperPlaneOutline, paperPlaneSharp, statsChartOutline, statsChartSharp, logOutOutline, settings });
   }
 
   async logout(){

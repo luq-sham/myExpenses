@@ -8,7 +8,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { addIcons } from 'ionicons';
 import { close } from 'ionicons/icons';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonGrid, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonGrid, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-add-modal',
@@ -19,7 +19,7 @@ import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonCon
     CommonModule, 
     FormsModule, 
     IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, 
-    IonGrid, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption,IonInput
+    IonGrid, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption,IonInput, IonLabel
   ],
 })
 
@@ -59,6 +59,9 @@ export class AddModalComponent  implements OnInit {
   }
   
   onSubmit(){
+    this.params.account_name = this.params.account_name.trim().toLowerCase();
+    this.params.account_type = this.params.account_type.trim().toLowerCase();
+
     if(this.params.account_name && this.params.account_type){
       this.alert.customComfirmationAlert('Create Account','Are you sure to create this account').then(res=>{
         if(res == 'confirm'){
@@ -66,7 +69,7 @@ export class AddModalComponent  implements OnInit {
           this.api.postAddAccount(this.params).subscribe( res =>{
             if(res.status_code == '200'){
               this.loading.hide()
-              this.toast.customToast('Success. Account successfully created.', 2000, 'success')
+              this.toast.customToast('Account successfully created.', 4000, 'success')
               this.modalController.dismiss(true);
             }
           })

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { paperPlaneOutline, paperPlaneSharp, statsChartOutline, statsChartSharp, logOutOutline } from 'ionicons/icons';
+import { paperPlaneOutline, paperPlaneSharp, statsChartOutline, statsChartSharp, logOutOutline, settings } from 'ionicons/icons';
 import { AlertService } from './services/alert.service';
 
 @Component({
@@ -27,7 +27,8 @@ export class AppComponent {
       paperPlaneSharp,
       statsChartOutline,
       statsChartSharp,
-      logOutOutline
+      logOutOutline,
+      settings
     });
   }
 

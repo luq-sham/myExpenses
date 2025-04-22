@@ -13,35 +13,37 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <p>Account Name:</p>
-        <ion-input fill="outline" placeholder="Enter Account Name" [(ngModel)]="params.account_name"></ion-input>
+        <ion-label position="stacked">Account Name:</ion-label>
+        <ion-input placeholder="Enter Account Name" [(ngModel)]="params.account_name" ></ion-input>
       </ion-col>
     </ion-row>
+
     <ion-row>
       <ion-col>
-        <p>Account Type:</p>
-        <ion-select label-placement="floating" fill="outline" [(ngModel)]="params.account_type">
+        <ion-label position="stacked">Type:</ion-label>
+        <ion-select [(ngModel)]="params.account_type" interface="popover">
           <ion-select-option value="">Select Type</ion-select-option>
-          @for (type of types; track $index) {
-            <ion-select-option value={{type.type}}>{{type.type}}</ion-select-option>
-          }
+          <ion-select-option *ngFor="let type of types; let i = index" [value]="type.type">
+            {{ type.type }}
+          </ion-select-option>
         </ion-select>
       </ion-col>
     </ion-row>
+
     <ion-row>
       <ion-col>
-        <p>Initial Balance:</p>
-        <ion-input label="MYR" type="number" fill="outline" placeholder="Enter Initial Balance" [(ngModel)]="params.balance" step="any"> </ion-input>
+        <ion-label position="stacked">Initial Balance :</ion-label>
+        <ion-input label="MYR" type="number" placeholder="Enter Initial Balance" [(ngModel)]="params.balance" step="any" ></ion-input>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar style="padding: 0px 16px;">
-    <ion-buttons>
+  <ion-toolbar style="padding-left: 8px;padding-right: 8px;">
+    <ion-buttons slot="start">
       <ion-button (click)="dismiss()">Dismiss</ion-button>
     </ion-buttons>
-    <ion-button slot="end" (click)="onSubmit()">Submit</ion-button>
+    <ion-button slot="end" color="primary" (click)="onSubmit()">Submit</ion-button>
   </ion-toolbar>
 </ion-footer>

@@ -2,9 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AlertController, IonicModule, LoadingController, ToastController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MenuController } from '@ionic/angular/standalone'
+import { MenuController,AlertController, LoadingController, ToastController } from '@ionic/angular/standalone'
 import { addIcons } from 'ionicons';
 import { eyeOffOutline, eyeOutline, lockClosed, logInOutline, mail } from 'ionicons/icons';
 import { ApiService } from '../services/api.service';
@@ -15,11 +15,7 @@ import { AlertService } from '../services/alert.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [
-    IonicModule,
-    CommonModule,
-    ReactiveFormsModule
-  ]
+  imports: [ IonicModule, CommonModule, ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
@@ -90,7 +86,7 @@ export class LoginPage implements OnInit {
             position: 'bottom'
           });
           await toast.present();
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['dashboard']);
         }else{
           this.alert.customAlert('Try Again',res.error)
         }

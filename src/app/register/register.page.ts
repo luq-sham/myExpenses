@@ -2,9 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AlertController, IonicModule, LoadingController, ToastController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MenuController } from '@ionic/angular/standalone';
+import { MenuController, AlertController, LoadingController, ToastController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { eyeOffOutline, eyeOutline, lockClosed, mail, person, personAdd, call, checkmarkDone, cash, } from 'ionicons/icons';
 import { ApiService } from '../services/api.service';

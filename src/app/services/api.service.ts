@@ -34,6 +34,11 @@ export class ApiService {
     return this.http.get(api)
   }
 
+  postAccountByUser(data:any): Observable <any> {
+    const api = this.url + "api/get_acc_by_user";
+    return this.http.post(api,data)
+  }
+
   postAddAccount(data:any): Observable <any> {
     const api = this.url + "api/post_add_acc";
     return this.http.post(api,data)

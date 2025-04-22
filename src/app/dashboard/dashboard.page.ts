@@ -52,12 +52,16 @@ export class DashboardPage implements OnInit {
   }
 
   getAccountData(){
+    const token ={
+      user: sessionStorage.getItem('email') 
+    } 
+
     this.loading.showLoading();
-    this.api.getAccount().subscribe(res=>{
+    this.api.postAccountByUser(token).subscribe(res=>{
       if(res.status_code == 200){
-        this.loading.hide();
         this.items = res.return_data
       }
+      this.loading.hide();
 
     })
   }

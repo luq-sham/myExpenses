@@ -33,6 +33,7 @@ export class AddModalComponent  implements OnInit {
     account_name: "",
     account_type: "",
     balance: 0,
+    user: sessionStorage.getItem('email'),
     created_at: new Date(),
     updated_at: new Date()
   }

@@ -1,17 +1,15 @@
-// login.page.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonicModule,} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { MenuController, AlertController, LoadingController, ToastController} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { eyeOffOutline, eyeOutline, lockClosed, logInOutline, mail} from 'ionicons/icons';
-import * as CryptoJS from 'crypto-js'
-
 
 import { ApiService } from '../services/api.service';
 import { AlertService } from '../services/alert.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -49,9 +47,13 @@ export class LoginPage implements OnInit {
     });
   }
 
-  // Getters for form fields
-  get email() { return this.loginForm.get('email'); }
-  get password() { return this.loginForm.get('password'); }
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -60,13 +62,13 @@ export class LoginPage implements OnInit {
   encryptPassword(password: string): string {
     const secretKey = 'myExpenses';
     const hashedKey = CryptoJS.enc.Hex.parse(CryptoJS.SHA256(secretKey).toString());
-  
+
     const encrypted = CryptoJS.AES.encrypt(password, hashedKey, {
       mode: CryptoJS.mode.ECB,
-      padding: CryptoJS.pad.Pkcs7
+      padding: CryptoJS.pad.Pkcs7,
     });
-  
-    return encrypted.toString();  // This will be the encrypted password string
+
+    return encrypted.toString();
   }
 
   async onSubmit() {
@@ -78,49 +80,43 @@ export class LoginPage implements OnInit {
     });
     await loading.present();
 
-    const userData = {
+    const credentials = {
       email: this.email?.value,
       password: this.encryptPassword(this.password?.value),
     };
 
-    this.api.postLoginUsers(userData).subscribe({
-      next:async (res) => {
-        await sessionStorage.clear()
+    this.api.postLoginUsers(credentials).subscribe({
+      next: async (res) => {
         await loading.dismiss();
 
         if (res.status_code === 200) {
-          sessionStorage.setItem('email',res.userData.email)
-          sessionStorage.setItem('userDetails', JSON.stringify(res.userData));
-
-          const toast = await this.toastController.create({
-            message: 'Login successful!',
-            duration: 2000,
-            color: 'success',
-            position: 'bottom',
-          });
-          await toast.present();
+          localStorage.clear()
+          localStorage.setItem('email', res.userData.email);
+          localStorage.setItem('userDetails', JSON.stringify(res.userData));
+          await this.presentToast('Login successful!', 'success');
+          this.loginForm.reset();
           this.router.navigate(['dashboard']);
+
         } else {
           this.alert.customAlert('Try Again', res.error || 'Unexpected error.');
         }
       },
-      
-      error:async () => {
+      error: async () => {
         await loading.dismiss();
         const alert = await this.alertController.create({
           header: 'Login Failed',
-          message: 'Invalid email or password. Please try again.',
+          message: 'An error has occurred. Kindly try again later.',
           buttons: ['OK'],
         });
         await alert.present();
-      }
+      },
     });
   }
 
   async forgotPassword() {
     const alert = await this.alertController.create({
       header: 'Reset Password',
-      message: 'Enter your email address and we\'ll send you a reset link.',
+      message: `Enter your email address and we'll send you a reset link.`,
       inputs: [
         {
           name: 'email',
@@ -141,6 +137,7 @@ export class LoginPage implements OnInit {
         },
       ],
     });
+
     await alert.present();
   }
 
@@ -148,16 +145,17 @@ export class LoginPage implements OnInit {
     this.router.navigate(['/register']);
   }
 
-  async presentToast(message: string) {
+  async presentToast(message: string, color: string = 'primary') {
     const toast = await this.toastController.create({
       message,
       duration: 2000,
       position: 'bottom',
+      color,
     });
     await toast.present();
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.menu.enable(false);
   }
 }

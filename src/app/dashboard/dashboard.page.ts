@@ -12,6 +12,7 @@ import { addCircle, addCircleSharp } from 'ionicons/icons';
 import { ApiService } from '../services/api.service';
 import { LoadingService } from '../services/loading.service';
 import { TwoDecimalPipe } from '../pipes/two-decimal-pipe.pipe';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,6 +43,7 @@ export class DashboardPage implements OnInit {
     private modal: ModalController,
     private api: ApiService,
     private loading: LoadingService,
+    private alert: AlertService,
     private menu: MenuController
   ) {
     addIcons({addCircle,addCircleSharp})
@@ -53,15 +55,22 @@ export class DashboardPage implements OnInit {
 
   getAccountData(){
     const token ={
-      user: sessionStorage.getItem('email') 
+      user: localStorage.getItem('email') 
     } 
 
     this.loading.showLoading();
-    this.api.postAccountByUser(token).subscribe(res=>{
-      if(res.status_code == 200){
-        this.items = res.return_data
+    this.api.postAccountByUser(token).subscribe({
+      next:async(res)=>{
+        if(res.status_code == 200){
+          this.items = res.return_data
+        }
+        this.loading.hide();
+      },
+      
+      error:async () => {
+        await this.loading.hide();
+        this.alert.customAlert('Loading Failed','An error has occurred. Kindly try again.')
       }
-      this.loading.hide();
 
     })
   }

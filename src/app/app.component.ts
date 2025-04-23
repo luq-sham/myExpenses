@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 
   public appPages = [
     { title: 'Dashboard', url: '/dashboard', icon: 'stats-chart' },
-    { title: 'Butget/Goal', url: '/folder1', icon: 'paper-plane' }
+    { title: 'Budget/Goal', url: '/folder1', icon: 'paper-plane' }
   ];
 
   constructor(

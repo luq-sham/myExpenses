@@ -33,7 +33,7 @@ export class AddModalComponent  implements OnInit {
     account_name: '',
     account_type: '',
     balance: 0,
-    user: sessionStorage.getItem('email'),
+    user: localStorage.getItem('email'),
     created_at: new Date(),
     updated_at: new Date()
   }
@@ -65,6 +65,7 @@ export class AddModalComponent  implements OnInit {
       this.alert.customComfirmationAlert('Create Account','Are you sure to create this account').then(res=>{
         if(res == 'confirm'){
           this.loading.showLoading()
+          
           this.api.postAddAccount(this.params).subscribe( res =>{
             this.loading.hide()
             if(res.status_code == '200'){

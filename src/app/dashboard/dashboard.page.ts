@@ -67,9 +67,12 @@ export class DashboardPage implements OnInit {
   }
 
   async modalAddAccount(){
+    const param = {
+      title : "Add Account"
+    }
     const modal = await this.modal.create({
       component:AddModalComponent,
-      componentProps: {title:"Add Account"}
+      componentProps: param
     });
     await modal.present();
     const { data } = await modal.onDidDismiss()

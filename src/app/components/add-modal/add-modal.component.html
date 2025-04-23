@@ -13,27 +13,32 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-label position="stacked">Account Name:</ion-label>
-        <ion-input placeholder="Enter Account Name" [(ngModel)]="params.account_name" ></ion-input>
+        <ion-item>
+          <ion-input type="text" placeholder="Enter the account name" label="Account Name" labelPlacement="stacked" [(ngModel)]="params.account_name"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="stacked">Type:</ion-label>
-        <ion-select [(ngModel)]="params.account_type" interface="popover">
-          <ion-select-option value="">Select Type</ion-select-option>
-          <ion-select-option *ngFor="let type of types; let i = index" [value]="type.type">
-            {{ type.type }}
-          </ion-select-option>
-        </ion-select>
+        <ion-item>
+          <ion-select label="Type" label-placement="stacked" [(ngModel)]="params.account_type">
+            <ion-select-option value="">Select Type</ion-select-option>
+            <ion-select-option *ngFor="let type of types; let i = index" [value]="type.type">
+              {{ type.type }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="stacked">Initial Balance :</ion-label>
-        <ion-input label="MYR" type="number" placeholder="Enter Initial Balance" [(ngModel)]="params.balance" step="any" ></ion-input>
+        <ion-item>
+          <ion-input type="number" placeholder="Enter the account name" label="Initial Balance" labelPlacement="stacked" [(ngModel)]="params.balance">
+            <ion-label slot="start">MYR</ion-label>
+          </ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>

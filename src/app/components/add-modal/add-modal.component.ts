@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {
+  IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent,
+  IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime
+} from '@ionic/angular/standalone';
 import { ModalController } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -8,7 +12,6 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { addIcons } from 'ionicons';
 import { close } from 'ionicons/icons';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonGrid, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-add-modal',
@@ -16,28 +19,24 @@ import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonCon
   styleUrls: ['./add-modal.component.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, 
-    IonGrid, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption,IonInput, IonLabel, IonItem
+    CommonModule, FormsModule,
+    IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent,
+    IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime
   ],
 })
+export class AddModalComponent implements OnInit {
+  add_id = 0;
+  title = ""
+  types: any[] = [];
+  categories: any[] = [];
+  income: any[] = [];
+  expense: any[] = [];
+  params: any = {};
+  disabled: boolean = true
+  label:any
+  accountUser:any[] =[]
+  maxDate: string = '';
 
-export class AddModalComponent  implements OnInit {
-
-  title = "";
-  types:any[] = [];
-  initialValue:any;
-  
-  params: any = {
-    account_name: '',
-    account_type: '',
-    balance: 0,
-    user: localStorage.getItem('email'),
-    created_at: new Date(),
-    updated_at: new Date()
-  }
-  
   constructor(
     private api: ApiService,
     private modalController: ModalController,
@@ -49,36 +48,156 @@ export class AddModalComponent  implements OnInit {
   }
 
   ngOnInit() {
+    addIcons({ close });
     this.getData();
+    this.modalInput();
+    this.maxDate = new Date().toISOString().split('T')[0];
   }
-  
-  getData(){
-    this.api.getAccountType().subscribe((res)=>{
-      this.types = res.return_data;
-    })
-  }
-  
-  onSubmit(){
-    this.params.account_name = this.params.account_name.trim().toLowerCase();
 
-    if(this.params.account_name && this.params.account_type){
-      this.alert.customComfirmationAlert('Create Account','Are you sure to create this account').then(res=>{
-        if(res == 'confirm'){
-          this.loading.showLoading()
-          
-          this.api.postAddAccount(this.params).subscribe( res =>{
-            this.loading.hide()
-            if(res.status_code == '200'){
-              this.toast.customToast('Account successfully created.', 4000, 'success')
-              this.modalController.dismiss(true);
-            }else if(res.status_code == '400'){
-              this.toast.customToast(res.msg , 3000, 'warning')
-            }
-          })
+  setDate(event: any) {
+    this.params.date = event.detail.value;
+  }
+
+  getData() {
+
+    if(this.add_id == 1){
+      this.api.getAccountType().subscribe((res) => {
+        this.types = res.return_data;
+      });
+    }
+
+    if(this.add_id== 2){
+      const token ={
+        user: localStorage.getItem('email') 
+      } 
+
+      this.api.getRecordCategories().subscribe((res) => {
+        this.income = res.income;
+        this.expense = res.expense;
+        this.categories = this.income;
+      });
+
+      this.api.postAccountByUser(token).subscribe({
+        next:async(res)=>{
+          if(res.status_code == 200){
+            this.accountUser = res.return_data
+          }
+        },
+        
+        error:async () => {
+          await this.loading.hide();
+          this.alert.customAlert('Loading Failed','An error has occurred. Kindly try again.')
         }
+  
       })
-    }else{
-      this.alert.customAlert('Warning','Please enter all the required information')
+    }
+  }
+
+  modalInput() {
+    switch (this.add_id) {
+      case 1:
+        this.params = {
+          account_name: '',
+          account_type: '',
+          balance: 0,
+        };
+        break;
+
+      case 2:
+        this.params = {
+          transaction_amount: 0,
+          transaction_category: '',
+          expenses_account: '',
+          transaction_description: '',
+          user: localStorage.getItem('email') || '',
+          transaction_date: new Date().toISOString(),
+          transaction_type: '',
+        };
+        break;
+
+    }
+  }
+
+  getCategory(values: any){
+    const value = values.detail.value
+    this.disabled = false
+
+    if(value == 'income'){
+      this.label = 'Income'
+      this.categories = this.income
+    }else if (value == 'expense'){
+      this.label = 'Expense'
+      this.categories = this.expense
+    }
+  }
+
+  onSubmit() {
+    let param: any = {};
+
+    switch (this.add_id) {
+      case 1:
+        if (this.params.account_name && this.params.account_type) {
+          this.params.account_name = this.params.account_name.trim().toLowerCase();
+
+          param = {
+            ...this.params,
+            user: localStorage.getItem('email'),
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          };
+
+          this.alert.customComfirmationAlert('Create Account', 'Are you sure to create this account?').then((res) => {
+              if (res === 'confirm') {
+                this.loading.showLoading();
+                this.api.postAddAccount(param).subscribe((res) => {
+                  this.loading.hide();
+                  if (res.status_code === 200) {
+                    this.toast.customToast('Account successfully created.', 4000, 'success');
+                    this.modalController.dismiss(true);
+                  } else {
+                    this.toast.customToast(res.msg || 'Something went wrong.', 3000, 'warning');
+                  }
+                });
+              }
+            });
+        } else {
+          this.alert.customAlert('Warning', 'Please enter all the required information');
+        }
+        break;
+
+      case 2:
+       
+        if (this.params.transaction_amount && this.params.transaction_category && this.params.expenses_account && this.params.transaction_type) {
+          param = {
+            ...this.params,
+            user: localStorage.getItem('email'),
+          };
+          console.log(param)
+
+          this.alert.customComfirmationAlert('Create Record', 'Are you sure to create this record?').then((res) => {
+            if (res === 'confirm') {
+              this.loading.showLoading();
+              this.api.postAddRecord(param).subscribe((res) => {
+                this.loading.hide();
+                if (res.status_code === 200) {
+                  this.toast.customToast('Account successfully created.', 4000, 'success');
+                  this.modalController.dismiss(true);
+                } else {
+                  this.toast.customToast(res.msg || 'Something went wrong.', 3000, 'warning');
+                }
+              });
+            }
+          });
+        }else{
+          this.alert.customAlert('Warning', 'Please enter all the required information');
+        }
+        
+        // this.modalController.dismiss(true)
+        break;
+
+      default:
+        this.alert.customAlert('Error', 'Invalid operation');
+        break;
     }
   }
 

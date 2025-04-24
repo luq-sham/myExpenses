@@ -17,3 +17,60 @@ ion-card.m-card{
     border: 2px solid #fff;
     color: #fff;
 }
+
+
+.transaction-card {
+    background-color: #1e1e1e; // dark background
+    color: white;
+    border-radius: 10px;
+  }
+  
+  .transaction-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .category-icon {
+    background-color: #2a2a2a;
+    border-radius: 50%;
+    padding: 10px;
+  }
+  
+  .icon-white {
+    color: white;
+    font-size: 24px;
+  }
+  
+  .transaction-info {
+    flex-grow: 1;
+    padding: 0 15px;
+  }
+  
+  .transaction-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+  
+  .transaction-date {
+    margin: 0;
+    font-size: 12px;
+    color: #aaa;
+  }
+  
+  .transaction-amount {
+    text-align: right;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .income {
+    color: #4caf50; // green
+  }
+  
+  .expense {
+    color: #f44336; // red
+  }
+  

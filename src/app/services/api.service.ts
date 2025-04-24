@@ -43,4 +43,19 @@ export class ApiService {
     const api = this.url + "api/post_add_acc";
     return this.http.post(api,data)
   }
+
+  getRecordCategories(): Observable<any>{
+    const api = this.url + "api/get_categories";
+    return this.http.get(api)
+  }
+
+  postAddRecord(data:any):Observable<any>{
+    const api = this.url + "api/post_add_transaction";
+    return this.http.post(api,data)
+  }
+
+  getRecord(data:any):Observable<any>{
+    const api = this.url + "api/get_transaction";
+    return this.http.post(api,data)
+  }
 }

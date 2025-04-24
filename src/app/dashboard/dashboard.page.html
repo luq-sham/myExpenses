@@ -2,10 +2,8 @@
 
 <ion-content>
   <ion-card class="ion-no-margin" color="fav" style="border-radius: 0px">
-    <ion-card-header>
-      <ion-card-title> List of accounts </ion-card-title>
-    </ion-card-header>
     <ion-card-content>
+      <h1 class="title-card">List of accounts</h1>
       <ion-grid>
         <ion-row style="display: flex; justify-content: center">
           @if (items.length > 0) { 
@@ -47,10 +45,8 @@
   </ion-card>
 
   <ion-card color="sub-fav" class="m-card">
-    <ion-card-header>
-      <ion-card-title>Expenses Structure</ion-card-title>
-    </ion-card-header>
     <ion-card-content class="ion-padding">
+      <h1 class="title-card">Expenses Structure</h1>
       <ion-grid>
         <ion-row>
           @if (records.length > 0) { 

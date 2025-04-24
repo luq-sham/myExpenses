@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalController } from '@ionic/angular/standalone';
 import { MenuController } from '@ionic/angular/standalone';
-import { IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardContent, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/angular/standalone';
 import { IonicModule } from '@ionic/angular'
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';

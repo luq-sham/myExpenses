@@ -8,49 +8,49 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "icons/favicon4-3.png",
+      "src": "icon/favicon4-3.png",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/favicon4-2.png",
+      "src": "icon/favicon-96x96.png",
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/favicon4-1.png",
+      "src": "icon/favicon4-1.png",
       "sizes": "128x128",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/favicon4.png",
+      "src": "icon/favicon-144x144.png",
       "sizes": "144x144",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/mobile-icon.png",
+      "src": "icon/favicon-192x192.png",
       "sizes": "152x152",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/mobile-icon (1).png",
+      "src": "icon/mobile-icon (1).png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/mobile-icon (2).png",
+      "src": "icon/mobile-icon (2).png",
       "sizes": "384x384",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "src/assets/icons/mobile-icon (3).png",
+      "src": "icon/favicon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"

@@ -1,6 +1,6 @@
 {
   "name": "myExpenses",
-  "short_name": "app",
+  "short_name": "myExpenses",
   "theme_color": "#264653",
   "background_color": "#264653",
   "display": "standalone",

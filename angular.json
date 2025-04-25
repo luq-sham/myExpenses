@@ -1,9 +1,10 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "defaultProject": "myExpenses",
   "newProjectRoot": "projects",
   "projects": {
-    "app": {
+    "myExpenses": {
       "projectType": "application",
       "schematics": {
         "@ionic/angular-toolkit:page": {
@@ -78,21 +79,19 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "app:build:production"
+              "buildTarget": "myExpenses:build:production"
             },
             "development": {
-              "buildTarget": "app:build:development"
+              "buildTarget": "myExpenses:build:development"
             },
-            "ci": {
-              "progress": false
-            }
+            "ci": {}
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "app:build"
+            "buildTarget": "myExpenses:build"
           }
         },
         "test": {

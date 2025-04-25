@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
-import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink, IonCard, IonCardContent } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular'
 import { addIcons } from 'ionicons';
 import { paperPlaneOutline, paperPlaneSharp, statsChartOutline, statsChartSharp, logOutOutline, settings } from 'ionicons/icons';
 import { AlertService } from './services/alert.service';
@@ -12,7 +12,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [ CommonModule, RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet, IonCard, IonCardContent ]
+  imports: [ IonicModule, CommonModule, RouterLink, RouterLinkActive ]
 })
 export class AppComponent implements OnInit {
 

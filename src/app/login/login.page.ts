@@ -22,6 +22,9 @@ export class LoginPage implements OnInit {
   loginForm!: FormGroup;
   showPassword = false;
 
+  deferredPrompt: any = null;
+  showInstallButton: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -37,6 +40,25 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.initForm();
+
+    this.deferredPrompt.prompt();
+    this.deferredPrompt.userChoice.then((choiceResult: any) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      this.deferredPrompt = null;
+      this.showInstallButton = false;
+    });
+
+    // PWA install prompt logic
+    window.addEventListener('beforeinstallprompt', (e: any) => {
+      e.preventDefault();
+      this.deferredPrompt = e;
+      this.showInstallButton = true;
+    });
+    
   }
 
   private initForm() {

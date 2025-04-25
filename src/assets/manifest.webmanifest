@@ -8,19 +8,19 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "icons/icon-72x72.png",
+      "src": "icons/favicon4-3.png",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/icon-96x96.png",
+      "src": "icons/favicon4-2.png",
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icons/icon-128x128.png",
+      "src": "icons/favicon4-1.png",
       "sizes": "128x128",
       "type": "image/png",
       "purpose": "maskable any"

@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular'
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';
 import { AddModalComponent } from '../components/add-modal/add-modal.component';
-import { addIcons } from 'ionicons';
-import { addCircle, addCircleSharp } from 'ionicons/icons';
 import { ApiService } from '../services/api.service';
 import { LoadingService } from '../services/loading.service';
 import { TwoDecimalPipe } from '../pipes/two-decimal-pipe.pipe';
@@ -47,7 +45,6 @@ export class DashboardPage implements OnInit {
     private alert: AlertService,
     private menu: MenuController
   ) {
-    addIcons({addCircle,addCircleSharp})
   }
   
   ngOnInit() {

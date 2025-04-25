@@ -54,9 +54,9 @@
               <ion-col size="12">
                 <ion-card class="ion-no-margin transaction-card">
                   <ion-card-content class="transaction-content">
-                    <!-- <ion-avatar slot="start" class="category-icon">
-                      <ion-icon [name]="getIcon(record.category)" class="icon-white"></ion-icon>
-                    </ion-avatar> -->
+                    <ion-avatar slot="start" class="category-icon">
+                      <ion-icon [name]="record.icon" class="icon-white"></ion-icon>
+                    </ion-avatar>
                     <div class="transaction-info">
                       <h2 class="transaction-title">{{ record.category }}</h2>
                       <p class="transaction-date">{{ record.date | date:'MMM d' }}</p>

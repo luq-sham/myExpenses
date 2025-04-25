@@ -1,77 +1,102 @@
 .title-card {
-    font-weight: bold;
-    text-align: center;
-    color: #fff;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
 }
 
-ion-card-content.text-center{
-    text-align: center;
+ion-card-content.text-center {
+  text-align: center;
 }
 
-ion-card.m-card{
-    margin-top: 16px;
+ion-card.m-card {
+  margin-top: 16px;
 }
 
-.btn-add-acc{
-    background-color: transparent;
-    border: 2px solid #fff;
-    color: #fff;
+.btn-add-acc {
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
 }
 
+.record-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-.transaction-card {
-    background-color: #1e1e1e; // dark background
-    color: white;
-    border-radius: 10px;
+.record-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2a2a2a;
+  font-size: 24px;
+  color: #fff;
+  padding: 10px;
+}
+
+.record-info {
+  flex-grow: 1;
+  padding: 0 15px;
+}
+
+.record-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.record-date {
+  margin: 0;
+  font-size: 14px;
+  color: #888888;
+}
+
+.transaction-amount {
+  text-align: right;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.income {
+  color: #4caf50; // green
+}
+
+.expense {
+  color: #f44336; // red
+}
+
+@media (max-width: 768px) {
+  .record-content {
+    flex-direction: column !important;
   }
-  
-  .transaction-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+
+  .record-icon {
+    margin-bottom: 10px;
   }
-  
-  .category-icon {
-    background-color: #2a2a2a;
-    border-radius: 50%;
-    padding: 10px;
-  }
-  
-  .icon-white {
-    color: white;
-    text-align: center;
-    font-size: 30px;
-  }
-  
-  .transaction-info {
-    flex-grow: 1;
-    padding: 0 15px;
-  }
-  
-  .transaction-title {
-    margin: 0;
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: capitalize;
-  }
-  
-  .transaction-date {
-    margin: 0;
-    font-size: 12px;
-    color: #aaa;
-  }
-  
+
   .transaction-amount {
-    text-align: right;
-    font-weight: bold;
-    font-size: 16px;
+    align-self: flex-end;
+    margin-top: 10px;
   }
-  
-  .income {
-    color: #4caf50; // green
+
+  .record-info {
+    text-align: center;
+    width: 100%;
   }
-  
-  .expense {
-    color: #f44336; // red
-  }
-  
+}
+// .transaction-card {
+//     background-color: #1e1e1e; // dark background
+//     color: white;
+//     border-radius: 10px;
+//   }
+
+
+//   .icon-white {
+//     color: white;
+//     text-align: center;
+//     font-size: 30px;
+//   }
+
+
+

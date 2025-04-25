@@ -51,7 +51,7 @@
         <ion-row>
           @if (records.length > 0) { 
             @for (record of records; track $index) {
-              <ion-col size="12">
+              <!-- <ion-col size="12">
                 <ion-card class="ion-no-margin transaction-card">
                   <ion-card-content class="transaction-content">
                     <ion-avatar slot="start" class="category-icon">
@@ -68,7 +68,28 @@
                     </div>
                   </ion-card-content>
                 </ion-card>
+              </ion-col> -->
+              <ion-col size="12">
+                <ion-card class="ion-no-margin">
+                  <ion-card-content class="record-content">
+                    <ion-avatar slot="start" class="record-icon">
+                      <ion-icon [name]="record.icon"></ion-icon>
+                    </ion-avatar>
+                    <div class="record-info">
+                      <h2 class="record-title">{{ record.category }}</h2>
+                      <p class="record-date ion-text-capitalize">{{ record.account_name }} ({{record.account_type}})</p>
+                    </div>
+                    <div class="transaction-amount">
+                      <p [ngClass]="{'income': record.type == 'income', 'expense': record.type == 'expense'}">
+                        {{ record.type == 'income' ? '+' : '-' }}MYR {{ record.amount | number:'1.2-2' }}
+                      </p>
+                      <p class="record-date">{{ record.date | date:'MMM d' }}</p>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
               </ion-col>
+
+
             }
           } @else {
             <ion-col size="12" style="text-align: center; color: lightgray">

@@ -71,7 +71,6 @@ export class RegisterPage implements OnInit {
     return null;
   }
 
-  // Getters for cleaner template bindings
   get name() { return this.registerForm.get('name'); }
   get email() { return this.registerForm.get('email'); }
   get phone() { return this.registerForm.get('phone'); }
@@ -128,6 +127,7 @@ export class RegisterPage implements OnInit {
             color: 'success',
             position: 'bottom',
           });
+          this.registerForm.reset()
           await toast.present();
           this.router.navigate(['/login']);
         } else {

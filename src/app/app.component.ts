@@ -1,36 +1,71 @@
-import { Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
+import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink, IonCard, IonCardContent } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { paperPlaneOutline, paperPlaneSharp, statsChartOutline, statsChartSharp, logOutOutline, settings } from 'ionicons/icons';
 import { AlertService } from './services/alert.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [ RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet],
+  standalone: true,
+  imports: [ CommonModule, RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet, IonCard, IonCardContent ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  router = inject(Router)
+  allowedPaths: string[] = ['/login', '/register'];
+  display: boolean = false;
+
+  name: string = '';
+  email: string = '';
 
   public appPages = [
     { title: 'Dashboard', url: '/dashboard', icon: 'stats-chart' },
-    { title: 'Outbox', url: '/folder1', icon: 'paper-plane' },
+    { title: 'Budget/Goal', url: '/folder1', icon: 'paper-plane' }
   ];
+
   constructor(
-    private alert:AlertService
+    private router: Router,
+    private alert: AlertService
   ) {
     addIcons({ paperPlaneOutline, paperPlaneSharp, statsChartOutline, statsChartSharp, logOutOutline, settings });
   }
 
-  async logout(){
-    this.alert.customComfirmationAlert('Logout','Are you sure to logout','Logout','Cancel').then( async res => {
-      if(res == 'confirm'){
-        await sessionStorage.clear();
-        this.router.navigateByUrl('/login',{replaceUrl:true})
-      }
-    })
+  ngOnInit() {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.display = !this.allowedPaths.includes(event.urlAfterRedirects);
+        this.loadUserDetails();
+      });
+
+  }
+
+  loadUserDetails() {
+    const storedUser = localStorage.getItem('userDetails');
+    if (storedUser) {
+      const userDetails = JSON.parse(storedUser);
+      this.name = userDetails.name;
+      this.email = userDetails.email;
+    } else {
+      this.name = '';
+      this.email = '';
+    }
+  }
+
+  async logout(): Promise<void> {
+    const res = await this.alert.customComfirmationAlert(
+      'Logout',
+      'Are you sure to logout',
+      'Logout',
+      'Cancel'
+    );
+    if (res === 'confirm') {
+      localStorage.clear();
+      this.router.navigateByUrl('/login', { replaceUrl: true });
+    }
   }
 }

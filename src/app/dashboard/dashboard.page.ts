@@ -60,32 +60,34 @@ export class DashboardPage implements OnInit {
     this.api.postAccountByUser(token).subscribe({
       next:async(res)=>{
         if(res.status_code == 200){
-          this.items = res.return_data
-        }
-        this.loading.hide();
-      },
+          
+          this.api.getRecord(token).subscribe({
+            next:async(res2)=>{
+              if(res.status_code == 200){
+
+                this.items = res.return_data
+                this.records = res2.return_data
+                
+              }
+              this.loading.hide();
+            },
+            
+            error:async () => {
+              await this.loading.hide();
+              this.alert.customAlert('Loading Failed','An error has occurred. Kindly try again.')
+            }
       
+          })
+
+        }
+      },
       error:async () => {
         await this.loading.hide();
         this.alert.customAlert('Loading Failed','An error has occurred. Kindly try again.')
       }
 
     })
-
-    this.api.getRecord(token).subscribe({
-      next:async(res)=>{
-        if(res.status_code == 200){
-          this.records = res.return_data
-        }
-        this.loading.hide();
-      },
-      
-      error:async () => {
-        await this.loading.hide();
-        this.alert.customAlert('Loading Failed','An error has occurred. Kindly try again.')
-      }
-
-    })
+    
   }
 
   async modalAddAccount(){

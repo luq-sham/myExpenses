@@ -19,6 +19,9 @@ export class AppComponent implements OnInit {
   allowedPaths: string[] = ['/login', '/register'];
   display: boolean = false;
 
+  deferredPrompt: any = null;
+  showInstallButton: boolean = false;
+
   name: string = '';
   email: string = '';
 
@@ -41,6 +44,28 @@ export class AppComponent implements OnInit {
         this.display = !this.allowedPaths.includes(event.urlAfterRedirects);
         this.loadUserDetails();
       });
+
+    // PWA install prompt logic
+    window.addEventListener('beforeinstallprompt', (e: any) => {
+      e.preventDefault();
+      this.deferredPrompt = e;
+      this.showInstallButton = true;
+    });
+  }
+
+  installPWA() {
+    if (this.deferredPrompt) {
+      this.deferredPrompt.prompt();
+      this.deferredPrompt.userChoice.then((choiceResult: any) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        this.deferredPrompt = null;
+        this.showInstallButton = false;
+      });
+    }
   }
 
   loadUserDetails() {

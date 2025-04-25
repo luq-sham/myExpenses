@@ -39,6 +39,11 @@
       </ion-content>
     </ion-menu>
 
+    <ion-card *ngIf="showInstallButton" (click)="installPWA()" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; cursor: pointer;">
+      <ion-card-content>
+        📲 Install App
+      </ion-card-content>
+    </ion-card>
     <ion-router-outlet id="main-content" type="overlay"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>

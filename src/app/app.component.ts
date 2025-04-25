@@ -42,6 +42,16 @@ export class AppComponent implements OnInit {
         this.loadUserDetails();
       });
 
+      let deferredPrompt: any;
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault(); // Prevent auto prompt
+        deferredPrompt = e;
+
+        // Show your custom install UI
+        // For example, display an "Install" button
+      });
+
   }
 
   loadUserDetails() {
@@ -68,4 +78,7 @@ export class AppComponent implements OnInit {
       this.router.navigateByUrl('/login', { replaceUrl: true });
     }
   }
+  
+  
+
 }

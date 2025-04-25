@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  url = "http://127.0.0.1:8000/"
+  // url = "http://127.0.0.1:8000/"
+  url = "https://data-myexpenses.vercel.app/"
 
   constructor(
     private http:HttpClient

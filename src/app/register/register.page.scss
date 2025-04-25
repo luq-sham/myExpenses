@@ -1,15 +1,15 @@
-/* Background Image Styles */
-// ion-content {
-//   --background: transparent;
-// }
-
 .register-container {
   display: flex;
   flex-direction: column;
   padding: 16px;
-  height: 100%;
   max-width: 500px;
   margin: 0 auto;
+  flex-grow: 1;
+}
+
+.form-scroll {
+  overflow-y: auto;
+  flex-grow: 1;
 }
 
 .logo-container {
@@ -17,17 +17,6 @@
   flex-direction: column;
   align-items: center;
   padding: 24px 0;
-
-  // img {
-
-  //   @media (prefers-color-scheme: dark) {
-  //     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-  //   }
-
-  //   @media (prefers-color-scheme: light) {
-  //     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  //   }
-  // }
 
   h1 {
     font-size: 24px;

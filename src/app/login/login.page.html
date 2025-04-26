@@ -1,52 +1,58 @@
-<ion-content fullscreen="true" scroll="true" forceOverscroll="true">
+<ion-content fullscreen="true" scroll="true">
   <div class="login-container">
     
     <div class="logo-container">
-      <img alt="Logo" src="assets/icon/favicon3-removebg.png" />
+      <img alt="Logo" class="logo" src="assets/icon/favicon3-removebg.png" />
       <h1>My Expenses</h1>
       <p>Sign in to continue to your account</p>
     </div>
 
     
     <div class="form-scroll">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <ion-card>
-          <ion-card-content>
-            
-            <ion-item>
-              <ion-icon name="mail" slot="start"></ion-icon>
-              <ion-input type="email" formControlName="email" placeholder="your@email.com"></ion-input>
-            </ion-item>
-            <div class="validation-error" *ngIf="(email?.invalid && (email?.dirty || email?.touched))">
-              <div *ngIf="email?.errors?.['required']">Email is required</div>
-              <div *ngIf="email?.errors?.['email']">Please enter a valid email</div>
-            </div>
-
-            
-            <ion-item>
-              <ion-icon name="lock-closed" slot="start"></ion-icon>
-              <ion-icon [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" slot="end" (click)="togglePasswordVisibility()"></ion-icon>
-              <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="******"></ion-input>
-            </ion-item>
-            <div class="validation-error" *ngIf="(password?.invalid && (password?.dirty || password?.touched))">
-              <div *ngIf="password?.errors?.['required']">Password is required</div>
-              <div *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</div>
-            </div>
-
-            
-            <div class="remember-forgot">
-              <ion-checkbox formControlName="rememberMe" labelPlacement="end">Remember me</ion-checkbox>
-              <a class="forgot-password" (click)="forgotPassword()">Forgot Password?</a>
-            </div>
-
-            
-            <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" color="fav">
-              <ion-icon name="log-in-outline" slot="start"></ion-icon>
-              Sign In
-            </ion-button>
-          </ion-card-content>
-        </ion-card>
-      </form>
+      <ion-grid>
+        <ion-row class="ion-display-flex ion-justify-content-center">
+          <ion-col size="12" [sizeMd]="2">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <ion-card>
+                <ion-card-content>
+                  
+                  <ion-item>
+                    <ion-icon name="mail" slot="start"></ion-icon>
+                    <ion-input type="email" formControlName="email" placeholder="your@email.com"></ion-input>
+                  </ion-item>
+                  <div class="validation-error" *ngIf="(email?.invalid && (email?.dirty || email?.touched))">
+                    <div *ngIf="email?.errors?.['required']">Email is required</div>
+                    <div *ngIf="email?.errors?.['email']">Please enter a valid email</div>
+                  </div>
+      
+                  
+                  <ion-item>
+                    <ion-icon name="lock-closed" slot="start"></ion-icon>
+                    <ion-icon [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" slot="end" (click)="togglePasswordVisibility()"></ion-icon>
+                    <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="******"></ion-input>
+                  </ion-item>
+                  <div class="validation-error" *ngIf="(password?.invalid && (password?.dirty || password?.touched))">
+                    <div *ngIf="password?.errors?.['required']">Password is required</div>
+                    <div *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</div>
+                  </div>
+      
+                  
+                  <div class="remember-forgot">
+                    <ion-checkbox formControlName="rememberMe" labelPlacement="end">Remember me</ion-checkbox>
+                    <a class="forgot-password" (click)="forgotPassword()">Forgot Password?</a>
+                  </div>
+      
+                  
+                  <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" color="fav">
+                    <ion-icon name="log-in-outline" slot="start"></ion-icon>
+                    Sign In
+                  </ion-button>
+                </ion-card-content>
+              </ion-card>
+            </form>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
       
       <div class="signup-link">

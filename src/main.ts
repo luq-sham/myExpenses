@@ -8,8 +8,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 import { provideServiceWorker } from '@angular/service-worker';
 
-import { environment } from './environments/environment';
-
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

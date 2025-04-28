@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular'
 import {
   IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent,
   IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime
@@ -19,9 +20,8 @@ import { close } from 'ionicons/icons';
   styleUrls: ['./add-modal.component.scss'],
   standalone: true,
   imports: [
+    IonicModule,
     CommonModule, FormsModule,
-    IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent,
-    IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime
   ],
 })
 export class AddModalComponent implements OnInit {
@@ -37,6 +37,8 @@ export class AddModalComponent implements OnInit {
   accountUser:any[] =[]
   maxDate: string = '';
 
+  selectedSegment = 'first'
+
   constructor(
     private api: ApiService,
     private modalController: ModalController,
@@ -44,7 +46,7 @@ export class AddModalComponent implements OnInit {
     private loading: LoadingService,
     private toast: ToastService
   ) {
-    addIcons({close})
+    addIcons({close});
   }
 
   ngOnInit() {
@@ -67,6 +69,7 @@ export class AddModalComponent implements OnInit {
     }
 
     if(this.add_id== 2){
+      
       const token ={
         user: localStorage.getItem('email') 
       } 
@@ -95,6 +98,8 @@ export class AddModalComponent implements OnInit {
 
   modalInput() {
     switch (this.add_id) {
+      
+      //add account
       case 1:
         this.params = {
           account_name: '',
@@ -102,7 +107,8 @@ export class AddModalComponent implements OnInit {
           balance: 0,
         };
         break;
-
+      
+      //add record
       case 2:
         this.params = {
           transaction_amount: 0,
@@ -135,36 +141,43 @@ export class AddModalComponent implements OnInit {
     let param: any = {};
 
     switch (this.add_id) {
+
+      //add account
       case 1:
-        if (this.params.account_name && this.params.account_type) {
-          this.params.account_name = this.params.account_name.trim().toLowerCase();
-
-          param = {
-            ...this.params,
-            user: localStorage.getItem('email'),
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-          };
-
-          this.alert.customComfirmationAlert('Create Account', 'Are you sure to create this account?').then((res) => {
-              if (res === 'confirm') {
-                this.loading.showLoading();
-                this.api.postAddAccount(param).subscribe((res) => {
-                  this.loading.hide();
-                  if (res.status_code === 200) {
-                    this.toast.customToast('Account successfully created.', 4000, 'success');
-                    this.modalController.dismiss(true);
-                  } else {
-                    this.toast.customToast(res.msg || 'Something went wrong.', 3000, 'warning');
-                  }
-                });
-              }
-            });
-        } else {
-          this.alert.customAlert('Warning', 'Please enter all the required information');
+        if(this.selectedSegment == 'first'){
+          if (this.params.account_name && this.params.account_type) {
+            this.params.account_name = this.params.account_name.trim().toLowerCase();
+  
+            param = {
+              ...this.params,
+              user: localStorage.getItem('email'),
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            };
+  
+            this.alert.customComfirmationAlert('Create Account', 'Are you sure to create this account?').then((res) => {
+                if (res === 'confirm') {
+                  this.loading.showLoading();
+                  this.api.postAddAccount(param).subscribe((res) => {
+                    this.loading.hide();
+                    if (res.status_code === 200) {
+                      this.toast.customToast('Account successfully created.', 4000, 'success');
+                      this.modalController.dismiss(true);
+                    } else {
+                      this.toast.customToast(res.msg || 'Something went wrong.', 3000, 'warning');
+                    }
+                  });
+                }
+              });
+          } else {
+            this.alert.customAlert('Warning', 'Please enter all the required information');
+          }
+        }else if(this.selectedSegment == 'second'){
+          
         }
         break;
 
+      //add record
       case 2:
        
         if (this.params.transaction_amount && this.params.transaction_category && this.params.expenses_account && this.params.transaction_type) {

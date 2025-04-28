@@ -9,40 +9,68 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-segment *ngIf="add_id === 1" [(ngModel)]="selectedSegment">
+  <ion-segment-button value="first" content-id="first">
+    <ion-label>Single Account</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="second" content-id="second">
+    <ion-label>Split Account</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
 <ion-content class="ion-padding">
 
-  <!-- Add Account Form -->
   <ng-container *ngIf="add_id === 1">
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-input type="text" placeholder="Enter the account name" label="Account Name" labelPlacement="stacked" [(ngModel)]="params.account_name"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+    <ion-segment-view>
 
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-select label="Type" label-placement="stacked" [(ngModel)]="params.account_type">
-            <ion-select-option value="">Select Type</ion-select-option>
-            <ion-select-option *ngFor="let type of types" [value]="type.type">
-              {{ type.type }}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+      <!-- Add Account Form -->
+      <ion-segment-content id="first">
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="text" placeholder="Enter the account name" label="Account Name" labelPlacement="stacked" [(ngModel)]="params.account_name"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-select label="Type" label-placement="stacked" [(ngModel)]="params.account_type">
+                <ion-select-option value="">Select Type</ion-select-option>
+                <ion-select-option *ngFor="let type of types" [value]="type.type">
+                  {{ type.type }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" placeholder="Initial Balance" label="Initial Balance" labelPlacement="stacked" [(ngModel)]="params.balance">
+                <ion-label slot="start">MYR</ion-label>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-segment-content>
 
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-input type="number" placeholder="Initial Balance" label="Initial Balance" labelPlacement="stacked" [(ngModel)]="params.balance">
-            <ion-label slot="start">MYR</ion-label>
-          </ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+      <!-- Split Account Form -->
+      <ion-segment-content id="second">
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" placeholder="Initial Balance" label="Initial Balance" labelPlacement="stacked" [(ngModel)]="params.balance">
+                <ion-label slot="start">MYR</ion-label>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-segment-content>
+    </ion-segment-view>
+    
   </ng-container>
 
   <!-- Add Expense Form -->
@@ -60,7 +88,7 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-select label="Type" label-placement="stacked" [(ngModel)]="params.transaction_type" (ionChange)="getCategory($event)">
+          <ion-select label="Type" label-placement="stacked" [(ngModel)]="params.transaction_type" interface="popover" (ionChange)="getCategory($event)">
             <ion-select-option value="income">Income</ion-select-option>
             <ion-select-option value="expense">Expense</ion-select-option>
           </ion-select>
@@ -119,7 +147,7 @@
 
     
   </ng-container>
-
+  
 </ion-content>
 
 <ion-footer>

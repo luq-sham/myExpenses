@@ -36,13 +36,20 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 // @import '@ionic/angular/css/palettes/dark.system.css';
 
-.loading{
-    --width: 300px;
+.loading {
+  --width: 300px;
 }
 
 .custom-alert .alert-button.confirm-red {
-    color: red;
-  }
+  color: red;
+}
+
+.small-modal .modal-wrapper {
+  width: 300px;
+  height: 300px;
+  border-radius: 20px;
+  overflow: hidden;
+}
 // body{
 //     background-image: url('src/assets/bg2.png');
 //     background-attachment: fixed;

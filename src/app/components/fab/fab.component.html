@@ -3,14 +3,14 @@
     <ion-icon name="chevron-up-circle"></ion-icon>
   </ion-fab-button>
   <ion-fab-list side="top">
-    <!-- <ion-fab-button>
-      <ion-icon name="document"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-button>
-      <ion-icon name="color-palette"></ion-icon>
-    </ion-fab-button> -->
-    <ion-fab-button (click)="addExpensesModal()" color="success">
+    <ion-fab-button (click)="addExpensesModal()" data-desc="Add Record" color="success">
       <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button (click)="manageRecord()" data-desc="Manage Record" color="medium">
+      <ion-icon name="trending-up"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button (click)="manageAccount()" data-desc="Manage Account" color="primary">
+      <ion-icon name="briefcase"></ion-icon>
     </ion-fab-button>
   </ion-fab-list>
 </ion-fab>

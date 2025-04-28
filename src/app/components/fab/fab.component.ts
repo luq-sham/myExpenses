@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IonFab, IonFabButton, IonIcon, IonFabList } from "@ionic/angular/standalone";
-import { addIcons } from 'ionicons';
-import { chevronUpCircle , document, colorPalette, globe, add} from 'ionicons/icons';
 import { ModalController } from '@ionic/angular/standalone'
 import { AddModalComponent } from '../add-modal/add-modal.component';
 import { Router } from '@angular/router';
@@ -17,9 +15,7 @@ export class FabComponent  implements OnInit {
   constructor(
     private modal: ModalController,
     private router: Router
-  ) {
-    addIcons({chevronUpCircle, document, colorPalette, globe, add});
-   }
+  ) {}
 
   ngOnInit() {}
 
@@ -40,6 +36,14 @@ export class FabComponent  implements OnInit {
     if (data){
       window.location.href = '/dashboard';
     }
+  }
+
+  async manageRecord(){
+
+  }
+
+  async manageAccount(){
+    
   }
 
 }

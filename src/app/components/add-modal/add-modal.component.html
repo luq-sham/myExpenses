@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-segment *ngIf="add_id === 1" [(ngModel)]="selectedSegment">
+<ion-segment *ngIf="add_id === 1" (ionChange)="segmentChanged($event)">
   <ion-segment-button value="first" content-id="first">
     <ion-label>Single Account</ion-label>
   </ion-segment-button>
@@ -25,6 +25,7 @@
 
       <!-- Add Account Form -->
       <ion-segment-content id="first">
+
         <ion-row>
           <ion-col>
             <ion-item>
@@ -55,19 +56,87 @@
             </ion-item>
           </ion-col>
         </ion-row>
+
       </ion-segment-content>
 
       <!-- Split Account Form -->
       <ion-segment-content id="second">
+
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-input type="number" placeholder="Initial Balance" label="Initial Balance" labelPlacement="stacked" [(ngModel)]="params.balance">
+              <ion-input type="number" placeholder="Total Amount" label="Total Amount" labelPlacement="stacked" [(ngModel)]="params.amount" >
                 <ion-label slot="start">MYR</ion-label>
               </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="text" placeholder="Prefix" label="Prefix" labelPlacement="stacked" [(ngModel)]="params.prefix" >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-toggle (ionChange)="allowChanges()">Customize Percentage?</ion-toggle>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" placeholder="Needs Percentage (%)" label="Needs Percentage (%)" labelPlacement="stacked" [(ngModel)]="params.needs_percent" [disabled]="percent_disabled">
+                <ion-label slot="end">%</ion-label>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" placeholder="Wants Percentage (%)" label="Wants Percentage (%)" labelPlacement="stacked" [(ngModel)]="params.wants_percent" [disabled]="percent_disabled">
+                <ion-label slot="end">%</ion-label>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" placeholder="Saving Percentage (%)" label="Saving Percentage (%)" labelPlacement="stacked" [(ngModel)]="params.savings_percent" [disabled]="percent_disabled">
+                <ion-label slot="end">%</ion-label>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-text color="medium">
+              <div style="display: flex; align-items: flex-start; font-size: 14px; margin-top: 10px;">
+                <ion-icon name="information-circle" style="font-size: 20px; margin-right: 12px; margin-top: 4px;"></ion-icon>
+                <div>
+                  By default, your amount will be divided into 
+                  <b><span style="text-transform: capitalize;">{{params.prefix}}</span> - Needs ({{params.needs_percent}}%)</b>, 
+                  <b><span style="text-transform: capitalize;">{{params.prefix}}</span> - Wants ({{params.wants_percent}}%)</b>, and 
+                  <b><span style="text-transform: capitalize;">{{params.prefix}}</span> - Savings ({{params.savings_percent}}%)</b> accounts.
+                  <br />
+                </div>
+              </div>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        
+
       </ion-segment-content>
     </ion-segment-view>
     
@@ -75,6 +144,7 @@
 
   <!-- Add Expense Form -->
   <ng-container *ngIf="add_id === 2 ">
+
     <ion-row>
       <ion-col>
         <ion-item>

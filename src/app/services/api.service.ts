@@ -59,4 +59,9 @@ export class ApiService {
     const api = this.url + "api/get_transaction";
     return this.http.post(api,data)
   }
+
+  postAddSplitAmount(data:any):Observable<any>{
+    const api = this.url + "api/post_add_split_amount";
+    return this.http.post(api,data)
+  }
 }

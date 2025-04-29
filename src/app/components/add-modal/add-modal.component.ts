@@ -1,21 +1,77 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, IonSegment, IonSegmentButton, IonSegmentView, IonSegmentContent, } from '@ionic/angular/standalone';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonContent,
+  IonCol,
+  IonRow,
+  IonFooter,
+  IonSelect,
+  IonSelectOption,
+  IonInput,
+  IonLabel,
+  IonItem,
+  IonTextarea,
+  IonPopover,
+  IonDatetime,
+  IonSegment,
+  IonSegmentButton,
+  IonSegmentView,
+  IonSegmentContent, IonToggle, IonText } from '@ionic/angular/standalone';
 import { ModalController } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { addIcons } from 'ionicons';
-import { close } from 'ionicons/icons';
+import { close, informationCircle } from 'ionicons/icons';
 
 @Component({
   selector: 'app-add-modal',
   templateUrl: './add-modal.component.html',
   styleUrls: ['./add-modal.component.scss'],
   standalone: true,
-  imports: [ IonSegment, IonSegmentButton, IonSegmentView, IonSegmentContent, IonIcon, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, IonContent, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, CommonModule, FormsModule,],
+  imports: [IonText, 
+    IonToggle, 
+    IonSegment,
+    IonSegmentButton,
+    IonSegmentView,
+    IonSegmentContent,
+    IonIcon,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonSelect,
+    IonSelectOption,
+    IonInput,
+    IonLabel,
+    IonItem,
+    IonTextarea,
+    IonPopover,
+    IonDatetime,
+    IonContent,
+    IonCol,
+    IonRow,
+    IonFooter,
+    IonSelect,
+    IonSelectOption,
+    IonInput,
+    IonLabel,
+    IonItem,
+    IonTextarea,
+    IonPopover,
+    IonDatetime,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class AddModalComponent implements OnInit {
   add_id = 0;
@@ -31,6 +87,7 @@ export class AddModalComponent implements OnInit {
   maxDate: string = '';
 
   selectedSegment = 'first';
+  percent_disabled = true;
 
   constructor(
     private api: ApiService,
@@ -39,7 +96,7 @@ export class AddModalComponent implements OnInit {
     private loading: LoadingService,
     private toast: ToastService
   ) {
-    addIcons({ close });
+    addIcons({close,informationCircle});
   }
 
   ngOnInit() {
@@ -47,6 +104,17 @@ export class AddModalComponent implements OnInit {
     this.getData();
     this.modalInput();
     this.maxDate = new Date().toISOString().split('T')[0];
+  }
+
+  segmentChanged(event: any) {
+    if (event?.detail?.value) {
+      this.selectedSegment = event.detail.value;
+      this.modalInput();
+    }
+  }
+
+  allowChanges() {
+    this.percent_disabled = !this.percent_disabled;
   }
 
   setDate(event: any) {
@@ -93,11 +161,21 @@ export class AddModalComponent implements OnInit {
     switch (this.add_id) {
       //add account
       case 1:
-        this.params = {
-          account_name: '',
-          account_type: '',
-          balance: 0,
-        };
+        if (this.selectedSegment == 'first') {
+          this.params = {
+            account_name: '',
+            account_type: '',
+            balance: 0,
+          };
+        }else if(this.selectedSegment == 'second'){
+          this.params = {
+            amount: '',
+            prefix: new Date().toLocaleString('default', { month: 'long' }) + " Budget",
+            needs_percent: 50,
+            wants_percent: 30,
+            savings_percent: 20
+          };
+        }
         break;
 
       //add record
@@ -148,17 +226,28 @@ export class AddModalComponent implements OnInit {
             };
 
             this.alert
-              .customComfirmationAlert( 'Create Account', 'Are you sure to create this account?' )
+              .customComfirmationAlert(
+                'Create Account',
+                'Are you sure to create this account?'
+              )
               .then((res) => {
                 if (res === 'confirm') {
                   this.loading.showLoading();
                   this.api.postAddAccount(param).subscribe((res) => {
                     this.loading.hide();
                     if (res.status_code === 200) {
-                      this.toast.customToast('Account successfully created.',4000,'success');
+                      this.toast.customToast(
+                        'Account successfully created.',
+                        4000,
+                        'success'
+                      );
                       this.modalController.dismiss(true);
                     } else {
-                      this.toast.customToast(res.msg || 'Something went wrong.',3000,'warning');
+                      this.toast.customToast(
+                        res.msg || 'Something went wrong.',
+                        3000,
+                        'warning'
+                      );
                     }
                   });
                 }
@@ -167,17 +256,52 @@ export class AddModalComponent implements OnInit {
             this.alert.customAlert('Warning','Please enter all the required information');
           }
         } else if (this.selectedSegment == 'second') {
+          if (this.params.amount && this.params.prefix && this.params.needs_percent && this.params.wants_percent && this.params.savings_percent) {
+            
+            this.alert
+            .customComfirmationAlert(
+              'Create Split Accounts',
+              'Are you sure to create this split accounts?'
+            )
+            .then((res) => {
+              if (res === 'confirm') {
+                  param = {
+                    ...this.params,
+                    user: localStorage.getItem('email'),
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString(),
+                  };
+
+                  this.loading.showLoading();
+                  this.api.postAddSplitAmount(param).subscribe((res) => {
+                    this.loading.hide();
+                    if (res.status_code === 200) {
+                      this.toast.customToast(
+                        'Budget successfully created.',
+                        4000,
+                        'success'
+                      );
+                      this.modalController.dismiss(true);
+                    } else {
+                      this.toast.customToast(
+                        res.msg || 'Something went wrong.',
+                        3000,
+                        'warning'
+                      );
+                    }
+                  });
+                }
+              });
+
+          }else{
+            this.alert.customAlert('Warning','Please enter all the required information');
+          }
         }
         break;
 
       //add record
       case 2:
-        if (
-          this.params.transaction_amount &&
-          this.params.transaction_category &&
-          this.params.expenses_account &&
-          this.params.transaction_type
-        ) {
+        if ( this.params.transaction_amount && this.params.transaction_category && this.params.expenses_account && this.params.transaction_type ) {
           param = {
             ...this.params,
             user: localStorage.getItem('email'),
@@ -185,23 +309,37 @@ export class AddModalComponent implements OnInit {
           console.log(param);
 
           this.alert
-            .customComfirmationAlert( 'Create Record', 'Are you sure to create this record?' )
+            .customComfirmationAlert(
+              'Create Record',
+              'Are you sure to create this record?'
+            )
             .then((res) => {
               if (res === 'confirm') {
                 this.loading.showLoading();
                 this.api.postAddRecord(param).subscribe((res) => {
                   this.loading.hide();
                   if (res.status_code === 200) {
-                    this.toast.customToast( 'Account successfully created.', 4000, 'success');
+                    this.toast.customToast(
+                      'Account successfully created.',
+                      4000,
+                      'success'
+                    );
                     this.modalController.dismiss(true);
                   } else {
-                    this.toast.customToast( res.msg || 'Something went wrong.', 3000, 'warning' );
+                    this.toast.customToast(
+                      res.msg || 'Something went wrong.',
+                      3000,
+                      'warning'
+                    );
                   }
                 });
               }
             });
         } else {
-          this.alert.customAlert('Warning','Please enter all the required information');
+          this.alert.customAlert(
+            'Warning',
+            'Please enter all the required information'
+          );
         }
 
         // this.modalController.dismiss(true)

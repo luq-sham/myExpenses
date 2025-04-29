@@ -1,10 +1,8 @@
-// register.page.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonicModule,} from '@ionic/angular';
-import { MenuController, AlertController, LoadingController, ToastController} from '@ionic/angular/standalone';
+import { MenuController, AlertController, LoadingController, ToastController, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonItem, IonIcon, IonInput, IonSelectOption, IonButton, IonFooter, IonToolbar, IonTitle } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { eyeOffOutline, eyeOutline, lockClosed, mail, person, personAdd, call, checkmarkDone, cash } from 'ionicons/icons';
 import * as CryptoJS from 'crypto-js'
@@ -16,7 +14,7 @@ import { ApiService } from '../services/api.service';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, ReactiveFormsModule],
+  imports: [IonTitle, IonToolbar, IonFooter, IonButton, IonIcon, IonItem, IonCardContent, IonCard, IonCol, IonRow, IonGrid, IonContent, IonInput, IonSelectOption, CommonModule, ReactiveFormsModule],
 })
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;

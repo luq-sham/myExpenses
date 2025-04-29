@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { MenuController, AlertController, LoadingController, ToastController} from '@ionic/angular/standalone';
+import { MenuController, AlertController, LoadingController, ToastController, IonContent, IonGrid, IonRow, IonCol, IonCardContent, IonCard, IonIcon, IonItem, IonButton, IonFooter, IonToolbar, IonTitle, IonInput,} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { eyeOffOutline, eyeOutline, lockClosed, logInOutline, mail} from 'ionicons/icons';
 
@@ -16,7 +15,7 @@ import * as CryptoJS from 'crypto-js';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, ReactiveFormsModule],
+  imports: [IonTitle, IonToolbar, IonFooter, IonButton, IonItem, IonIcon, IonCard, IonCardContent, IonCol, IonRow, IonGrid, IonContent, IonInput, CommonModule, ReactiveFormsModule],
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;

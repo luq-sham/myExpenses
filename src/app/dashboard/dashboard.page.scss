@@ -66,6 +66,14 @@ ion-card.m-card {
   color: #f44336; // red
 }
 
+ion-badge{
+  
+    background-color: #33658a;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
 @media (max-width: 768px) {
   .record-content {
     flex-direction: column !important;
@@ -85,6 +93,8 @@ ion-card.m-card {
     width: 100%;
   }
 }
+
+
 // .transaction-card {
 //     background-color: #1e1e1e; // dark background
 //     color: white;

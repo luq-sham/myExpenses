@@ -72,7 +72,7 @@
                   </div>
 
                   <div class="terms-container">
-                    <ion-checkbox formControlName="termsAccepted" labelPlacement="end">I agree to the<a (click)="showTerms()">Terms & Conditions</a></ion-checkbox>
+                    <ion-checkbox formControlName="termsAccepted" labelPlacement="end">I agree to the <a (click)="showTerms()">Terms & Conditions</a></ion-checkbox>
                   </div>
                   <div class="validation-error" *ngIf="(termsAccepted?.invalid && (termsAccepted?.dirty || termsAccepted?.touched))">
                     <div *ngIf="termsAccepted?.errors?.['requiredTrue']">You must accept the terms and conditions</div>

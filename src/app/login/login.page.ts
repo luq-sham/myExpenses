@@ -1,10 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MenuController, AlertController, LoadingController, ToastController, IonContent, IonGrid, IonRow, IonCol, IonCardContent, IonCard, IonIcon, IonItem, IonButton, IonFooter, IonToolbar, IonTitle, IonInput,} from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { eyeOffOutline, eyeOutline, lockClosed, logInOutline, mail} from 'ionicons/icons';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import {
+  MenuController,
+  AlertController,
+  LoadingController,
+  ToastController,
+  IonContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonCardContent,
+  IonCard,
+  IonIcon,
+  IonItem,
+  IonButton,
+  IonFooter,
+  IonToolbar,
+  IonTitle,
+  IonInput,
+  IonCheckbox,
+} from '@ionic/angular/standalone';
 
 import { ApiService } from '../services/api.service';
 import { AlertService } from '../services/alert.service';
@@ -15,7 +37,24 @@ import * as CryptoJS from 'crypto-js';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonTitle, IonToolbar, IonFooter, IonButton, IonItem, IonIcon, IonCard, IonCardContent, IonCol, IonRow, IonGrid, IonContent, IonInput, CommonModule, ReactiveFormsModule],
+  imports: [
+    IonTitle,
+    IonToolbar,
+    IonFooter,
+    IonButton,
+    IonItem,
+    IonIcon,
+    IonCard,
+    IonCardContent,
+    IonCol,
+    IonRow,
+    IonGrid,
+    IonContent,
+    IonInput,
+    IonCheckbox,
+    CommonModule,
+    ReactiveFormsModule,
+  ],
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
@@ -33,27 +72,21 @@ export class LoginPage implements OnInit {
     private menu: MenuController,
     private api: ApiService,
     private alert: AlertService
-  ) {
-    addIcons({ mail, lockClosed, logInOutline, eyeOutline, eyeOffOutline });
-  }
+  ) {}
 
   ngOnInit() {
     this.initForm();
 
-    
     // PWA install prompt logic
     window.addEventListener('beforeinstallprompt', (e: any) => {
       e.preventDefault();
       this.deferredPrompt = e;
       this.showInstallButton = true;
     });
-    
-    
-    
   }
 
-  showInstall(){
-    if(this.deferredPrompt){
+  showInstall() {
+    if (this.deferredPrompt) {
       this.deferredPrompt.prompt();
       this.deferredPrompt.userChoice.then((choiceResult: any) => {
         if (choiceResult.outcome === 'accepted') {
@@ -89,7 +122,9 @@ export class LoginPage implements OnInit {
 
   encryptPassword(password: string): string {
     const secretKey = 'myExpenses';
-    const hashedKey = CryptoJS.enc.Hex.parse(CryptoJS.SHA256(secretKey).toString());
+    const hashedKey = CryptoJS.enc.Hex.parse(
+      CryptoJS.SHA256(secretKey).toString()
+    );
 
     const encrypted = CryptoJS.AES.encrypt(password, hashedKey, {
       mode: CryptoJS.mode.ECB,
@@ -118,13 +153,12 @@ export class LoginPage implements OnInit {
         await loading.dismiss();
 
         if (res.status_code === 200) {
-          localStorage.clear()
+          localStorage.clear();
           localStorage.setItem('email', res.userData.email);
           localStorage.setItem('userDetails', JSON.stringify(res.userData));
           await this.presentToast('Login successful!', 'success');
           this.loginForm.reset();
           this.router.navigate(['dashboard']);
-
         } else {
           this.alert.customAlert('Try Again', res.error || 'Unexpected error.');
         }

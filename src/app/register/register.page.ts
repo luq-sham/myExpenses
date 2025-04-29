@@ -1,11 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MenuController, AlertController, LoadingController, ToastController, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonItem, IonIcon, IonInput, IonSelectOption, IonButton, IonFooter, IonToolbar, IonTitle } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { eyeOffOutline, eyeOutline, lockClosed, mail, person, personAdd, call, checkmarkDone, cash } from 'ionicons/icons';
-import * as CryptoJS from 'crypto-js'
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import {
+  MenuController,
+  AlertController,
+  LoadingController,
+  ToastController,
+  IonContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonCard,
+  IonCardContent,
+  IonItem,
+  IonIcon,
+  IonInput,
+  IonSelect,
+  IonSelectOption,
+  IonButton,
+  IonFooter,
+  IonToolbar,
+  IonTitle,
+  IonCheckbox,
+} from '@ionic/angular/standalone';
+import * as CryptoJS from 'crypto-js';
 
 import { ApiService } from '../services/api.service';
 
@@ -14,7 +38,26 @@ import { ApiService } from '../services/api.service';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonTitle, IonToolbar, IonFooter, IonButton, IonIcon, IonItem, IonCardContent, IonCard, IonCol, IonRow, IonGrid, IonContent, IonInput, IonSelectOption, CommonModule, ReactiveFormsModule],
+  imports: [
+    IonTitle,
+    IonToolbar,
+    IonFooter,
+    IonButton,
+    IonIcon,
+    IonItem,
+    IonCardContent,
+    IonCard,
+    IonCol,
+    IonRow,
+    IonGrid,
+    IonContent,
+    IonInput,
+    IonSelect,
+    IonSelectOption,
+    IonCheckbox,
+    CommonModule,
+    ReactiveFormsModule,
+  ],
 })
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
@@ -29,9 +72,7 @@ export class RegisterPage implements OnInit {
     private toastController: ToastController,
     private menu: MenuController,
     private api: ApiService
-  ) {
-    addIcons({ mail, lockClosed, eyeOutline, eyeOffOutline, person, personAdd, call, checkmarkDone, cash });
-  }
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -46,7 +87,9 @@ export class RegisterPage implements OnInit {
           '',
           [
             Validators.required,
-            Validators.pattern('^[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$'),
+            Validators.pattern(
+              '^[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$'
+            ),
           ],
         ],
         password: ['', [Validators.required, Validators.minLength(6)]],
@@ -69,13 +112,27 @@ export class RegisterPage implements OnInit {
     return null;
   }
 
-  get name() { return this.registerForm.get('name'); }
-  get email() { return this.registerForm.get('email'); }
-  get phone() { return this.registerForm.get('phone'); }
-  get password() { return this.registerForm.get('password'); }
-  get confirmPassword() { return this.registerForm.get('confirmPassword'); }
-  get currency() { return this.registerForm.get('currency'); }
-  get termsAccepted() { return this.registerForm.get('termsAccepted'); }
+  get name() {
+    return this.registerForm.get('name');
+  }
+  get email() {
+    return this.registerForm.get('email');
+  }
+  get phone() {
+    return this.registerForm.get('phone');
+  }
+  get password() {
+    return this.registerForm.get('password');
+  }
+  get confirmPassword() {
+    return this.registerForm.get('confirmPassword');
+  }
+  get currency() {
+    return this.registerForm.get('currency');
+  }
+  get termsAccepted() {
+    return this.registerForm.get('termsAccepted');
+  }
 
   togglePasswordVisibility(field: string) {
     if (field === 'password') {
@@ -87,14 +144,16 @@ export class RegisterPage implements OnInit {
 
   encryptPassword(password: string): string {
     const secretKey = 'myExpenses';
-    const hashedKey = CryptoJS.enc.Hex.parse(CryptoJS.SHA256(secretKey).toString());
-  
+    const hashedKey = CryptoJS.enc.Hex.parse(
+      CryptoJS.SHA256(secretKey).toString()
+    );
+
     const encrypted = CryptoJS.AES.encrypt(password, hashedKey, {
       mode: CryptoJS.mode.ECB,
-      padding: CryptoJS.pad.Pkcs7
+      padding: CryptoJS.pad.Pkcs7,
     });
-  
-    return encrypted.toString();  // This will be the encrypted password string
+
+    return encrypted.toString(); // This will be the encrypted password string
   }
 
   async onSubmit() {
@@ -125,17 +184,23 @@ export class RegisterPage implements OnInit {
             color: 'success',
             position: 'bottom',
           });
-          this.registerForm.reset()
+          this.registerForm.reset();
           await toast.present();
           this.router.navigate(['/login']);
         } else {
-          this.showErrorAlert('Registration Failed', res.error || 'Unexpected error.');
+          this.showErrorAlert(
+            'Registration Failed',
+            res.error || 'Unexpected error.'
+          );
         }
       },
       error: async () => {
         await loading.dismiss();
-        this.showErrorAlert('Registration Failed', 'There was an error creating your account. Please try again.');
-      }
+        this.showErrorAlert(
+          'Registration Failed',
+          'There was an error creating your account. Please try again.'
+        );
+      },
     });
   }
 

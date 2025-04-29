@@ -1,9 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalController } from '@ionic/angular/standalone';
+import {
+  ModalController,
+  IonCard,
+  IonContent,
+  IonCardContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonIcon,
+  IonAvatar,
+} from '@ionic/angular/standalone';
 import { MenuController } from '@ionic/angular/standalone';
-import { IonicModule } from '@ionic/angular'
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';
 import { AddModalComponent } from '../components/add-modal/add-modal.component';
@@ -18,92 +27,95 @@ import { AlertService } from '../services/alert.service';
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
   imports: [
-    IonicModule,
-    CommonModule, 
-    FormsModule, 
-    HeaderComponent, 
-    FabComponent, 
-    TwoDecimalPipe
+    IonAvatar,
+    IonIcon,
+    IonCol,
+    IonRow,
+    IonGrid,
+    IonCardContent,
+    IonCard,
+    IonContent,
+    CommonModule,
+    FormsModule,
+    HeaderComponent,
+    FabComponent,
+    TwoDecimalPipe,
   ],
 })
 export class DashboardPage implements OnInit {
-  
-  
   doughnutChart: any;
   data: any[] = [];
   password: string = '';
   email: string = '';
   param: any = {};
-  dataCerdencial:any;
+  dataCerdencial: any;
   items: any[] = [];
-  records: any[] = []
-  
+  records: any[] = [];
+
   constructor(
     private modal: ModalController,
     private api: ApiService,
     private loading: LoadingService,
     private alert: AlertService,
     private menu: MenuController
-  ) {
-  }
-  
+  ) {}
+
   ngOnInit() {
-    this.getData()
+    this.getData();
   }
 
-  getData(){
-    const token ={
-      user: localStorage.getItem('email') 
-    }
+  getData() {
+    const token = {
+      user: localStorage.getItem('email'),
+    };
 
     this.loading.showLoading();
     this.api.postAccountByUser(token).subscribe({
-      next:async(res)=>{
-        if(res.status_code == 200){
-          
+      next: async (res) => {
+        if (res.status_code == 200) {
           this.api.getRecord(token).subscribe({
-            next:async(res2)=>{
-              if(res.status_code == 200){
-
-                this.items = res.return_data
-                this.records = res2.return_data
-                
+            next: async (res2) => {
+              if (res.status_code == 200) {
+                this.items = res.return_data;
+                this.records = res2.return_data;
               }
               this.loading.hide();
             },
-            
-            error:async () => {
-              await this.loading.hide();
-              this.alert.customAlert('Loading Failed','An error has occurred. Kindly try again.')
-            }
-      
-          })
 
+            error: async () => {
+              await this.loading.hide();
+              this.alert.customAlert(
+                'Loading Failed',
+                'An error has occurred. Kindly try again.'
+              );
+            },
+          });
         }
       },
-      error:async () => {
+      error: async () => {
         await this.loading.hide();
-        this.alert.customAlert('Loading Failed','An error has occurred. Kindly try again.')
-      }
-
-    })
-    
+        this.alert.customAlert(
+          'Loading Failed',
+          'An error has occurred. Kindly try again.'
+        );
+      },
+    });
   }
 
-  async modalAddAccount(){
+  async modalAddAccount() {
     const param = {
       add_id: 1,
-      title : "Add Account"
-    }
+      title: 'Add Account',
+    };
     const modal = await this.modal.create({
-      component:AddModalComponent,
-      componentProps: param
+      component: AddModalComponent,
+      componentProps: param,
     });
     await modal.present();
-    const { data } = await modal.onDidDismiss()
+    const { data } = await modal.onDidDismiss();
 
-    if(data){
-      this.getData()
+    if (data) {
+      this.getData();
     }
   }
 

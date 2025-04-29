@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular'
-import {
-  IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent,
-  IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime
-} from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, IonSegment, IonSegmentButton, IonSegmentView, IonSegmentContent, } from '@ionic/angular/standalone';
 import { ModalController } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -19,25 +15,22 @@ import { close } from 'ionicons/icons';
   templateUrl: './add-modal.component.html',
   styleUrls: ['./add-modal.component.scss'],
   standalone: true,
-  imports: [
-    IonicModule,
-    CommonModule, FormsModule,
-  ],
+  imports: [ IonSegment, IonSegmentButton, IonSegmentView, IonSegmentContent, IonIcon, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, IonContent, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, CommonModule, FormsModule,],
 })
 export class AddModalComponent implements OnInit {
   add_id = 0;
-  title = ""
+  title = '';
   types: any[] = [];
   categories: any[] = [];
   income: any[] = [];
   expense: any[] = [];
   params: any = {};
-  disabled: boolean = true
-  label:any
-  accountUser:any[] =[]
+  disabled: boolean = true;
+  label: any;
+  accountUser: any[] = [];
   maxDate: string = '';
 
-  selectedSegment = 'first'
+  selectedSegment = 'first';
 
   constructor(
     private api: ApiService,
@@ -46,7 +39,7 @@ export class AddModalComponent implements OnInit {
     private loading: LoadingService,
     private toast: ToastService
   ) {
-    addIcons({close});
+    addIcons({ close });
   }
 
   ngOnInit() {
@@ -61,18 +54,16 @@ export class AddModalComponent implements OnInit {
   }
 
   getData() {
-
-    if(this.add_id == 1){
+    if (this.add_id == 1) {
       this.api.getAccountType().subscribe((res) => {
         this.types = res.return_data;
       });
     }
 
-    if(this.add_id== 2){
-      
-      const token ={
-        user: localStorage.getItem('email') 
-      } 
+    if (this.add_id == 2) {
+      const token = {
+        user: localStorage.getItem('email'),
+      };
 
       this.api.getRecordCategories().subscribe((res) => {
         this.income = res.income;
@@ -81,24 +72,25 @@ export class AddModalComponent implements OnInit {
       });
 
       this.api.postAccountByUser(token).subscribe({
-        next:async(res)=>{
-          if(res.status_code == 200){
-            this.accountUser = res.return_data
+        next: async (res) => {
+          if (res.status_code == 200) {
+            this.accountUser = res.return_data;
           }
         },
-        
-        error:async () => {
+
+        error: async () => {
           await this.loading.hide();
-          this.alert.customAlert('Loading Failed','An error has occurred. Kindly try again.')
-        }
-  
-      })
+          this.alert.customAlert(
+            'Loading Failed',
+            'An error has occurred. Kindly try again.'
+          );
+        },
+      });
     }
   }
 
   modalInput() {
     switch (this.add_id) {
-      
       //add account
       case 1:
         this.params = {
@@ -107,7 +99,7 @@ export class AddModalComponent implements OnInit {
           balance: 0,
         };
         break;
-      
+
       //add record
       case 2:
         this.params = {
@@ -120,20 +112,19 @@ export class AddModalComponent implements OnInit {
           transaction_type: '',
         };
         break;
-
     }
   }
 
-  getCategory(values: any){
-    const value = values.detail.value
-    this.disabled = false
+  getCategory(values: any) {
+    const value = values.detail.value;
+    this.disabled = false;
 
-    if(value == 'income'){
-      this.label = 'Income'
-      this.categories = this.income
-    }else if (value == 'expense'){
-      this.label = 'Expense'
-      this.categories = this.expense
+    if (value == 'income') {
+      this.label = 'Income';
+      this.categories = this.income;
+    } else if (value == 'expense') {
+      this.label = 'Expense';
+      this.categories = this.expense;
     }
   }
 
@@ -141,70 +132,78 @@ export class AddModalComponent implements OnInit {
     let param: any = {};
 
     switch (this.add_id) {
-
       //add account
       case 1:
-        if(this.selectedSegment == 'first'){
+        if (this.selectedSegment == 'first') {
           if (this.params.account_name && this.params.account_type) {
-            this.params.account_name = this.params.account_name.trim().toLowerCase();
-  
+            this.params.account_name = this.params.account_name
+              .trim()
+              .toLowerCase();
+
             param = {
               ...this.params,
               user: localStorage.getItem('email'),
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
             };
-  
-            this.alert.customComfirmationAlert('Create Account', 'Are you sure to create this account?').then((res) => {
+
+            this.alert
+              .customComfirmationAlert( 'Create Account', 'Are you sure to create this account?' )
+              .then((res) => {
                 if (res === 'confirm') {
                   this.loading.showLoading();
                   this.api.postAddAccount(param).subscribe((res) => {
                     this.loading.hide();
                     if (res.status_code === 200) {
-                      this.toast.customToast('Account successfully created.', 4000, 'success');
+                      this.toast.customToast('Account successfully created.',4000,'success');
                       this.modalController.dismiss(true);
                     } else {
-                      this.toast.customToast(res.msg || 'Something went wrong.', 3000, 'warning');
+                      this.toast.customToast(res.msg || 'Something went wrong.',3000,'warning');
                     }
                   });
                 }
               });
           } else {
-            this.alert.customAlert('Warning', 'Please enter all the required information');
+            this.alert.customAlert('Warning','Please enter all the required information');
           }
-        }else if(this.selectedSegment == 'second'){
-          
+        } else if (this.selectedSegment == 'second') {
         }
         break;
 
       //add record
       case 2:
-       
-        if (this.params.transaction_amount && this.params.transaction_category && this.params.expenses_account && this.params.transaction_type) {
+        if (
+          this.params.transaction_amount &&
+          this.params.transaction_category &&
+          this.params.expenses_account &&
+          this.params.transaction_type
+        ) {
           param = {
             ...this.params,
             user: localStorage.getItem('email'),
           };
-          console.log(param)
+          console.log(param);
 
-          this.alert.customComfirmationAlert('Create Record', 'Are you sure to create this record?').then((res) => {
-            if (res === 'confirm') {
-              this.loading.showLoading();
-              this.api.postAddRecord(param).subscribe((res) => {
-                this.loading.hide();
-                if (res.status_code === 200) {
-                  this.toast.customToast('Account successfully created.', 4000, 'success');
-                  this.modalController.dismiss(true);
-                } else {
-                  this.toast.customToast(res.msg || 'Something went wrong.', 3000, 'warning');
-                }
-              });
-            }
-          });
-        }else{
-          this.alert.customAlert('Warning', 'Please enter all the required information');
+          this.alert
+            .customComfirmationAlert( 'Create Record', 'Are you sure to create this record?' )
+            .then((res) => {
+              if (res === 'confirm') {
+                this.loading.showLoading();
+                this.api.postAddRecord(param).subscribe((res) => {
+                  this.loading.hide();
+                  if (res.status_code === 200) {
+                    this.toast.customToast( 'Account successfully created.', 4000, 'success');
+                    this.modalController.dismiss(true);
+                  } else {
+                    this.toast.customToast( res.msg || 'Something went wrong.', 3000, 'warning' );
+                  }
+                });
+              }
+            });
+        } else {
+          this.alert.customAlert('Warning','Please enter all the required information');
         }
-        
+
         // this.modalController.dismiss(true)
         break;
 

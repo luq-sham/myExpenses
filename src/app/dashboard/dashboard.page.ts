@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalController, IonCard, IonContent, IonCardContent, IonGrid, IonRow, IonCol, IonIcon, IonAvatar,} from '@ionic/angular/standalone';
+import { ModalController, IonCard, IonContent, IonCardContent, IonRow, IonCol, IonIcon, IonAvatar, IonSkeletonText } from '@ionic/angular/standalone';
 import { MenuController } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';
@@ -15,7 +15,7 @@ import { AlertService } from '../services/alert.service';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [ IonAvatar, IonIcon, IonCol, IonRow, IonGrid, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent,],
+  imports: [IonSkeletonText,  IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent,],
 })
 export class DashboardPage implements OnInit {
   doughnutChart: any;
@@ -26,6 +26,7 @@ export class DashboardPage implements OnInit {
   dataCerdencial: any;
   items: any[] = [];
   records: any[] = [];
+  loadings: boolean = true;
 
   constructor(
     private modal: ModalController,
@@ -44,7 +45,6 @@ export class DashboardPage implements OnInit {
       user: localStorage.getItem('email'),
     };
 
-    this.loading.showLoading();
     this.api.postAccountByUser(token).subscribe({
       next: async (res) => {
         if (res.status_code == 200) {
@@ -54,7 +54,7 @@ export class DashboardPage implements OnInit {
                 this.items = res.return_data;
                 this.records = res2.return_data;
               }
-              this.loading.hide();
+              this.loadings = false;
             },
 
             error: async () => {

@@ -4,11 +4,20 @@
   color: #fff;
 }
 
-ion-card-content.text-center {
+.text-center {
   text-align: center;
 }
 
-ion-card.m-card {
+.text-muted {
+  color: lightgray;
+}
+
+.center-row {
+  display: flex;
+  justify-content: center;
+}
+
+.m-card {
   margin-top: 16px;
 }
 
@@ -16,12 +25,29 @@ ion-card.m-card {
   background-color: transparent;
   border: 2px solid #fff;
   color: #fff;
+  cursor: pointer;
+}
+
+.add-account-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-icon {
+  font-size: 24px;
+  margin-left: 8px;
+}
+
+.account-card {
+  font-size: 14px;
 }
 
 .record-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .record-icon {
@@ -46,10 +72,11 @@ ion-card.m-card {
   text-transform: capitalize;
 }
 
-.record-date {
+.record-date,
+.record-acc {
   margin: 0;
   font-size: 14px;
-  color: #888888;
+  color: #888;
 }
 
 .transaction-amount {
@@ -59,32 +86,38 @@ ion-card.m-card {
 }
 
 .income {
-  color: #4caf50; // green
+  color: #4caf50;
 }
 
 .expense {
-  color: #f44336; // red
-}
-
-ion-badge{
-  
-    background-color: #33658a;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
+  color: #f44336;
 }
 
 @media (max-width: 768px) {
   .record-content {
-    flex-direction: column !important;
+    flex-direction: column;
+  }
+  
+  .acc-card-content{
+    padding: 8px 0px;
   }
 
   .record-icon {
     margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  .add-account-content {
+    font-size: 12px;
+  }
+
+  ion-avatar {
+    width: 50px;
+    height: 50px;
   }
 
   .transaction-amount {
-    align-self: flex-end;
+    align-self: flex-start;
     margin-top: 10px;
   }
 
@@ -92,21 +125,32 @@ ion-badge{
     text-align: center;
     width: 100%;
   }
+
+  .account-card {
+    font-size: 10px;
+  }
+
+  .add-icon {
+    font-size: 18px;
+  }
+
+  .title-card {
+    font-size: 16px;
+  }
+
+  .record-title,
+  .record-acc {
+    font-size: 14px;
+  }
+  
+  .record-date {
+    text-align: left;
+    font-size: 12px;
+  }
+
+  .income,
+  .expense {
+    font-size: 12px;
+  }
+
 }
-
-
-// .transaction-card {
-//     background-color: #1e1e1e; // dark background
-//     color: white;
-//     border-radius: 10px;
-//   }
-
-
-//   .icon-white {
-//     color: white;
-//     text-align: center;
-//     font-size: 30px;
-//   }
-
-
-

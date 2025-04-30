@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalController, IonCard, IonContent, IonCardContent, IonGrid, IonRow, IonCol, IonIcon, IonAvatar, IonBadge } from '@ionic/angular/standalone';
+import { ModalController, IonCard, IonContent, IonCardContent, IonGrid, IonRow, IonCol, IonIcon, IonAvatar,} from '@ionic/angular/standalone';
 import { MenuController } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';
 import { AddModalComponent } from '../components/add-modal/add-modal.component';
 import { ApiService } from '../services/api.service';
 import { LoadingService } from '../services/loading.service';
-import { TwoDecimalPipe } from '../pipes/two-decimal-pipe.pipe';
+import { MoneyFormatPipe } from '../pipes/two-decimal-pipe.pipe';
 import { AlertService } from '../services/alert.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { AlertService } from '../services/alert.service';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [ IonBadge, IonAvatar, IonIcon, IonCol, IonRow, IonGrid, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent, TwoDecimalPipe,],
+  imports: [ IonAvatar, IonIcon, IonCol, IonRow, IonGrid, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent, MoneyFormatPipe,],
 })
 export class DashboardPage implements OnInit {
   doughnutChart: any;

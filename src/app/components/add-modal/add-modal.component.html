@@ -21,6 +21,7 @@
 <ion-content class="ion-padding">
 
   <ng-container *ngIf="add_id === 1">
+    
     <ion-segment-view>
 
       <!-- Add Account Form -->
@@ -185,7 +186,7 @@
         <ion-item>
             <ion-select label="From Account" label-placement="stacked" [(ngModel)]="params.expenses_account">
               <ion-select-option *ngFor="let acc of accountUser" [value]="acc.id">
-                <span class="ion-text-capitalize">{{acc.account_name | titlecase }}</span> ({{ acc.type }})
+                <span class="ion-text-capitalize">{{acc.account_name | titlecase }}</span>
               </ion-select-option>
             </ion-select>
         </ion-item>

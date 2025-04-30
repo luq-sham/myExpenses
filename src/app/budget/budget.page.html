@@ -1,0 +1,35 @@
+<app-header title="Budget"></app-header>
+
+<ion-content class="ion-padding">
+  
+  <ion-list *ngIf="budgets.length === 0; else budgetList">
+    <ion-item color="light" lines="none" class="no-budgets-item">
+      <ion-icon name="warning-outline" slot="start" color="medium"></ion-icon>
+      <ion-label class="no-budgets">
+        No budgets available. Tap the "+" to add one.
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
+  <ng-template #budgetList>
+    <ion-card *ngFor="let budget of budgets" (click)="openBudget(budget)" class="budget-card">
+      <ion-item lines="none">
+        <ion-icon name="wallet-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h2>{{ budget.budget_name | titlecase }}</h2>
+          <p>Click to view or edit</p>
+        </ion-label>
+        <ion-note slot="end" color="success">
+          {{ budget.amount | currency: 'MYR ' }}
+        </ion-note>
+      </ion-item>
+    </ion-card>
+  </ng-template>
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addBudget()" color="primary">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+</ion-content>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
-import { IonicModule } from '@ionic/angular'
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonLabel, IonList, IonMenuToggle, IonIcon, IonItem, IonRouterOutlet } from '@ionic/angular/standalone'
 import { addIcons } from 'ionicons';
 import { paperPlaneOutline, paperPlaneSharp, statsChartOutline, statsChartSharp, logOutOutline, settings } from 'ionicons/icons';
@@ -25,7 +24,7 @@ export class AppComponent implements OnInit {
 
   public appPages = [
     { title: 'Dashboard', url: '/dashboard', icon: 'stats-chart' },
-    { title: 'Budget/Goal', url: '/folder1', icon: 'paper-plane' }
+    { title: 'Budget/Goal', url: '/budget-goal', icon: 'wallet' }
   ];
 
   constructor(

@@ -8,7 +8,6 @@ import { FabComponent } from '../components/fab/fab.component';
 import { AddModalComponent } from '../components/add-modal/add-modal.component';
 import { ApiService } from '../services/api.service';
 import { LoadingService } from '../services/loading.service';
-import { MoneyFormatPipe } from '../pipes/two-decimal-pipe.pipe';
 import { AlertService } from '../services/alert.service';
 
 @Component({
@@ -16,7 +15,7 @@ import { AlertService } from '../services/alert.service';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [ IonAvatar, IonIcon, IonCol, IonRow, IonGrid, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent, MoneyFormatPipe,],
+  imports: [ IonAvatar, IonIcon, IonCol, IonRow, IonGrid, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent,],
 })
 export class DashboardPage implements OnInit {
   doughnutChart: any;

@@ -64,4 +64,14 @@ export class ApiService {
     const api = this.url + "api/post_add_split_amount";
     return this.http.post(api,data)
   }
+
+  postAddBudget(data:any):Observable<any>{
+    const api = this.url + "api/post_add_budget";
+    return this.http.post(api,data)
+  }
+
+  getBudget(data:any):Observable<any>{
+    const api = this.url + "api/get_budget";
+    return this.http.post(api, data);
+  }
 }

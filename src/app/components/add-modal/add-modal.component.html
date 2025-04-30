@@ -9,143 +9,56 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-segment *ngIf="add_id === 1" (ionChange)="segmentChanged($event)">
+<ion-segment *ngIf="add_id === 3" (ionChange)="segmentChanged($event)">
   <ion-segment-button value="first" content-id="first">
-    <ion-label>Single Account</ion-label>
+    <ion-label>Single Budget</ion-label>
   </ion-segment-button>
   <ion-segment-button value="second" content-id="second">
-    <ion-label>Split Account</ion-label>
+    <ion-label>Auto Split</ion-label>
   </ion-segment-button>
 </ion-segment>
 
 <ion-content class="ion-padding">
 
+  <!-- Add Account Form -->
   <ng-container *ngIf="add_id === 1">
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-input type="text" placeholder="Enter the account name" label="Account Name" labelPlacement="stacked" [(ngModel)]="params.account_name"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
     
-    <ion-segment-view>
-
-      <!-- Add Account Form -->
-      <ion-segment-content id="first">
-
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-input type="text" placeholder="Enter the account name" label="Account Name" labelPlacement="stacked" [(ngModel)]="params.account_name"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-select label="Type" label-placement="stacked" [(ngModel)]="params.account_type">
+            <ion-select-option value="">Select Type</ion-select-option>
+            <ion-select-option *ngFor="let type of types" [value]="type.type">
+              {{ type.type }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
     
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-select label="Type" label-placement="stacked" [(ngModel)]="params.account_type">
-                <ion-select-option value="">Select Type</ion-select-option>
-                <ion-select-option *ngFor="let type of types" [value]="type.type">
-                  {{ type.type }}
-                </ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-    
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-input type="number" placeholder="Initial Balance" label="Initial Balance" labelPlacement="stacked" [(ngModel)]="params.balance">
-                <ion-label slot="start">MYR</ion-label>
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-input type="number" placeholder="Initial Balance" label="Initial Balance" labelPlacement="stacked" [(ngModel)]="params.balance">
+            <ion-label slot="start">MYR</ion-label>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-      </ion-segment-content>
-
-      <!-- Split Account Form -->
-      <ion-segment-content id="second">
-
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-input type="number" placeholder="Total Amount" label="Total Amount" labelPlacement="stacked" [(ngModel)]="params.amount" >
-                <ion-label slot="start">MYR</ion-label>
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-input type="text" placeholder="Prefix" label="Prefix" labelPlacement="stacked" [(ngModel)]="params.prefix" >
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-item lines="none">
-              <ion-toggle (ionChange)="allowChanges()">Customize Percentage?</ion-toggle>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-input type="number" placeholder="Needs Percentage (%)" label="Needs Percentage (%)" labelPlacement="stacked" [(ngModel)]="params.needs_percent" [disabled]="percent_disabled">
-                <ion-label slot="end">%</ion-label>
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-input type="number" placeholder="Wants Percentage (%)" label="Wants Percentage (%)" labelPlacement="stacked" [(ngModel)]="params.wants_percent" [disabled]="percent_disabled">
-                <ion-label slot="end">%</ion-label>
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-input type="number" placeholder="Saving Percentage (%)" label="Saving Percentage (%)" labelPlacement="stacked" [(ngModel)]="params.savings_percent" [disabled]="percent_disabled">
-                <ion-label slot="end">%</ion-label>
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-text color="medium">
-              <div style="display: flex; align-items: flex-start; font-size: 14px; margin-top: 10px;">
-                <ion-icon name="information-circle" style="font-size: 20px; margin-right: 12px; margin-top: 4px;"></ion-icon>
-                <div>
-                  By default, your amount will be divided into 
-                  <b><span style="text-transform: capitalize;">{{params.prefix}}</span> - Needs ({{params.needs_percent}}%)</b>, 
-                  <b><span style="text-transform: capitalize;">{{params.prefix}}</span> - Wants ({{params.wants_percent}}%)</b>, and 
-                  <b><span style="text-transform: capitalize;">{{params.prefix}}</span> - Savings ({{params.savings_percent}}%)</b> accounts.
-                  <br />
-                </div>
-              </div>
-            </ion-text>
-          </ion-col>
-        </ion-row>
-        
-
-      </ion-segment-content>
-    </ion-segment-view>
-    
   </ng-container>
 
   <!-- Add Expense Form -->
   <ng-container *ngIf="add_id === 2 ">
-
+    
     <ion-row>
       <ion-col>
         <ion-item>
@@ -216,6 +129,145 @@
       </ng-template>
     </ion-popover>
 
+    
+  </ng-container>
+
+  <!-- Add budget Form -->
+  <ng-container *ngIf="add_id === 3">
+    
+    <ion-segment-view>
+
+      <!-- Add budget Form -->
+      <ion-segment-content id="first">
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-icon name="document-text-outline" slot="start" color="secondary"></ion-icon>
+              <ion-input type="text" placeholder="Enter the budget name" label="Budget Name" labelPlacement="stacked" [(ngModel)]="params1.budget_name"> </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-icon name="pricetags-outline" slot="start" color="secondary"></ion-icon>
+              <ion-select label="Expenses Type" label-placement="stacked" [(ngModel)]="params1.budget_type"> 
+                <ion-select-option value="">Select Expenses Type</ion-select-option>
+                <ion-select-option *ngFor="let ex of expense" [value]="ex.type">
+                  {{ ex.type | titlecase }} 
+                </ion-select-option> 
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-icon name="wallet-outline" slot="start" color="secondary"></ion-icon>
+              <ion-select label="From Account" label-placement="stacked" [(ngModel)]="params1.budget_account"> 
+                <ion-select-option value="">Select Account</ion-select-option>
+                <ion-select-option *ngFor="let acc of accountUser" [value]="acc.id">
+                  {{ acc.account_name | titlecase }} 
+                </ion-select-option> 
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-icon name="cash-outline" slot="start" color="secondary"></ion-icon>
+              <ion-input type="number" placeholder="Budget Amount" label="Budget Amount" labelPlacement="stacked" [(ngModel)]="params1.amount"> <ion-label slot="start">MYR</ion-label> </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+      </ion-segment-content>
+
+      <!-- Split budget Form -->
+      <ion-segment-content id="second">
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" placeholder="Total Amount" label="Total Amount" labelPlacement="stacked" [(ngModel)]="params2.amount" >
+                <ion-label slot="start">MYR</ion-label>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="text" placeholder="Prefix" label="Prefix" labelPlacement="stacked" [(ngModel)]="params2.prefix" >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-toggle (ionChange)="allowChanges()">Customize Percentage?</ion-toggle>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" placeholder="Needs Percentage (%)" label="Needs Percentage (%)" labelPlacement="stacked" [(ngModel)]="params2.needs_percent" [disabled]="percent_disabled">
+                <ion-label slot="end">%</ion-label>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" placeholder="Wants Percentage (%)" label="Wants Percentage (%)" labelPlacement="stacked" [(ngModel)]="params2.wants_percent" [disabled]="percent_disabled">
+                <ion-label slot="end">%</ion-label>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" placeholder="Saving Percentage (%)" label="Saving Percentage (%)" labelPlacement="stacked" [(ngModel)]="params2.savings_percent" [disabled]="percent_disabled">
+                <ion-label slot="end">%</ion-label>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-text color="medium">
+              <div style="display: flex; align-items: flex-start; font-size: 14px; margin-top: 10px;">
+                <ion-icon name="information-circle" style="font-size: 20px; margin-right: 12px; margin-top: 4px;"></ion-icon>
+                <div>
+                  By default, your amount will be divided into 
+                  <b><span style="text-transform: capitalize;">{{params2.prefix}}</span> - Needs ({{params2.needs_percent}}%)</b>, 
+                  <b><span style="text-transform: capitalize;">{{params2.prefix}}</span> - Wants ({{params2.wants_percent}}%)</b>, and 
+                  <b><span style="text-transform: capitalize;">{{params2.prefix}}</span> - Savings ({{params2.savings_percent}}%)</b> budgets.
+                  <br />
+                </div>
+              </div>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        
+
+      </ion-segment-content>
+    </ion-segment-view>
     
   </ng-container>
   

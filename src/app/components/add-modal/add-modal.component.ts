@@ -1,77 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonButtons,
-  IonButton,
-  IonIcon,
-  IonContent,
-  IonCol,
-  IonRow,
-  IonFooter,
-  IonSelect,
-  IonSelectOption,
-  IonInput,
-  IonLabel,
-  IonItem,
-  IonTextarea,
-  IonPopover,
-  IonDatetime,
-  IonSegment,
-  IonSegmentButton,
-  IonSegmentView,
-  IonSegmentContent, IonToggle, IonText } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, IonSegment, IonSegmentButton, IonSegmentView, IonSegmentContent, IonToggle, IonText, } from '@ionic/angular/standalone';
 import { ModalController } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { addIcons } from 'ionicons';
-import { close, informationCircle } from 'ionicons/icons';
 
 @Component({
   selector: 'app-add-modal',
   templateUrl: './add-modal.component.html',
   styleUrls: ['./add-modal.component.scss'],
   standalone: true,
-  imports: [IonText, 
-    IonToggle, 
-    IonSegment,
-    IonSegmentButton,
-    IonSegmentView,
-    IonSegmentContent,
-    IonIcon,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonButton,
-    IonSelect,
-    IonSelectOption,
-    IonInput,
-    IonLabel,
-    IonItem,
-    IonTextarea,
-    IonPopover,
-    IonDatetime,
-    IonContent,
-    IonCol,
-    IonRow,
-    IonFooter,
-    IonSelect,
-    IonSelectOption,
-    IonInput,
-    IonLabel,
-    IonItem,
-    IonTextarea,
-    IonPopover,
-    IonDatetime,
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [ IonText, IonToggle, IonSegment, IonSegmentButton, IonSegmentView, IonSegmentContent, IonIcon, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, IonContent, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, CommonModule, FormsModule,],
 })
 export class AddModalComponent implements OnInit {
   add_id = 0;
@@ -81,6 +23,8 @@ export class AddModalComponent implements OnInit {
   income: any[] = [];
   expense: any[] = [];
   params: any = {};
+  params1: any = {};
+  params2: any = {};
   disabled: boolean = true;
   label: any;
   accountUser: any[] = [];
@@ -95,30 +39,12 @@ export class AddModalComponent implements OnInit {
     private alert: AlertService,
     private loading: LoadingService,
     private toast: ToastService
-  ) {
-    addIcons({close,informationCircle});
-  }
+  ) {}
 
   ngOnInit() {
-    addIcons({ close });
     this.getData();
     this.modalInput();
     this.maxDate = new Date().toISOString().split('T')[0];
-  }
-
-  segmentChanged(event: any) {
-    if (event?.detail?.value) {
-      this.selectedSegment = event.detail.value;
-      this.modalInput();
-    }
-  }
-
-  allowChanges() {
-    this.percent_disabled = !this.percent_disabled;
-  }
-
-  setDate(event: any) {
-    this.params.date = event.detail.value;
   }
 
   getData() {
@@ -155,27 +81,43 @@ export class AddModalComponent implements OnInit {
         },
       });
     }
+
+    if (this.add_id == 3) {
+      const token = {
+        user: localStorage.getItem('email'),
+      };
+
+      this.api.getRecordCategories().subscribe((res) => {
+        this.expense = res.expense;
+      });
+
+      this.api.postAccountByUser(token).subscribe({
+        next: async (res) => {
+          if (res.status_code == 200) {
+            this.accountUser = res.return_data;
+          }
+        },
+
+        error: async () => {
+          await this.loading.hide();
+          this.alert.customAlert(
+            'Loading Failed',
+            'An error has occurred. Kindly try again.'
+          );
+        },
+      });
+    }
   }
 
   modalInput() {
     switch (this.add_id) {
       //add account
       case 1:
-        if (this.selectedSegment == 'first') {
-          this.params = {
-            account_name: '',
-            account_type: '',
-            balance: 0,
-          };
-        }else if(this.selectedSegment == 'second'){
-          this.params = {
-            amount: '',
-            prefix: new Date().toLocaleString('default', { month: 'long' }) + " Budget",
-            needs_percent: 50,
-            wants_percent: 30,
-            savings_percent: 20
-          };
-        }
+        this.params = {
+          account_name: '',
+          account_type: '',
+          balance: 0,
+        };
         break;
 
       //add record
@@ -190,19 +132,24 @@ export class AddModalComponent implements OnInit {
           transaction_type: '',
         };
         break;
-    }
-  }
 
-  getCategory(values: any) {
-    const value = values.detail.value;
-    this.disabled = false;
+      //add budget
+      case 3:
+        this.params1 = {
+          budget_name: '',
+          budget_type: '',
+          budget_account: '',
+          amount: null,
+        };
 
-    if (value == 'income') {
-      this.label = 'Income';
-      this.categories = this.income;
-    } else if (value == 'expense') {
-      this.label = 'Expense';
-      this.categories = this.expense;
+        this.params2 = {
+          amount: '',
+          prefix: new Date().toLocaleString('default', { month: 'long' }) + ' Budget',
+          needs_percent: 50,
+          wants_percent: 30,
+          savings_percent: 20,
+        };
+        break;
     }
   }
 
@@ -253,18 +200,26 @@ export class AddModalComponent implements OnInit {
                 }
               });
           } else {
-            this.alert.customAlert('Warning','Please enter all the required information');
+            this.alert.customAlert(
+              'Warning',
+              'Please enter all the required information'
+            );
           }
         } else if (this.selectedSegment == 'second') {
-          if (this.params.amount && this.params.prefix && this.params.needs_percent && this.params.wants_percent && this.params.savings_percent) {
-            
+          if (
+            this.params.amount &&
+            this.params.prefix &&
+            this.params.needs_percent &&
+            this.params.wants_percent &&
+            this.params.savings_percent
+          ) {
             this.alert
-            .customComfirmationAlert(
-              'Create Split Accounts',
-              'Are you sure to create this split accounts?'
-            )
-            .then((res) => {
-              if (res === 'confirm') {
+              .customComfirmationAlert(
+                'Create Split Accounts',
+                'Are you sure to create this split accounts?'
+              )
+              .then((res) => {
+                if (res === 'confirm') {
                   param = {
                     ...this.params,
                     user: localStorage.getItem('email'),
@@ -292,16 +247,23 @@ export class AddModalComponent implements OnInit {
                   });
                 }
               });
-
-          }else{
-            this.alert.customAlert('Warning','Please enter all the required information');
+          } else {
+            this.alert.customAlert(
+              'Warning',
+              'Please enter all the required information'
+            );
           }
         }
         break;
 
       //add record
       case 2:
-        if ( this.params.transaction_amount && this.params.transaction_category && this.params.expenses_account && this.params.transaction_type ) {
+        if (
+          this.params.transaction_amount &&
+          this.params.transaction_category &&
+          this.params.expenses_account &&
+          this.params.transaction_type
+        ) {
           param = {
             ...this.params,
             user: localStorage.getItem('email'),
@@ -345,10 +307,86 @@ export class AddModalComponent implements OnInit {
         // this.modalController.dismiss(true)
         break;
 
+      //add budget
+      case 3:
+        if(this.selectedSegment == 'first') {
+          if (this.params1.budget_name && this.params1.budget_type && this.params1.budget_account && this.params1.amount) {
+            param = {
+              ...this.params1,
+              user: localStorage.getItem('email'),
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            };
+            console.log(param);
+  
+            this.alert
+              .customComfirmationAlert(
+                'Create Budget',
+                'Are you sure to create this budget?'
+              )
+              .then((res) => {
+                if (res === 'confirm') {
+                  this.loading.showLoading();
+                  this.api.postAddBudget(param).subscribe((res) => {
+                    this.loading.hide();
+                    if (res.status_code === 200) {
+                      this.toast.customToast(
+                        'Budget successfully created.',
+                        4000,
+                        'success'
+                      );
+                      this.modalController.dismiss(true);
+                    } else {
+                      this.toast.customToast(
+                        res.msg || 'Something went wrong.',
+                        3000,
+                        'warning'
+                      );
+                    }
+                  });
+                }
+              });
+
+          }else {
+            this.alert.customAlert(
+              'Warning',
+              'Please enter all the required information'
+            );
+          }
+        }
+        break;
+      
       default:
         this.alert.customAlert('Error', 'Invalid operation');
         break;
     }
+  }
+
+  getCategory(values: any) {
+    const value = values.detail.value;
+    this.disabled = false;
+
+    if (value == 'income') {
+      this.label = 'Income';
+      this.categories = this.income;
+    } else if (value == 'expense') {
+      this.label = 'Expense';
+      this.categories = this.expense;
+    }
+  }
+
+  segmentChanged(event: any) {
+    if (event?.detail?.value) {
+      this.selectedSegment = event.detail.value;
+    }
+  }
+
+  allowChanges() {
+    this.percent_disabled = !this.percent_disabled;
+  }
+
+  setDate(event: any) {
+    this.params.date = event.detail.value;
   }
 
   dismiss() {

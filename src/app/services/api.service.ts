@@ -71,7 +71,7 @@ export class ApiService {
   }
 
   getBudget(data:any):Observable<any>{
-    const api = this.url + "api/get_budget";
+    const api = this.url + "api/get_budget_by_account";
     return this.http.post(api, data);
   }
 }

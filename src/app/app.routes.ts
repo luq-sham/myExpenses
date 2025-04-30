@@ -39,6 +39,10 @@ export const routes: Routes = [
     path: 'budget',
     loadComponent: () => import('./budget/budget.page').then( m => m.BudgetPage)
   },
+  {
+    path: 'account-list',
+    loadComponent: () => import('./account-list/account-list.page').then( m => m.AccountListPage)
+  },
 
 
 

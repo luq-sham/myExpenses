@@ -5,7 +5,7 @@ import { IonContent, IonList, IonItem, IonLabel, IonNote, IonFab, IonFabButton, 
 import { HeaderComponent } from '../components/header/header.component';
 import { ModalController } from '@ionic/angular/standalone';
 import { AddModalComponent } from '../components/add-modal/add-modal.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -18,20 +18,27 @@ import { ApiService } from '../services/api.service';
 export class BudgetPage implements OnInit {
 
   budgets:any[] = []
+  acc_id: any = ''
 
   constructor(
     private modal: ModalController,
     private router: Router,
     private api: ApiService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params) {
+        this.acc_id = params['id'];
+      }
+    });
     this.getBudgetsData()
   }
 
   getBudgetsData(){
     const token = {
-      user: localStorage.getItem('email'),
+      account: this.acc_id,
     };
 
     this.api.getBudget(token).subscribe((res) => {
@@ -47,6 +54,7 @@ export class BudgetPage implements OnInit {
     const param = {
       add_id: 3,
       title: 'Add Budget',
+      acc_id: this.acc_id,
     };
     const modal = await this.modal.create({
       component: AddModalComponent,
@@ -56,7 +64,7 @@ export class BudgetPage implements OnInit {
     const { data } = await modal.onDidDismiss();
 
     if (data) {
-      window.location.href = '/budget';
+      window.location.href = '/budget?id=' + this.acc_id;
     }
   }
 

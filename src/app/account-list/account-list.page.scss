@@ -1,0 +1,16 @@
+.card-icon {
+  font-size: 28px;
+  padding: 6px;
+  background: #e0f0ff;
+  border-radius: 50%;
+}
+
+.account-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+  }
+  .account-card:hover {
+    transform: scale(1.02);
+  }

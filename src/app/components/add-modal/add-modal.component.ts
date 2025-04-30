@@ -30,6 +30,8 @@ export class AddModalComponent implements OnInit {
   accountUser: any[] = [];
   maxDate: string = '';
 
+  acc_id: any = '';
+
   selectedSegment = 'first';
   percent_disabled = true;
 
@@ -45,6 +47,7 @@ export class AddModalComponent implements OnInit {
     this.getData();
     this.modalInput();
     this.maxDate = new Date().toISOString().split('T')[0];
+    console.log(this.acc_id);
   }
 
   getData() {
@@ -90,22 +93,6 @@ export class AddModalComponent implements OnInit {
       this.api.getRecordCategories().subscribe((res) => {
         this.expense = res.expense;
       });
-
-      this.api.postAccountByUser(token).subscribe({
-        next: async (res) => {
-          if (res.status_code == 200) {
-            this.accountUser = res.return_data;
-          }
-        },
-
-        error: async () => {
-          await this.loading.hide();
-          this.alert.customAlert(
-            'Loading Failed',
-            'An error has occurred. Kindly try again.'
-          );
-        },
-      });
     }
   }
 
@@ -116,7 +103,7 @@ export class AddModalComponent implements OnInit {
         this.params = {
           account_name: '',
           account_type: '',
-          balance: 0,
+          balance: null,
         };
         break;
 
@@ -125,7 +112,7 @@ export class AddModalComponent implements OnInit {
         this.params = {
           transaction_amount: 0,
           transaction_category: '',
-          expenses_account: '',
+          expenses_account: "",
           transaction_description: '',
           user: localStorage.getItem('email') || '',
           transaction_date: new Date().toISOString(),
@@ -138,7 +125,7 @@ export class AddModalComponent implements OnInit {
         this.params1 = {
           budget_name: '',
           budget_type: '',
-          budget_account: '',
+          budget_account: this.acc_id,
           amount: null,
         };
 

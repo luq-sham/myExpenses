@@ -60,7 +60,8 @@ export class AppComponent implements OnInit {
       'Logout',
       'Are you sure to logout',
       'Logout',
-      'Cancel'
+      'Cancel',
+      'confirm-red'
     );
     if (res === 'confirm') {
       localStorage.clear();

@@ -23,7 +23,7 @@ export class AlertService {
         {
           text: confirmMsg ? confirmMsg : 'Confirm',
           role: 'confirm',
-          cssClass: 'confirm-red'
+          cssClass: css ? css : 'custom-alert'
         },
       ]
     })

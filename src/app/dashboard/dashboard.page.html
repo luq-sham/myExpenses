@@ -11,8 +11,8 @@
             <ion-col *ngFor="let item of items;" size="6" sizeMd="2">
               <ion-card class="ion-no-margin">
                 <ion-card-content class="text-center acc-card-content">
-                  <h2 class="ion-text-capitalize"><b class="account-card">{{ item.account_name }}</b></h2>
-                  <p class="account-card">MYR {{ item.balance | currency: 'MYR ' }}</p>
+                  <h2><b class="account-card">{{ item.account_name | titlecase }}</b></h2>
+                  <p>{{ item.balance | currency: 'MYR ' }}</p>
                 </ion-card-content>
               </ion-card>
             </ion-col>
@@ -63,7 +63,7 @@
 
                   <div class="transaction-amount">
                     <p [ngClass]="{ income: record.type === 'income', expense: record.type === 'expense' }">
-                      {{ record.type === 'income' ? '+' : '-' }}MYR {{ record.amount | currency: 'MYR ' }}
+                      {{ record.type === 'income' ? '+' : '-' }} {{ record.amount | currency: 'MYR ' }}
                     </p>
                     <p class="record-date">{{ record.date | date: 'MMM d' }}</p>
                   </div>

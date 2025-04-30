@@ -1,10 +1,11 @@
-<app-header title="Budget / Goal"></app-header>
+<app-header title="Budget/Goal"></app-header>
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-card button routerLink="/budget" class="option-card">
+    <ion-card button [routerLink]="['/account-list']" [queryParams]="{ type: 'budget' }" class="option-card">
       <ion-item lines="none" color="light">
-        <ion-icon name="wallet-outline" slot="start" color="primary"></ion-icon>
+        <ion-icon name="wallet" slot="start" color="secondary"></ion-icon>
+        <ion-icon name="chevron-forward" slot="end" color="medium"></ion-icon>
         <ion-label>
           <h2>Budget</h2>
           <p>Manage your monthly expenses</p>
@@ -14,7 +15,8 @@
 
     <ion-card button (click)="openSoon()" class="option-card">
       <ion-item lines="none" color="light">
-        <ion-icon name="flag-outline" slot="start" color="success"></ion-icon>
+        <ion-icon name="flag" slot="start" color="secondary"></ion-icon>
+        <ion-icon name="chevron-forward" slot="end" color="medium"></ion-icon>
         <ion-label>
           <h2>Goal</h2>
           <p>Track and achieve your goals</p>

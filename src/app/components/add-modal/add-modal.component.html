@@ -26,6 +26,7 @@
     <ion-row>
       <ion-col>
         <ion-item>
+          <ion-icon name="person-circle-outline" slot="start"></ion-icon>
           <ion-input type="text" placeholder="Enter the account name" label="Account Name" labelPlacement="stacked" [(ngModel)]="params.account_name"></ion-input>
         </ion-item>
       </ion-col>
@@ -34,6 +35,7 @@
     <ion-row>
       <ion-col>
         <ion-item>
+          <ion-icon name="list-circle-outline" slot="start"></ion-icon>
           <ion-select label="Type" label-placement="stacked" [(ngModel)]="params.account_type">
             <ion-select-option value="">Select Type</ion-select-option>
             <ion-select-option *ngFor="let type of types" [value]="type.type">
@@ -47,12 +49,14 @@
     <ion-row>
       <ion-col>
         <ion-item>
+          <ion-icon name="cash-outline" slot="start"></ion-icon>
           <ion-input type="number" placeholder="Initial Balance" label="Initial Balance" labelPlacement="stacked" [(ngModel)]="params.balance">
             <ion-label slot="start">MYR</ion-label>
           </ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
+    
 
   </ng-container>
 
@@ -62,16 +66,18 @@
     <ion-row>
       <ion-col>
         <ion-item>
+          <ion-icon name="cash-outline" slot="start"></ion-icon>
           <ion-input type="number" placeholder="Enter expense amount" label="Amount" labelPlacement="stacked" [(ngModel)]="params.transaction_amount">
-            <ion-label slot="start">MYR</ion-label>
+            <ion-label slot="end">MYR</ion-label>
           </ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
-
+    
     <ion-row>
       <ion-col>
         <ion-item>
+          <ion-icon name="swap-horizontal-outline" slot="start"></ion-icon>
           <ion-select label="Type" label-placement="stacked" [(ngModel)]="params.transaction_type" interface="popover" (ionChange)="getCategory($event)">
             <ion-select-option value="income">Income</ion-select-option>
             <ion-select-option value="expense">Expense</ion-select-option>
@@ -79,11 +85,14 @@
         </ion-item>
       </ion-col>
     </ion-row>
-
+    
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-label position="stacked">Category {{ label ? '(' + label + ')' : '' }}</ion-label>
+          <ion-icon name="pricetags-outline" slot="start"></ion-icon>
+          <ion-label position="stacked">
+            Category {{ label ? '(' + label + ')' : '' }}
+          </ion-label>
           <ion-select [(ngModel)]="params.transaction_category" [disabled]="disabled" label-placement="stacked">
             <ion-select-option value="">Select Category</ion-select-option>
             <ion-select-option *ngFor="let category of categories" [value]="category.type">
@@ -93,41 +102,47 @@
         </ion-item>
       </ion-col>
     </ion-row>
-
+    
     <ion-row>
       <ion-col>
         <ion-item>
-            <ion-select label="From Account" label-placement="stacked" [(ngModel)]="params.expenses_account">
-              <ion-select-option *ngFor="let acc of accountUser" [value]="acc.id">
-                <span class="ion-text-capitalize">{{acc.account_name | titlecase }}</span>
-              </ion-select-option>
-            </ion-select>
+          <ion-icon name="wallet-outline" slot="start"></ion-icon>
+          <ion-select label="From Account" label-placement="stacked" [(ngModel)]="params.expenses_account">
+            <ion-select-option value="">Select Account</ion-select-option>
+            <ion-select-option *ngFor="let acc of accountUser" [value]="acc.id">
+              {{ acc.account_name | titlecase }}
+            </ion-select-option>
+          </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>
-
+    
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-textarea class="ion-no-padding" label="Description" labelPlacement="stacked" [(ngModel)]="params.transaction_description"></ion-textarea>
+          <ion-icon name="document-text-outline" slot="start"></ion-icon>
+          <ion-textarea class="ion-no-padding" label="Description" labelPlacement="stacked" [(ngModel)]="params.transaction_description">
+          </ion-textarea>
         </ion-item>
       </ion-col>
     </ion-row>
-
+    
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-input label="Date" id="open-date-popover" labelPlacement="stacked" [value]="params.transaction_date | date:'dd/MM/yyyy'" readonly></ion-input>
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-input label="Date" id="open-date-popover" labelPlacement="stacked" [value]="params.transaction_date | date:'dd/MM/yyyy'" readonly>
+          </ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
-
-
+    
     <ion-popover trigger="open-date-popover" showBackdrop="true">
       <ng-template>
         <ion-datetime presentation="date" (ionChange)="setDate($event)" [max]="maxDate"></ion-datetime>
       </ng-template>
     </ion-popover>
+    
 
     
   </ng-container>
@@ -157,20 +172,6 @@
                 <ion-select-option value="">Select Expenses Type</ion-select-option>
                 <ion-select-option *ngFor="let ex of expense" [value]="ex.type">
                   {{ ex.type | titlecase }} 
-                </ion-select-option> 
-              </ion-select>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-icon name="wallet-outline" slot="start" color="secondary"></ion-icon>
-              <ion-select label="From Account" label-placement="stacked" [(ngModel)]="params1.budget_account"> 
-                <ion-select-option value="">Select Account</ion-select-option>
-                <ion-select-option *ngFor="let acc of accountUser" [value]="acc.id">
-                  {{ acc.account_name | titlecase }} 
                 </ion-select-option> 
               </ion-select>
             </ion-item>

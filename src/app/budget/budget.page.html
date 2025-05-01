@@ -48,11 +48,11 @@
             color="primary"
           ></ion-icon>
           <ion-label>
-            <h2>{{ budget.budget_name | titlecase }}</h2>
+            <h2><b>{{ budget.budget_name | titlecase }}</b></h2>
             <p>Click to view or edit</p>
           </ion-label>
           <ion-note slot="end" color="success">
-            {{ budget.amount | currency: 'MYR ' }}
+            <b>{{ budget.amount | currency: 'MYR ' }}</b>
           </ion-note>
         </ion-item>
       </ion-card>

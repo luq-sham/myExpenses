@@ -19,24 +19,32 @@
 </ion-segment>
 
 <ion-content class="ion-padding">
-
   <!-- Add Account Form -->
   <ng-container *ngIf="add_id === 1">
-
     <ion-row>
       <ion-col>
         <ion-item>
           <ion-icon name="person-circle-outline" slot="start"></ion-icon>
-          <ion-input type="text" placeholder="Enter the account name" label="Account Name" labelPlacement="stacked" [(ngModel)]="params.account_name"></ion-input>
+          <ion-input
+            type="text"
+            placeholder="Enter the account name"
+            label="Account Name"
+            labelPlacement="stacked"
+            [(ngModel)]="params.account_name"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
-    
+
     <ion-row>
       <ion-col>
         <ion-item>
           <ion-icon name="list-circle-outline" slot="start"></ion-icon>
-          <ion-select label="Type" label-placement="stacked" [(ngModel)]="params.account_type">
+          <ion-select
+            label="Type"
+            label-placement="stacked"
+            [(ngModel)]="params.account_type"
+          >
             <ion-select-option value="">Select Type</ion-select-option>
             <ion-select-option *ngFor="let type of types" [value]="type.type">
               {{ type.type }}
@@ -45,69 +53,95 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    
+
     <ion-row>
       <ion-col>
         <ion-item>
           <ion-icon name="cash-outline" slot="start"></ion-icon>
-          <ion-input type="number" placeholder="Initial Balance" label="Initial Balance" labelPlacement="stacked" [(ngModel)]="params.balance">
+          <ion-input
+            type="number"
+            placeholder="Initial Balance"
+            label="Initial Balance"
+            labelPlacement="stacked"
+            [(ngModel)]="params.balance"
+          >
             <ion-label slot="start">MYR</ion-label>
           </ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
-    
-
   </ng-container>
 
   <!-- Add Expense Form -->
-  <ng-container *ngIf="add_id === 2 ">
-    
+  <ng-container *ngIf="add_id === 2">
     <ion-row>
       <ion-col>
         <ion-item>
           <ion-icon name="cash-outline" slot="start"></ion-icon>
-          <ion-input type="number" placeholder="Enter expense amount" label="Amount" labelPlacement="stacked" [(ngModel)]="params.transaction_amount">
+          <ion-input
+            type="number"
+            placeholder="Enter expense amount"
+            label="Amount"
+            labelPlacement="stacked"
+            [(ngModel)]="params.transaction_amount"
+          >
             <ion-label slot="end">MYR</ion-label>
           </ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
-    
+
     <ion-row>
       <ion-col>
         <ion-item>
           <ion-icon name="swap-horizontal-outline" slot="start"></ion-icon>
-          <ion-select label="Type" label-placement="stacked" [(ngModel)]="params.transaction_type" interface="popover" (ionChange)="getCategory($event)">
+          <ion-select
+            label="Type"
+            label-placement="stacked"
+            [(ngModel)]="params.transaction_type"
+            interface="popover"
+            (ionChange)="getCategory($event)"
+          >
             <ion-select-option value="income">Income</ion-select-option>
             <ion-select-option value="expense">Expense</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>
-    
+
     <ion-row>
       <ion-col>
         <ion-item>
           <ion-icon name="pricetags-outline" slot="start"></ion-icon>
           <ion-label position="stacked">
-            Category {{ label ? '(' + label + ')' : '' }}
+            Category {{ label ? "(" + label + ")" : "" }}
           </ion-label>
-          <ion-select [(ngModel)]="params.transaction_category" [disabled]="disabled" label-placement="stacked">
+          <ion-select
+            [(ngModel)]="params.transaction_category"
+            [disabled]="disabled"
+            label-placement="stacked"
+          >
             <ion-select-option value="">Select Category</ion-select-option>
-            <ion-select-option *ngFor="let category of categories" [value]="category.type">
+            <ion-select-option
+              *ngFor="let category of categories"
+              [value]="category.type"
+            >
               {{ category.type }}
             </ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>
-    
+
     <ion-row>
       <ion-col>
         <ion-item>
           <ion-icon name="wallet-outline" slot="start"></ion-icon>
-          <ion-select label="From Account" label-placement="stacked" [(ngModel)]="params.expenses_account">
+          <ion-select
+            label="From Account"
+            label-placement="stacked"
+            [(ngModel)]="params.expenses_account"
+          >
             <ion-select-option value="">Select Account</ion-select-option>
             <ion-select-option *ngFor="let acc of accountUser" [value]="acc.id">
               {{ acc.account_name | titlecase }}
@@ -116,63 +150,93 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    
+
     <ion-row>
       <ion-col>
         <ion-item>
           <ion-icon name="document-text-outline" slot="start"></ion-icon>
-          <ion-textarea class="ion-no-padding" label="Description" labelPlacement="stacked" [(ngModel)]="params.transaction_description">
+          <ion-textarea
+            class="ion-no-padding"
+            label="Description"
+            labelPlacement="stacked"
+            [(ngModel)]="params.transaction_description"
+          >
           </ion-textarea>
         </ion-item>
       </ion-col>
     </ion-row>
-    
+
     <ion-row>
       <ion-col>
         <ion-item>
           <ion-icon name="calendar-outline" slot="start"></ion-icon>
-          <ion-input label="Date" id="open-date-popover" labelPlacement="stacked" [value]="params.transaction_date | date:'dd/MM/yyyy'" readonly>
+          <ion-input
+            label="Date"
+            id="open-date-popover"
+            labelPlacement="stacked"
+            [value]="params.transaction_date | date : 'dd/MM/yyyy'"
+            readonly
+          >
           </ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
-    
+
     <ion-popover trigger="open-date-popover" showBackdrop="true">
       <ng-template>
-        <ion-datetime presentation="date" (ionChange)="setDate($event)" [max]="maxDate"></ion-datetime>
+        <ion-datetime
+          presentation="date"
+          (ionChange)="setDate($event)"
+          [max]="maxDate"
+        ></ion-datetime>
       </ng-template>
     </ion-popover>
-    
-
-    
   </ng-container>
 
   <!-- Add budget Form -->
   <ng-container *ngIf="add_id === 3">
-    
     <ion-segment-view>
-
       <!-- Add budget Form -->
       <ion-segment-content id="first">
-
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-icon name="document-text-outline" slot="start" color="secondary"></ion-icon>
-              <ion-input type="text" placeholder="Enter the budget name" label="Budget Name" labelPlacement="stacked" [(ngModel)]="params1.budget_name"> </ion-input>
+              <ion-icon
+                name="document-text-outline"
+                slot="start"
+                color="secondary"
+              ></ion-icon>
+              <ion-input
+                type="text"
+                placeholder="e.g. Monthly Budget"
+                label="Budget Name"
+                labelPlacement="stacked"
+                [(ngModel)]="params1.budget_name"
+              >
+              </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
-        
+
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-icon name="pricetags-outline" slot="start" color="secondary"></ion-icon>
-              <ion-select label="Expenses Type" label-placement="stacked" [(ngModel)]="params1.budget_type"> 
-                <ion-select-option value="">Select Expenses Type</ion-select-option>
+              <ion-icon
+                name="pricetags-outline"
+                slot="start"
+                color="secondary"
+              ></ion-icon>
+              <ion-select
+                label="Expenses Type"
+                label-placement="stacked"
+                [(ngModel)]="params1.budget_type"
+              >
+                <ion-select-option value=""
+                  >Select Expenses Type</ion-select-option
+                >
                 <ion-select-option *ngFor="let ex of expense" [value]="ex.type">
-                  {{ ex.type | titlecase }} 
-                </ion-select-option> 
+                  {{ ex.type | titlecase }}
+                </ion-select-option>
               </ion-select>
             </ion-item>
           </ion-col>
@@ -181,97 +245,123 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-icon name="cash-outline" slot="start" color="secondary"></ion-icon>
-              <ion-input type="number" placeholder="Budget Amount" label="Budget Amount" labelPlacement="stacked" [(ngModel)]="params1.amount"> <ion-label slot="start">MYR</ion-label> </ion-input>
+              <ion-icon
+                name="cash-outline"
+                slot="start"
+                color="secondary"
+              ></ion-icon>
+              <ion-input
+                type="number"
+                placeholder="e.g. 1000"
+                label="Budget Amount"
+                labelPlacement="stacked"
+                [(ngModel)]="params1.amount"
+              >
+              </ion-input>
+              <ion-note slot="end" color="medium">MYR</ion-note>
             </ion-item>
           </ion-col>
         </ion-row>
-
       </ion-segment-content>
 
       <!-- Split budget Form -->
       <ion-segment-content id="second">
-
+        <!-- Prefix Input -->
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-input type="number" placeholder="Total Amount" label="Total Amount" labelPlacement="stacked" [(ngModel)]="params2.amount" >
-                <ion-label slot="start">MYR</ion-label>
-              </ion-input>
+              <ion-icon name="pricetag-outline" slot="start" color="secondary"></ion-icon>
+              <ion-label position="stacked">Prefix</ion-label>
+              <ion-input
+                type="text"
+                placeholder="e.g. Monthly Budget"
+                [(ngModel)]="params2.prefix"
+              ></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
 
+        <!-- Total Budget Input -->
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-input type="text" placeholder="Prefix" label="Prefix" labelPlacement="stacked" [(ngModel)]="params2.prefix" >
-              </ion-input>
+              <ion-icon name="cash-outline" slot="start" color="secondary"></ion-icon>
+              <ion-label position="stacked">Total Budget</ion-label>
+              <ion-input
+                type="number"
+                placeholder="e.g. 1000"
+                [(ngModel)]="params2.amount"
+              ></ion-input>
+              <ion-note slot="end" color="medium">MYR</ion-note>
             </ion-item>
           </ion-col>
         </ion-row>
 
-        <ion-row>
+        <!-- Toggle for Customization -->
+        <ion-row class="ion-padding-top">
           <ion-col>
             <ion-item lines="none">
-              <ion-toggle (ionChange)="allowChanges()">Customize Percentage?</ion-toggle>
+              <ion-icon name="settings-outline" slot="start" color="secondary"></ion-icon>
+              <ion-label>Customize Percentages?</ion-label>
+              <ion-toggle slot="end" (ionChange)="allowChanges()"></ion-toggle>
             </ion-item>
           </ion-col>
         </ion-row>
 
+        <!-- Percentage Inputs -->
         <ion-row>
-          <ion-col>
+          <ion-col size="12">
             <ion-item>
-              <ion-input type="number" placeholder="Needs Percentage (%)" label="Needs Percentage (%)" labelPlacement="stacked" [(ngModel)]="params2.needs_percent" [disabled]="percent_disabled">
-                <ion-label slot="end">%</ion-label>
-              </ion-input>
+              <ion-icon name="wallet-outline" slot="start" color="secondary"></ion-icon>
+              <ion-label position="stacked">Needs</ion-label>
+              <ion-input
+                type="number"
+                placeholder="e.g. 50"
+                [(ngModel)]="params2.needs_percent"
+                [disabled]="percent_disabled"
+              ></ion-input>
+              <ion-note slot="end" color="medium">%</ion-note>
             </ion-item>
           </ion-col>
-        </ion-row>
 
-        <ion-row>
-          <ion-col>
+          <ion-col size="12">
             <ion-item>
-              <ion-input type="number" placeholder="Wants Percentage (%)" label="Wants Percentage (%)" labelPlacement="stacked" [(ngModel)]="params2.wants_percent" [disabled]="percent_disabled">
-                <ion-label slot="end">%</ion-label>
-              </ion-input>
+              <ion-icon name="cart-outline" slot="start" color="secondary"></ion-icon>
+              <ion-label position="stacked">Wants</ion-label>
+              <ion-input
+                type="number"
+                placeholder="e.g. 30"
+                [(ngModel)]="params2.wants_percent"
+                [disabled]="percent_disabled"
+              ></ion-input>
+              <ion-note slot="end" color="medium">%</ion-note>
             </ion-item>
           </ion-col>
-        </ion-row>
 
-        <ion-row>
-          <ion-col>
+          <ion-col size="12">
             <ion-item>
-              <ion-input type="number" placeholder="Saving Percentage (%)" label="Saving Percentage (%)" labelPlacement="stacked" [(ngModel)]="params2.savings_percent" [disabled]="percent_disabled">
-                <ion-label slot="end">%</ion-label>
-              </ion-input>
+              <ion-icon name="trending-up-outline" slot="start" color="secondary"></ion-icon>
+              <ion-label position="stacked">Savings</ion-label>
+              <ion-input
+                type="number"
+                placeholder="e.g. 20"
+                [(ngModel)]="params2.savings_percent"
+                [disabled]="percent_disabled"
+              ></ion-input>
+              <ion-note slot="end" color="medium">%</ion-note>
             </ion-item>
           </ion-col>
         </ion-row>
 
-        <ion-row>
+        <!-- Helper Note -->
+        <ion-row *ngIf="!percent_disabled" class="ion-padding-top">
           <ion-col>
-            <ion-text color="medium">
-              <div style="display: flex; align-items: flex-start; font-size: 14px; margin-top: 10px;">
-                <ion-icon name="information-circle" style="font-size: 20px; margin-right: 12px; margin-top: 4px;"></ion-icon>
-                <div>
-                  By default, your amount will be divided into 
-                  <b><span style="text-transform: capitalize;">{{params2.prefix}}</span> - Needs ({{params2.needs_percent}}%)</b>, 
-                  <b><span style="text-transform: capitalize;">{{params2.prefix}}</span> - Wants ({{params2.wants_percent}}%)</b>, and 
-                  <b><span style="text-transform: capitalize;">{{params2.prefix}}</span> - Savings ({{params2.savings_percent}}%)</b> budgets.
-                  <br />
-                </div>
-              </div>
-            </ion-text>
+            <ion-note color="medium">Total should add up to 100%</ion-note>
           </ion-col>
         </ion-row>
-        
-
       </ion-segment-content>
     </ion-segment-view>
-    
   </ng-container>
-  
 </ion-content>
 
 <ion-footer>

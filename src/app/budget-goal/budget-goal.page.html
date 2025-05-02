@@ -1,26 +1,28 @@
 <app-header title="Budget/Goal"></app-header>
 
 <ion-content class="ion-padding">
-  <ion-list>
+  <ion-list lines="none">
+    <!-- Budget Card -->
     <ion-card button [routerLink]="['/account-list']" [queryParams]="{ type: 'budget' }" class="option-card">
-      <ion-item lines="none" color="light">
-        <ion-icon name="wallet" slot="start" color="secondary"></ion-icon>
-        <ion-icon name="chevron-forward" slot="end" color="medium"></ion-icon>
+      <ion-item lines="none" class="card-item">
+        <ion-icon name="wallet-outline" slot="start" class="card-icon"></ion-icon>
         <ion-label>
           <h2>Budget</h2>
           <p>Manage your monthly expenses</p>
         </ion-label>
+        <ion-icon name="chevron-forward" slot="end" class="arrow-icon"></ion-icon>
       </ion-item>
     </ion-card>
 
+    <!-- Goal Card -->
     <ion-card button (click)="openSoon()" class="option-card">
-      <ion-item lines="none" color="light">
-        <ion-icon name="flag" slot="start" color="secondary"></ion-icon>
-        <ion-icon name="chevron-forward" slot="end" color="medium"></ion-icon>
+      <ion-item lines="none" class="card-item">
+        <ion-icon name="flag-outline" slot="start" class="card-icon"></ion-icon>
         <ion-label>
           <h2>Goal</h2>
           <p>Track and achieve your goals</p>
         </ion-label>
+        <ion-icon name="chevron-forward" slot="end" class="arrow-icon"></ion-icon>
       </ion-item>
     </ion-card>
   </ion-list>

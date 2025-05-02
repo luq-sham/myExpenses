@@ -81,20 +81,55 @@
 }
 
 .transaction-amount {
-  text-align: right;
   font-weight: bold;
   font-size: 16px;
 }
 
 .income {
+  text-align: right;
   color: #4caf50;
 }
 
 .expense {
+  text-align: right;
   color: #f44336;
 }
 
-@media (max-width: 1500px) {
+.account-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #f0f4ff, #d6e4ff);
+  transition: transform 0.2s ease-in-out;
+}
+
+.account-card:hover {
+  transform: translateY(-5px);
+}
+
+.acc-card-content {
+  padding: 16px;
+}
+
+.account-icon {
+  font-size: 32px;
+  color: #3b82f6;
+  margin-bottom: 8px;
+}
+
+.account-title {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin-bottom: 4px;
+}
+
+.account-balance {
+  font-size: 1em;
+  font-weight: bold;
+  color: #10b981;
+}
+
+@media (max-width: 990px) {
   .record-content {
     flex-direction: column;
   }
@@ -120,6 +155,14 @@
   .transaction-amount {
     align-self: flex-start;
     margin-top: 10px;
+  }
+
+  .income {
+    text-align: left;
+  }
+  
+  .expense {
+    text-align: left;
   }
 
   .record-info {

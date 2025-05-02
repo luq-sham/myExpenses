@@ -72,15 +72,15 @@ ion-menu ion-item:hover ion-label {
 }
 
 /* Icons */
-ion-menu.md ion-item ion-icon {
+ion-menu ion-item ion-icon {
   color: #616e7e;
 }
 
-ion-menu.md ion-item.selected ion-icon {
+ion-menu ion-item.selected ion-icon {
   color: #06d6a0;
 }
 
-ion-menu.md ion-item.logout ion-icon {
+ion-menu ion-item.logout ion-icon {
   color: #fff;
 }
 

@@ -24,7 +24,7 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+          <ion-icon name="person-circle-outline" slot="start" color="secondary"></ion-icon>
           <ion-input
             type="text"
             placeholder="Enter the account name"
@@ -39,7 +39,7 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-icon name="list-circle-outline" slot="start"></ion-icon>
+          <ion-icon name="list-circle-outline" slot="start" color="secondary"></ion-icon>
           <ion-select
             label="Type"
             label-placement="stacked"
@@ -57,7 +57,7 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-icon name="cash-outline" slot="start"></ion-icon>
+          <ion-icon name="cash-outline" slot="start" color="secondary"></ion-icon>
           <ion-input
             type="number"
             placeholder="Initial Balance"
@@ -77,7 +77,7 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-icon name="cash-outline" slot="start"></ion-icon>
+          <ion-icon name="cash-outline" slot="start" color="secondary"></ion-icon>
           <ion-input
             type="number"
             placeholder="Enter expense amount"
@@ -85,8 +85,8 @@
             labelPlacement="stacked"
             [(ngModel)]="params.transaction_amount"
           >
-            <ion-label slot="end">MYR</ion-label>
-          </ion-input>
+        </ion-input>
+        <ion-note slot="end" color="medium">MYR</ion-note>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -94,7 +94,7 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-icon name="swap-horizontal-outline" slot="start"></ion-icon>
+          <ion-icon name="swap-horizontal-outline" slot="start" color="secondary"></ion-icon>
           <ion-select
             label="Type"
             label-placement="stacked"
@@ -112,7 +112,7 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-icon name="pricetags-outline" slot="start"></ion-icon>
+          <ion-icon name="pricetags-outline" slot="start" color="secondary"></ion-icon>
           <ion-label position="stacked">
             Category {{ label ? "(" + label + ")" : "" }}
           </ion-label>
@@ -136,11 +136,11 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-icon name="wallet-outline" slot="start"></ion-icon>
+          <ion-icon name="wallet-outline" slot="start" color="secondary"></ion-icon>
           <ion-select
             label="From Account"
             label-placement="stacked"
-            [(ngModel)]="params.expenses_account"
+            [(ngModel)]="params.accounts"
           >
             <ion-select-option value="">Select Account</ion-select-option>
             <ion-select-option *ngFor="let acc of accountUser" [value]="acc.id">
@@ -154,7 +154,7 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-icon name="document-text-outline" slot="start"></ion-icon>
+          <ion-icon name="document-text-outline" slot="start" color="secondary"></ion-icon>
           <ion-textarea
             class="ion-no-padding"
             label="Description"
@@ -169,7 +169,7 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-icon name="calendar-outline" slot="start" color="secondary"></ion-icon>
           <ion-input
             label="Date"
             id="open-date-popover"
@@ -227,12 +227,12 @@
                 color="secondary"
               ></ion-icon>
               <ion-select
-                label="Expenses Type"
+                label="Budget Category"
                 label-placement="stacked"
                 [(ngModel)]="params1.budget_type"
               >
                 <ion-select-option value=""
-                  >Select Expenses Type</ion-select-option
+                  >Select Category</ion-select-option
                 >
                 <ion-select-option *ngFor="let ex of expense" [value]="ex.type">
                   {{ ex.type | titlecase }}

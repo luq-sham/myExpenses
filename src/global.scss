@@ -40,15 +40,8 @@
   --width: 300px;
 }
 
-.custom-alert .alert-button.confirm-red {
-  color: red;
-}
-
-.small-modal .modal-wrapper {
-  width: 300px;
-  height: 300px;
-  border-radius: 20px;
-  overflow: hidden;
+.confirm-red {
+  color: red !important;
 }
 // body{
 //     background-image: url('src/assets/bg2.png');

@@ -24,8 +24,8 @@ export class DashboardPage implements OnInit {
   email: string = '';
   param: any = {};
   dataCerdencial: any;
-  items: any[] = [];
-  records: any[] = [];
+  account_list: any[] = [];
+  transactions: any[] = [];
   loadings: boolean = true;
 
   constructor(
@@ -47,12 +47,13 @@ export class DashboardPage implements OnInit {
 
     this.api.postAccountByUser(token).subscribe({
       next: async (res) => {
+        this.loadings = true;
         if (res.status_code == 200) {
           this.api.getRecord(token).subscribe({
             next: async (res2) => {
               if (res.status_code == 200) {
-                this.items = res.return_data;
-                this.records = res2.return_data;
+                this.account_list = res.return_data;
+                this.transactions = res2.return_data;
               }
               this.loadings = false;
             },

@@ -112,7 +112,7 @@ export class AddModalComponent implements OnInit {
         this.params = {
           transaction_amount: 0,
           transaction_category: '',
-          expenses_account: "",
+          accounts: "",
           transaction_description: '',
           user: localStorage.getItem('email') || '',
           transaction_date: new Date().toISOString(),
@@ -125,7 +125,7 @@ export class AddModalComponent implements OnInit {
         this.params1 = {
           budget_name: '',
           budget_type: '',
-          budget_account: this.acc_id,
+          accounts: this.acc_id,
           amount: null,
         };
 
@@ -245,12 +245,7 @@ export class AddModalComponent implements OnInit {
 
       //add record
       case 2:
-        if (
-          this.params.transaction_amount &&
-          this.params.transaction_category &&
-          this.params.expenses_account &&
-          this.params.transaction_type
-        ) {
+        if ( this.params.transaction_amount && this.params.transaction_category && this.params.accounts && this.params.transaction_type ) {
           param = {
             ...this.params,
             user: localStorage.getItem('email'),
@@ -297,7 +292,7 @@ export class AddModalComponent implements OnInit {
       //add budget
       case 3:
         if(this.selectedSegment == 'first') {
-          if (this.params1.budget_name && this.params1.budget_type && this.params1.budget_account && this.params1.amount) {
+          if (this.params1.budget_name && this.params1.budget_type && this.params1.accounts && this.params1.amount) {
             param = {
               ...this.params1,
               user: localStorage.getItem('email'),

@@ -1,41 +1,26 @@
 <app-header title="Account List"></app-header>
 
 <ion-content class="ion-padding">
+  <!-- Skeleton Loader -->
   <ion-list *ngIf="loading; else accountData">
     <ion-card *ngFor="let skeleton of [1]" class="account-card">
       <ion-item lines="none" color="light">
         <ion-avatar slot="start">
-          <ion-skeleton-text
-            animated
-            style="width: 40px; height: 40px"
-          ></ion-skeleton-text>
+          <ion-skeleton-text animated class="avatar-skeleton"></ion-skeleton-text>
         </ion-avatar>
         <ion-label>
-          <h2>
-            <ion-skeleton-text
-              animated
-              style="width: 120px"
-            ></ion-skeleton-text>
-          </h2>
-          <p>
-            <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text>
-          </p>
+          <h2><ion-skeleton-text animated class="text-skeleton-120"></ion-skeleton-text></h2>
+          <p><ion-skeleton-text animated class="text-skeleton-80"></ion-skeleton-text></p>
         </ion-label>
         <ion-icon name="chevron-forward" slot="end" color="primary"></ion-icon>
       </ion-item>
       <ion-card-content>
         <ion-grid>
           <ion-row>
-            <ion-col size="12" style="padding-top: 8px">
-              <ion-skeleton-text
-                animated
-                style="width: 60px; height: 12px"
-              ></ion-skeleton-text>
-              <div style="margin-top: 8px">
-                <ion-skeleton-text
-                  animated
-                  style="width: 100px; height: 18px"
-                ></ion-skeleton-text>
+            <ion-col size="12">
+              <ion-skeleton-text animated class="text-skeleton-60"></ion-skeleton-text>
+              <div class="mt-8">
+                <ion-skeleton-text animated class="text-skeleton-100-18"></ion-skeleton-text>
               </div>
             </ion-col>
           </ion-row>
@@ -44,56 +29,33 @@
     </ion-card>
   </ion-list>
 
+  <!-- Actual Data -->
   <ng-template #accountData>
     <ion-list *ngIf="accounts.length === 0; else accountsList">
       <ion-item color="light" lines="none">
         <ion-icon name="warning-outline" slot="start" color="medium"></ion-icon>
-        <ion-label>
-          No account available. Please create new account to make the budget.
-        </ion-label>
+        <ion-label>No account available. Please create a new account to make the budget.</ion-label>
       </ion-item>
     </ion-list>
 
     <ng-template #accountsList>
-      <ion-card
-        *ngFor="let account of accounts"
-        button
-        (click)="openAccount(type,account.id)"
-        class="account-card ion-activated"
-      >
+      <ion-card *ngFor="let account of accounts" button (click)="openAccount(type, account.id)" class="account-card ion-activated" >
         <ion-item lines="none" color="light">
           <ion-avatar slot="start">
-            <ion-icon
-              [name]="account.type === 'Bank' ? 'card-outline' : 'wallet-outline'"
-              color="primary"
-              class="card-icon"
-            >
-            </ion-icon>
+            <ion-icon [name]="account.icon" color="primary" class="card-icon"></ion-icon>
           </ion-avatar>
-
           <ion-label>
-            <h2 style="font-weight: 600; margin-bottom: 4px">
-              {{ account.account_name | titlecase }}
-            </h2>
-            <p style="font-size: 14px; color: #666">
-              {{ account.type }} Account
-            </p>
+            <h2 class="account-title">{{ account.account_name | titlecase }}</h2>
+            <p class="account-subtitle">{{ account.type }} Account</p>
           </ion-label>
-          <ion-icon
-            name="chevron-forward"
-            slot="end"
-            color="primary"
-          ></ion-icon>
+          <ion-icon name="chevron-forward" slot="end" color="primary"></ion-icon>
         </ion-item>
-
         <ion-card-content>
           <ion-grid>
             <ion-row>
-              <ion-col size="12" style="padding-top: 8px">
-                <div style="font-size: 14px; color: #888">Balance</div>
-                <div style="font-size: 18px; font-weight: bold; color: #2dd36f">
-                  RM {{ account.balance | number: '1.2-2' }}
-                </div>
+              <ion-col size="12">
+                <div class="balance-label">Balance</div>
+                <div class="balance-amount">{{ account.balance | currency: 'MYR ' }}</div>
               </ion-col>
             </ion-row>
           </ion-grid>

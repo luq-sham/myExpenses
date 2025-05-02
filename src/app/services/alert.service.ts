@@ -10,12 +10,12 @@ export class AlertService {
     private alert: AlertController
   ) { }
 
-  async customComfirmationAlert(header:string, msg:string, confirmMsg?:string, cancleMsg?:string, css?:string){
+  async customComfirmationAlert( header: string, msg: string, confirmMsg?: string, cancleMsg?: string, css?: string ) {
     const alert = await this.alert.create({
       header: header,
       message: msg,
       cssClass: css ? css : 'custom-alert',
-      buttons:[
+      buttons: [
         {
           text: cancleMsg ? cancleMsg : 'Cancel',
           role: 'cancel'
@@ -23,15 +23,16 @@ export class AlertService {
         {
           text: confirmMsg ? confirmMsg : 'Confirm',
           role: 'confirm',
-          cssClass: css ? css : 'custom-alert'
+          cssClass: css ? 'confirm-red' : ''  // Apply red only if css is passed
         },
       ]
-    })
-
+    });
+  
     await alert.present();
-    const { role } = await alert.onDidDismiss()
-    return role
+    const { role } = await alert.onDidDismiss();
+    return role;
   }
+  
 
   async customAlert(header:string, msg:string, okMsg?:string){
     const alert = await this.alert.create({

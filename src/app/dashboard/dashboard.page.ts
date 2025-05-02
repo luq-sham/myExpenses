@@ -99,13 +99,16 @@ export class DashboardPage implements OnInit {
   }
 
   printContent() {
+    const content = '<html><body><h1>Hello Printer</h1><p>This is from Ionic</p></body></html>';
+
     const options: PrintOptions = {
-      name: 'MyDocument',
-      printer: '',
-      duplex: true,
+      name: 'Test Print',
     };
-  
-    this.printer.print('<html><body><h1>Hello Printer</h1></body></html>', options);
+
+    this.printer.print(content, options).then(
+      () => console.log('Print success'),
+      (err) => console.error('Print failed:', err)
+    );
   }
 
   ionViewDidEnter(): void {

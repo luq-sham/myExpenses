@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalController, IonCard, IonContent, IonCardContent, IonRow, IonCol, IonIcon, IonAvatar, IonSkeletonText } from '@ionic/angular/standalone';
+import { ModalController, IonCard, IonContent, IonCardContent, IonRow, IonCol, IonIcon, IonAvatar, IonSkeletonText, IonButton } from '@ionic/angular/standalone';
 import { MenuController } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';
@@ -10,12 +10,14 @@ import { ApiService } from '../services/api.service';
 import { LoadingService } from '../services/loading.service';
 import { AlertService } from '../services/alert.service';
 
+import { Printer, PrintOptions } from '@awesome-cordova-plugins/printer/ngx';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [IonSkeletonText,  IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent,],
+  imports: [IonButton, IonSkeletonText,  IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent,],
 })
 export class DashboardPage implements OnInit {
   doughnutChart: any;
@@ -33,7 +35,8 @@ export class DashboardPage implements OnInit {
     private api: ApiService,
     private loading: LoadingService,
     private alert: AlertService,
-    private menu: MenuController
+    private menu: MenuController,
+    private printer: Printer
   ) {}
 
   ngOnInit() {
@@ -93,6 +96,16 @@ export class DashboardPage implements OnInit {
     if (data) {
       this.getData();
     }
+  }
+
+  printContent() {
+    const options: PrintOptions = {
+      name: 'MyDocument',
+      printer: '',
+      duplex: true,
+    };
+  
+    this.printer.print('<html><body><h1>Hello Printer</h1></body></html>', options);
   }
 
   ionViewDidEnter(): void {

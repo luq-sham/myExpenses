@@ -6,13 +6,15 @@ import { addIcons } from 'ionicons';
 import { paperPlaneOutline, paperPlaneSharp, statsChartOutline, statsChartSharp, logOutOutline, settings } from 'ionicons/icons';
 import { AlertService } from './services/alert.service';
 import { filter } from 'rxjs/operators';
+import { Printer } from '@awesome-cordova-plugins/printer/ngx';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [ CommonModule, RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonLabel, IonList, IonMenuToggle, IonIcon, IonItem, IonRouterOutlet ]
+  imports: [ CommonModule, RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonLabel, IonList, IonMenuToggle, IonIcon, IonItem, IonRouterOutlet ],
+  providers: [Printer],
 })
 export class AppComponent implements OnInit {
 

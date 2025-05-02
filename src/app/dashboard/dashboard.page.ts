@@ -11,6 +11,7 @@ import { LoadingService } from '../services/loading.service';
 import { AlertService } from '../services/alert.service';
 
 import { Printer, PrintOptions } from '@awesome-cordova-plugins/printer/ngx';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -99,16 +100,35 @@ export class DashboardPage implements OnInit {
   }
 
   printContent() {
-    const content = '<html><body><h1>Hello Printer</h1><p>This is from Ionic</p></body></html>';
-
-    const options: PrintOptions = {
-      name: 'Test Print',
-    };
-
-    this.printer.print(content, options).then(
-      () => console.log('Print success'),
-      (err) => console.error('Print failed:', err)
-    );
+    const contentElement = document.getElementById('print-section');
+    const content = `
+      <html>
+        <body>
+          ${contentElement?.outerHTML || ''}
+        </body>
+      </html>
+    `;
+  
+    if (Capacitor.getPlatform() === 'web') {
+      // Web fallback
+      const printWindow = window.open('', '', 'width=800,height=600');
+      if (printWindow) {
+        printWindow.document.write(content);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+      }
+    } else {
+      // Native
+      const options: PrintOptions = {
+        name: 'Test Print',
+      };
+  
+      this.printer.print(content, options).then(
+        () => console.log('Print successful'),
+        (err) => console.error('Print failed:', err)
+      );
+    }
   }
 
   ionViewDidEnter(): void {

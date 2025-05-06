@@ -1,24 +1,3 @@
-/* Import Ionic Variables/Utilities if needed, often done globally */
-// @import "../../../theme/variables.scss";
-
-/* Global Styles */
-:host {
-  --card-border-radius: 16px; // Define standard radius
-  --section-card-margin-horizontal: 12px;
-  --section-card-margin-vertical: 16px;
-
-  // Define custom colors if 'fav' and 'sub-fav' are not in theme
-  // Example:
-  // --ion-color-fav: #your-fav-color-base;
-  // --ion-color-fav-rgb: your-fav-color-rgb;
-  // --ion-color-fav-contrast: #your-fav-color-contrast;
-  // --ion-color-fav-contrast-rgb: your-fav-color-contrast-rgb;
-  // --ion-color-fav-shade: your-fav-color-shade;
-  // --ion-color-fav-tint: your-fav-color-tint;
-
-  // --ion-color-sub-fav: #your-sub-fav-color-base;
-  // ... and so on for sub-fav
-}
 
 ion-content {
   // Optional: Add a subtle background pattern or gradient

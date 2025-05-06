@@ -93,7 +93,7 @@
       </ng-container>
 
       <ng-template #transactionContent>
-        <ion-list *ngIf="transactions.length > 0; else noTransactions" lines="full" class="ion-no-padding transaction-list">
+        <ion-list *ngIf="transactions.length > 0; else noTransactions" lines="full" class="transaction-list">
           <ion-item *ngFor="let record of transactions" button detail="false" class="transaction-item">
              <ion-avatar slot="start" class="transaction-avatar" [ngClass]="record.type">
                 <ion-icon [name]="record.icon || (record.type === 'income' ? 'arrow-down' : 'arrow-up')" class="transaction-icon"></ion-icon>
@@ -111,7 +111,7 @@
           </ion-item>
         </ion-list>
         <div class="signup-link">
-          <a>Show More</a>
+          <a (click)="transactionsList()">Show More</a>
         </div>
 
         <ng-template #noTransactions>
@@ -126,7 +126,7 @@
   <!-- Budget Section -->
   <ion-card class="section-card" color="">
      <ion-card-header class=" section-header">
-      <ion-card-title style="color: #fff;">Budget Overview</ion-card-title>
+      <ion-card-title>Budget Overview</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ng-container *ngIf="loadings; else loadedBudgets">

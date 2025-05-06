@@ -56,6 +56,11 @@ export class ApiService {
     return this.http.post(api, data);
   }
 
+  getTransactionsByUser(data: any): Observable<any> {
+    const api = this.url + 'api/get_transaction_by_user';
+    return this.http.post(api, data);
+  }
+
   postAddSplitAmount(data: any): Observable<any> {
     const api = this.url + 'api/post_add_split_amount';
     return this.http.post(api, data);

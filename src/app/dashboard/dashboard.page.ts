@@ -12,7 +12,7 @@ import { AlertService } from '../services/alert.service';
 
 import { Printer, PrintOptions } from '@awesome-cordova-plugins/printer/ngx';
 import { Capacitor } from '@capacitor/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -43,6 +43,7 @@ export class DashboardPage implements OnInit {
     private alert: AlertService,
     private menu: MenuController,
     private route: ActivatedRoute,
+    private router: Router,
     private printer: Printer
   ) {}
 
@@ -166,5 +167,9 @@ export class DashboardPage implements OnInit {
 
   ionViewDidEnter(): void {
     this.menu.enable(true);
+  }
+
+  transactionsList(){
+    this.router.navigate(['/transaction-list']);
   }
 }

@@ -51,7 +51,7 @@ export class ApiService {
     return this.http.post(api, data);
   }
 
-  getRecord(data: any): Observable<any> {
+  getTransaction(data: any): Observable<any> {
     const api = this.url + 'api/get_transaction';
     return this.http.post(api, data);
   }
@@ -68,6 +68,16 @@ export class ApiService {
 
   getBudget(data: any): Observable<any> {
     const api = this.url + 'api/get_budget_by_account';
+    return this.http.post(api, data);
+  }
+
+  postAddSplitBudget(data: any): Observable<any> {
+    const api = this.url + 'api/post_add_split_budget';
+    return this.http.post(api, data);
+  }
+
+  getBudgetByUser(data: any): Observable<any> {
+    const api = this.url + 'api/get_budget_by_user';
     return this.http.post(api, data);
   }
 }

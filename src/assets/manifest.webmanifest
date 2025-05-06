@@ -1,6 +1,6 @@
 {
   "name": "myExpenses",
-  "short_name": "myExpenses",
+  "short_name": "myExpense",
   "theme_color": "#264653",
   "background_color": "#264653",
   "display": "standalone",

@@ -115,7 +115,7 @@ export class AddModalComponent implements OnInit {
           accounts: "",
           transaction_description: '',
           user: localStorage.getItem('email') || '',
-          transaction_date: new Date().toISOString(),
+          transaction_date: this.getLocalIsoString(),
           transaction_type: '',
         };
         break;
@@ -341,7 +341,7 @@ export class AddModalComponent implements OnInit {
         
         //split budget
         if(this.selectedSegment == 'second') {
-          if (this.params2.prefix && this.params2.needs_percent && this.params2.wants_percent && this.params2.savings_percent && this.params2.accounts) {
+          if (this.params2.prefix && this.params2.amount &&this.params2.needs_percent && this.params2.wants_percent && this.params2.savings_percent && this.params2.accounts) {
             param = {
               ...this.params2,
               user: localStorage.getItem('email'),
@@ -417,11 +417,18 @@ export class AddModalComponent implements OnInit {
     this.percent_disabled = !this.percent_disabled;
   }
 
-  setDate(event: any) {
-    this.params.date = event.detail.value;
+  setDate(event: any, popover: IonPopover) {
+    this.params.transaction_date = event.detail.value;
+    popover.dismiss();
   }
 
   dismiss() {
     this.modalController.dismiss();
+  }
+
+  getLocalIsoString(): string {
+    const tzOffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
+    const localISOTime = (new Date(Date.now() - tzOffset)).toISOString().slice(0, 19);
+    return localISOTime;
   }
 }

@@ -53,7 +53,7 @@
             label-placement="stacked"
             [(ngModel)]="params.account_type"
           >
-            <ion-select-option value="">Select Type</ion-select-option>
+            <ion-select-option value=""></ion-select-option>
             <ion-select-option *ngFor="let type of types" [value]="type.type">
               {{ type.type }}
             </ion-select-option>
@@ -145,7 +145,7 @@
             [disabled]="disabled"
             label-placement="stacked"
           >
-            <ion-select-option value="">Select Category</ion-select-option>
+            <ion-select-option value=""></ion-select-option>
             <ion-select-option
               *ngFor="let category of categories"
               [value]="category.name"
@@ -170,7 +170,7 @@
             label-placement="stacked"
             [(ngModel)]="params.accounts"
           >
-            <ion-select-option value="">Select Account</ion-select-option>
+            <ion-select-option value=""></ion-select-option>
             <ion-select-option *ngFor="let acc of accountUser" [value]="acc.id">
               {{ acc.account_name | titlecase }}
             </ion-select-option>
@@ -211,19 +211,18 @@
             id="open-date-popover"
             labelPlacement="stacked"
             [value]="params.transaction_date | date : 'dd/MM/yyyy'"
-            readonly
-          >
+            readonly="true" >
           </ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
 
-    <ion-popover trigger="open-date-popover" showBackdrop="true">
+    <ion-popover #datePopover trigger="open-date-popover" showBackdrop="true">
       <ng-template>
         <ion-datetime
           presentation="date"
-          (ionChange)="setDate($event)"
-        ></ion-datetime>
+          (ionChange)="setDate($event, datePopover)"
+          [value]="params.transaction_date" ></ion-datetime>
       </ng-template>
     </ion-popover>
   </ng-container>
@@ -266,7 +265,7 @@
                 label-placement="stacked"
                 [(ngModel)]="params1.budget_type"
               >
-                <ion-select-option value="">Select Category</ion-select-option>
+                <ion-select-option value=""></ion-select-option>
                 <ion-select-option *ngFor="let ex of expense" [value]="ex.name">
                   {{ ex.name | titlecase }}
                 </ion-select-option>

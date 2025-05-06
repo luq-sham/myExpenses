@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalController, IonCard, IonContent, IonCardContent, IonRow, IonCol, IonIcon, IonAvatar, IonSkeletonText, IonItem, IonLabel, IonNote, IonList, IonProgressBar } from '@ionic/angular/standalone';
+import { ModalController, IonCard, IonContent, IonCardContent, IonRow, IonCol, IonIcon, IonAvatar, IonSkeletonText, IonItem, IonLabel, IonNote, IonList, IonProgressBar, IonCardHeader, IonCardTitle, IonRippleEffect, IonGrid, } from '@ionic/angular/standalone';
 import { MenuController } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';
@@ -19,7 +19,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [IonProgressBar, IonList, IonNote, IonLabel, IonItem,  IonSkeletonText,  IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent,],
+  imports: [ IonGrid, IonRippleEffect, IonCardTitle, IonCardHeader, IonProgressBar, IonList, IonNote, IonLabel, IonItem,  IonSkeletonText,  IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent,],
 })
 export class DashboardPage implements OnInit {
   doughnutChart: any;
@@ -75,7 +75,7 @@ export class DashboardPage implements OnInit {
                     await this.loading.hide();
                     this.alert.customAlert(
                       'Loading Failed',
-                      'An error has occurred. Kindly try again.'
+                      'An error has occurred. Kindly try again.(budget)'
                     );
                   },
                 })
@@ -85,7 +85,7 @@ export class DashboardPage implements OnInit {
               await this.loading.hide();
               this.alert.customAlert(
                 'Loading Failed',
-                'An error has occurred. Kindly try again.'
+                'An error has occurred. Kindly try again.(transaction)'
               );
             },
           });
@@ -95,7 +95,7 @@ export class DashboardPage implements OnInit {
         await this.loading.hide();
         this.alert.customAlert(
           'Loading Failed',
-          'An error has occurred. Kindly try again.'
+          'An error has occurred. Kindly try again.(account)'
         );
       },
     });

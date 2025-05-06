@@ -1,246 +1,454 @@
-/* Typography & Alignment */
-.title-card {
-  font-weight: bold;
-  text-align: center;
-  color: #fff;
+/* Import Ionic Variables/Utilities if needed, often done globally */
+// @import "../../../theme/variables.scss";
+
+/* Global Styles */
+:host {
+  --card-border-radius: 16px; // Define standard radius
+  --section-card-margin-horizontal: 12px;
+  --section-card-margin-vertical: 16px;
+
+  // Define custom colors if 'fav' and 'sub-fav' are not in theme
+  // Example:
+  // --ion-color-fav: #your-fav-color-base;
+  // --ion-color-fav-rgb: your-fav-color-rgb;
+  // --ion-color-fav-contrast: #your-fav-color-contrast;
+  // --ion-color-fav-contrast-rgb: your-fav-color-contrast-rgb;
+  // --ion-color-fav-shade: your-fav-color-shade;
+  // --ion-color-fav-tint: your-fav-color-tint;
+
+  // --ion-color-sub-fav: #your-sub-fav-color-base;
+  // ... and so on for sub-fav
 }
 
-.text-center {
-  text-align: center;
+ion-content {
+  // Optional: Add a subtle background pattern or gradient
+  --background: linear-gradient(
+    to bottom,
+    var(--ion-color-light-tint),
+    var(--ion-color-light)
+  );
+}
+
+/* General Card & Section Styling */
+.section-card {
+  margin-left: var(--section-card-margin-horizontal);
+  margin-right: var(--section-card-margin-horizontal);
+  margin-top: var(--section-card-margin-vertical);
+  margin-bottom: var(--section-card-margin-vertical);
+  border-radius: var(--card-border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden; // Ensure content respects border-radius
+
+  &.accounts-card {
+    margin-top: 0; // First card attached to top
+  }
+}
+
+.section-header {
+  padding-top: 16px;
+  padding-bottom: 8px; // Less padding than content
+  // border-bottom: 1px solid var(--ion-color-step-150, rgba(0, 0, 0, 0.05));
+
+  ion-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+}
+
+// Ensure card color cascades to header title
+ion-card[color="fav"] .section-header ion-card-title {
+  --header-title-color: var(--ion-color-fav-contrast);
+}
+ion-card[color="sub-fav"] .section-header ion-card-title {
+  --header-title-color: var(--ion-color-sub-fav-contrast);
 }
 
 .text-muted {
-  color: lightgray;
+  color: #e0e0e0;
+  font-size: 0.9rem;
 }
 
-.center-row {
-  display: flex;
-  justify-content: center;
+.placeholder-card {
+  opacity: 0.7;
 }
 
-.m-card {
-  margin-top: 16px;
+/* Ripple Effect */
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
 }
 
-/* Add Account Button */
-.btn-add-acc {
-  background-color: transparent;
-  border: 2px solid #fff;
-  color: #fff;
-  border-radius: 12px;
-  cursor: pointer;
+/* Accounts Section */
+.accounts-card ion-card-content {
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
-.add-account-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.add-icon {
-  font-size: 24px;
-  margin-left: 8px;
-}
-
-/* Account Card */
 .account-card {
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, #f0f4ff, #d6e4ff);
-  transition: transform 0.2s ease-in-out;
-  color: #000;
-  font-size: 14px;
-}
+  --border-radius: 12px; // Slightly smaller radius for inner cards
+  margin: 4px 0; // Minimal margin
+  background: var(--ion-color-light-tint); // Use a light background
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  min-height: 130px; // Ensure cards have a minimum height
+  display: flex; // Use flexbox for centering
+  flex-direction: column; // Stack content vertically
+  justify-content: center; // Center vertically
 
-.account-card:hover {
-  transform: translateY(-5px);
-}
+  ion-card-content {
+    padding: 12px 8px; // Adjust padding
+  }
 
-.acc-card-content {
-  padding: 16px;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
 }
 
 .account-icon {
-  font-size: 32px;
-  color: #3b82f6;
+  font-size: 2.2rem; // Larger icon
   margin-bottom: 8px;
+  display: block; // Center properly
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .account-title {
-  font-size: 1.1em;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #1e3a8a;
-  margin-bottom: 4px;
+  color: var(--ion-color-dark-shade);
+  margin: 0 0 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px; // Prevent text touching edges
 }
 
 .account-balance {
-  font-size: 1em;
-  font-weight: bold;
-  color: #10b981;
-}
-
-/* Expense Records */
-.record-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.record-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #2a2a2a;
-  font-size: 24px;
-  color: #fff;
-  padding: 10px;
-}
-
-.record-info {
-  flex-grow: 1;
-  padding: 0 15px;
-}
-
-.record-title {
-  margin: 0;
-  font-size: 16px;
-  font-weight: bold;
-  text-transform: capitalize;
-}
-
-.record-acc,
-.record-date {
-  margin: 0;
-  font-size: 14px;
-  color: #888;
-}
-
-.transaction-amount {
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.income {
-  color: #4caf50;
-  text-align: right;
-}
-
-.expense {
-  color: #f44336;
-  text-align: right;
-}
-
-/* Budget Cards */
-.budget-card {
-  margin: 10px;
-  border-radius: 12px;
-}
-
-.budget-title {
-  font-size: 1.1rem;
-  margin-bottom: 2px;
-}
-
-.budget-type {
-  font-size: 0.9rem;
-  color: gray;
-}
-
-.budget-amount {
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: bold;
+  color: var(--ion-color-success-shade);
 }
 
-.budget-summary {
-  font-size: 0.9rem;
+.add-account-card {
+  border: 2px dashed #e0e0e0;
+  background: transparent;
+  color: #e0e0e0;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; // Stack icon and text
 
-.budget-row {
-  display: flex;
-  justify-content: space-between;
-}
-
-.update-date {
-  font-size: 0.8rem;
-  color: #666;
-}
-
-.transaction-card{
-  border-radius: 12px;
-}
-
-
-/* Responsive Adjustments */
-@media (max-width: 990px) {
-  .record-content {
+  ion-card-content {
+    display: flex;
     flex-direction: column;
-  }
-
-  .acc-card-content {
-    padding: 8px 0;
-  }
-
-  .record-icon {
-    margin-bottom: 10px;
-    font-size: 18px;
-  }
-
-  .add-account-content {
-    font-size: 12px;
-  }
-
-  ion-avatar {
-    width: 50px;
-    height: 50px;
-  }
-
-  .transaction-amount {
-    align-self: flex-start;
-    margin-top: 10px;
-  }
-
-  .income,
-  .expense {
-    text-align: left;
-    font-size: 12px;
-  }
-
-  .record-info {
-    text-align: center;
-    width: 100%;
-  }
-
-  .account-card {
-    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    height: 100%; // Ensure content fills card for centering
+    padding: 8px; // Less padding needed
   }
 
   .add-icon {
-    font-size: 18px;
+    font-size: 2.5rem; // Prominent icon
+    margin-bottom: 6px;
   }
 
-  .title-card {
-    font-size: 16px;
-  }
-
-  .record-title,
-  .record-acc {
-    font-size: 14px;
-  }
-
-  .record-date {
-    text-align: left;
-    font-size: 12px;
-  }
-  
-  .budget-tile{
-    font-size: 14px;
-  }
-
-  .budget-amount{
-    font-size: 14px;
+  .add-text {
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 }
+
+/* Transactions (Expenses) Section */
+.transaction-list {
+  margin: 0px 12px;
+  // padding-bottom: 8px; // Add padding at the bottom of the list
+  background: transparent; // Inherit card background
+}
+
+.transaction-item {
+  --inner-padding-end: 8px; // Reduce default padding
+  --min-height: 70px; // Ensure enough height
+
+  .transaction-avatar {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; // Make it circular
+    margin-right: 12px; // Space from text
+
+    &.income {
+      background-color: rgba(
+        var(--ion-color-success-rgb),
+        0.15
+      ); // Lighter background
+      .transaction-icon {
+        color: var(--ion-color-success-shade);
+      }
+    }
+
+    &.expense {
+      background-color: rgba(
+        var(--ion-color-danger-rgb),
+        0.1
+      ); // Lighter background
+      .transaction-icon {
+        color: var(--ion-color-danger-shade);
+      }
+    }
+  }
+
+  .transaction-icon {
+    font-size: 1.6rem;
+  }
+
+  .transaction-category {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 2px;
+    color: var(--ion-color-dark-tint);
+  }
+
+  .transaction-account {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium-shade);
+  }
+
+  .transaction-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .transaction-amount {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 2px;
+
+    &.income {
+      color: var(--ion-color-success-shade);
+    }
+    &.expense {
+      color: var(--ion-color-danger-shade);
+    }
+  }
+
+  .transaction-date {
+    font-size: 0.75rem;
+    color: var(--ion-color-medium-shade);
+  }
+}
+
+/* Budget Section */
+.budget-list {
+  background: transparent;
+}
+
+.budget-item {
+  --inner-padding-end: 8px;
+  --min-height: 90px; // Enough space for progress bar etc.
+  align-items: flex-start; // Align icon to top
+  border-radius: 20px;
+
+  .budget-icon {
+    font-size: 2rem;
+    margin-top: 4px; // Align with title
+    margin-right: 12px;
+  }
+
+  ion-label {
+    width: 100%; // Take full width for layout
+    // padding-right: 8px; // Space before amount
+    padding: 10px;
+  }
+
+  .budget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .budget-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ion-color-dark-tint);
+    margin: 0;
+  }
+
+  .budget-amount {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--ion-color-primary); // Match icon color
+    white-space: nowrap; // Prevent wrapping
+    margin: 0;
+  }
+
+  .budget-type {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium-shade);
+    margin-bottom: 10px; // Space before summary
+    text-transform: capitalize;
+  }
+
+  .budget-summary {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium-shade);
+
+    .budget-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+
+      span:last-child {
+        font-weight: 500;
+        color: var(--ion-color-dark-tint);
+      }
+
+      .low-balance {
+        color: var(--ion-color-warning-shade);
+        font-weight: bold;
+      }
+    }
+  }
+
+  .budget-progress {
+    height: 8px;
+    border-radius: 4px;
+    margin: 8px 0; // Add vertical spacing
+    --background: var(
+      --ion-color-step-200,
+      #e0e0e0
+    ); // Lighter background for progress
+
+    // Ensure progress bar itself is rounded
+    &::part(progress) {
+      border-radius: 4px;
+    }
+  }
+
+  .update-date {
+    font-size: 0.75rem;
+    color: var(--ion-color-medium-shade);
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+
+    .update-icon {
+      font-size: 0.9rem;
+      margin-right: 4px;
+      vertical-align: middle; // Align icon properly
+    }
+  }
+}
+
+/* Skeleton Loader Refinements */
+.placeholder-avatar {
+  border-radius: 50%;
+  background-color: var(--ion-color-light-shade); // Give it a base color
+  ion-skeleton-text {
+    border-radius: 50%;
+  }
+}
+
+.placeholder-amount ion-skeleton-text {
+  margin-left: auto; // Align to right
+}
+
+.placeholder-budget {
+  .budget-summary-placeholder ion-skeleton-text {
+    margin-left: 0; // Align left
+  }
+  .budget-progress-placeholder {
+    border-radius: 4px; // Match progress bar
+  }
+}
+
+.signup-link {
+  margin: 24px 16px 16px 16px;
+
+  a {
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  
+}
+
+/* Responsive Adjustments */
+
+// Small screens (Phones)
+@media (max-width: 576px) {
+  .account-title {
+    font-size: 0.85rem;
+  }
+  .account-balance {
+    font-size: 0.9rem;
+  }
+  .account-card {
+    min-height: 120px;
+  }
+  .add-account-card .add-icon {
+    font-size: 2rem;
+  }
+  .add-account-card .add-text {
+    font-size: 0.8rem;
+  }
+
+  .transaction-item {
+    --min-height: 65px;
+    .transaction-avatar {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    .transaction-icon {
+      font-size: 1.4rem;
+    }
+    .transaction-category {
+      font-size: 0.9rem;
+    }
+    .transaction-account {
+      font-size: 0.8rem;
+    }
+    .transaction-amount {
+      font-size: 0.9rem;
+    }
+    .transaction-date {
+      font-size: 0.7rem;
+    }
+  }
+
+  .budget-item {
+    .budget-icon {
+      font-size: 1.8rem;
+      margin-right: 10px;
+    }
+    .budget-title {
+      font-size: 1rem;
+    }
+    .budget-amount {
+      font-size: 0.9rem;
+    }
+    .budget-type {
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+    }
+    .budget-summary {
+      font-size: 0.8rem;
+    }
+    .budget-progress {
+      height: 6px;
+    }
+    .update-date {
+      font-size: 0.7rem;
+    }
+  }
+}
+
+// Medium screens (Tablets) - Adjust based on the sizeMd/sizeLg values used
+// Example: Add specific styles if needed between 768px and 991px
+// @media (min-width: 768px) and (max-width: 991px) {
+//    /* Add tablet-specific overrides here */
+// }

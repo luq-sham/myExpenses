@@ -27,23 +27,26 @@ export const routes: Routes = [
     path: 'register',
     canActivate:[loginGuard],
     loadComponent: () => import('./register/register.page').then( m => m.RegisterPage)
-  },  {
+  },
+  {
     path: 'list-expenses',
+    canActivate:[authGuard],
     loadComponent: () => import('./list-expenses/list-expenses.page').then( m => m.ListExpensesPage)
   },
   {
     path: 'budget-goal',
+    canActivate:[authGuard],
     loadComponent: () => import('./budget-goal/budget-goal.page').then( m => m.BudgetGoalPage)
   },
   {
     path: 'budget',
+    canActivate:[authGuard],
     loadComponent: () => import('./budget/budget.page').then( m => m.BudgetPage)
   },
   {
     path: 'account-list',
+    canActivate:[authGuard],
     loadComponent: () => import('./account-list/account-list.page').then( m => m.AccountListPage)
   },
-
-
 
 ];

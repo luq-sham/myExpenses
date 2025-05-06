@@ -1,7 +1,6 @@
 <app-header title="Dashboard"></app-header>
 
 <ion-content id="print-section">
-
   <!-- Accounts Section -->
   <ion-card class="ion-no-margin" color="fav" style="border-radius: 0">
     <ion-card-content>
@@ -13,15 +12,15 @@
           <ion-col *ngFor="let i of [1]" size="6" sizeMd="2">
             <ion-card class="account-card ion-no-margin">
               <ion-card-content class="text-center">
-                <ion-skeleton-text animated style="width: 60%; height: 20px; margin: 10px auto;"></ion-skeleton-text>
-                <ion-skeleton-text animated style="width: 40%; height: 14px; margin: 0 auto;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 60%; height: 20px; margin: 10px auto"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 40%; height: 14px; margin: 0 auto"></ion-skeleton-text>
               </ion-card-content>
             </ion-card>
           </ion-col>
         </ion-row>
       </ng-container>
 
-      <!-- Loaded Content -->
+      <!-- Loaded Accounts Content -->
       <ng-template #accountContent>
         <ion-row class="center-row">
           <ng-container *ngIf="account_list.length > 0; else noAccounts">
@@ -46,7 +45,7 @@
 
       <!-- Add Account Button -->
       <ion-row class="center-row">
-        <ion-col size="8" sizeMd="2">
+        <ion-col size="6" sizeMd="2">
           <ion-card class="ion-no-margin btn-add-acc" (click)="modalAddAccount()">
             <ion-card-content class="text-center">
               <div class="add-account-content">
@@ -71,16 +70,16 @@
           <ion-col *ngFor="let i of [1]" size="12">
             <ion-card class="ion-no-margin">
               <ion-card-content class="record-content">
-                <ion-avatar slot="start" class="record-icon">
-                  <ion-skeleton-text animated style="width: 40px; height: 40px;"></ion-skeleton-text>
+                <ion-avatar class="record-icon">
+                  <ion-skeleton-text animated style="width: 40px; height: 40px"></ion-skeleton-text>
                 </ion-avatar>
-                <div class="record-info" style="flex: 1;">
-                  <ion-skeleton-text animated style="width: 50%; height: 16px;"></ion-skeleton-text>
-                  <ion-skeleton-text animated style="width: 30%; height: 14px; margin-top: 6px;"></ion-skeleton-text>
+                <div class="record-info" style="flex: 1">
+                  <ion-skeleton-text animated style="width: 50%; height: 16px"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 30%; height: 14px; margin-top: 6px"></ion-skeleton-text>
                 </div>
                 <div class="transaction-amount">
-                  <ion-skeleton-text animated style="width: 60px; height: 16px;"></ion-skeleton-text>
-                  <ion-skeleton-text animated style="width: 40px; height: 12px; margin-top: 6px;"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 60px; height: 16px"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 40px; height: 12px; margin-top: 6px"></ion-skeleton-text>
                 </div>
               </ion-card-content>
             </ion-card>
@@ -88,14 +87,14 @@
         </ion-row>
       </ng-container>
 
-      <!-- Loaded Content -->
+      <!-- Loaded Expenses Content -->
       <ng-template #expenseContent>
         <ion-row>
           <ng-container *ngIf="transactions.length > 0; else notransactions">
             <ion-col *ngFor="let record of transactions" size="12">
-              <ion-card class="ion-no-margin">
+              <ion-card class="ion-no-margin transaction-card">
                 <ion-card-content class="record-content">
-                  <ion-avatar slot="start" class="record-icon">
+                  <ion-avatar class="record-icon">
                     <ion-icon [name]="record.icon"></ion-icon>
                   </ion-avatar>
                   <div class="record-info">
@@ -112,7 +111,6 @@
               </ion-card>
             </ion-col>
           </ng-container>
-          <ion-button (click)="printContent()">Print</ion-button>
 
           <ng-template #notransactions>
             <ion-col size="12" class="text-muted text-center">
@@ -120,6 +118,83 @@
             </ion-col>
           </ng-template>
         </ion-row>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Budget Section -->
+  <ion-card color="sub-fav" class="m-card">
+    <ion-card-content class="ion-padding">
+      <h1 class="title-card">Budget Structure</h1>
+
+      <!-- Loading Placeholder -->
+      <ng-container *ngIf="loadings; else loadedContent">
+        <ion-card *ngFor="let i of [1]" class="budget-card">
+          <ion-item lines="none">
+            <ion-icon name="wallet-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h2><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></h2>
+              <p><ion-skeleton-text animated style="width: 40%"></ion-skeleton-text></p>
+            </ion-label>
+            <ion-note slot="end" color="success">
+              <ion-skeleton-text animated style="width: 50px; height: 16px"></ion-skeleton-text>
+            </ion-note>
+          </ion-item>
+        </ion-card>
+      </ng-container>
+
+      <!-- Loaded Budget Content -->
+      <ng-template #loadedContent>
+        <ion-list *ngIf="budgets.length === 0; else budgetList">
+          <ion-item lines="none">
+            <ion-label class="no-budgets">
+              You don't have any budget record. Let's create a new one.
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ng-template #budgetList>
+          <ion-card *ngFor="let budget of budgets" (click)="openBudget(budget)" class="budget-card">
+            <ion-item lines="none">
+              <ion-icon name="wallet-outline" slot="start" color="primary" size="large"></ion-icon>
+              <ion-label>
+                <h2 class="budget-title">{{ budget.budget_name | titlecase }}</h2>
+                <p class="budget-type">{{ budget.budget_type }} Budget</p>
+              </ion-label>
+              <ion-note slot="end" color="success" class="budget-amount">
+                <b>{{ budget.amount | currency: 'MYR ' }}</b>
+              </ion-note>
+            </ion-item>
+          
+            <ion-item lines="none">
+              <ion-label>
+                <div class="budget-summary">
+                  <div class="budget-row">
+                    <span>Used:</span>
+                    <span>{{ budget.used_amount | currency: 'MYR ' }}</span>
+                  </div>
+                  <div class="budget-row">
+                    <span>Remaining:</span>
+                    <span>{{ budget.balance_budget | currency: 'MYR ' }}</span>
+                  </div>
+                  <ion-progress-bar
+                    [value]="budget.used_amount / budget.amount"
+                    [color]="getProgressColor(budget)">
+                  </ion-progress-bar>
+                </div>
+              </ion-label>
+            </ion-item>
+          
+            <ion-item lines="none">
+              <ion-label>
+                <p class="update-date">
+                  <ion-icon name="calendar-outline" style="vertical-align: middle;"></ion-icon>
+                  <span style="margin-left: 4px;">Updated: {{ budget.updated_at | date:'short' }}</span>
+                </p>
+              </ion-label>
+            </ion-item>
+          </ion-card>          
+        </ng-template>
       </ng-template>
     </ion-card-content>
   </ion-card>

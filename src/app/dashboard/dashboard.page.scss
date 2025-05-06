@@ -1,3 +1,4 @@
+/* Typography & Alignment */
 .title-card {
   font-weight: bold;
   text-align: center;
@@ -21,10 +22,12 @@
   margin-top: 16px;
 }
 
+/* Add Account Button */
 .btn-add-acc {
   background-color: transparent;
   border: 2px solid #fff;
   color: #fff;
+  border-radius: 12px;
   cursor: pointer;
 }
 
@@ -39,67 +42,14 @@
   margin-left: 8px;
 }
 
-.account-card {
-  color: #000;
-  font-size: 14px;
-}
-
-.record-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.record-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #2a2a2a;
-  font-size: 24px;
-  color: #fff;
-  padding: 10px;
-}
-
-.record-info {
-  flex-grow: 1;
-  padding: 0 15px;
-}
-
-.record-title {
-  margin: 0;
-  font-size: 16px;
-  font-weight: bold;
-  text-transform: capitalize;
-}
-
-.record-date,
-.record-acc {
-  margin: 0;
-  font-size: 14px;
-  color: #888;
-}
-
-.transaction-amount {
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.income {
-  text-align: right;
-  color: #4caf50;
-}
-
-.expense {
-  text-align: right;
-  color: #f44336;
-}
-
+/* Account Card */
 .account-card {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   background: linear-gradient(135deg, #f0f4ff, #d6e4ff);
   transition: transform 0.2s ease-in-out;
+  color: #000;
+  font-size: 14px;
 }
 
 .account-card:hover {
@@ -129,13 +79,109 @@
   color: #10b981;
 }
 
+/* Expense Records */
+.record-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.record-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2a2a2a;
+  font-size: 24px;
+  color: #fff;
+  padding: 10px;
+}
+
+.record-info {
+  flex-grow: 1;
+  padding: 0 15px;
+}
+
+.record-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.record-acc,
+.record-date {
+  margin: 0;
+  font-size: 14px;
+  color: #888;
+}
+
+.transaction-amount {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.income {
+  color: #4caf50;
+  text-align: right;
+}
+
+.expense {
+  color: #f44336;
+  text-align: right;
+}
+
+/* Budget Cards */
+.budget-card {
+  margin: 10px;
+  border-radius: 12px;
+}
+
+.budget-title {
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+
+.budget-type {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.budget-amount {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.budget-summary {
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.budget-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.update-date {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.transaction-card{
+  border-radius: 12px;
+}
+
+
+/* Responsive Adjustments */
 @media (max-width: 990px) {
   .record-content {
     flex-direction: column;
   }
-  
-  .acc-card-content{
-    padding: 8px 0px;
+
+  .acc-card-content {
+    padding: 8px 0;
   }
 
   .record-icon {
@@ -157,12 +203,10 @@
     margin-top: 10px;
   }
 
-  .income {
-    text-align: left;
-  }
-  
+  .income,
   .expense {
     text-align: left;
+    font-size: 12px;
   }
 
   .record-info {
@@ -171,7 +215,6 @@
   }
 
   .account-card {
-    color: #000;
     font-size: 12px;
   }
 
@@ -187,15 +230,17 @@
   .record-acc {
     font-size: 14px;
   }
-  
+
   .record-date {
     text-align: left;
     font-size: 12px;
   }
-
-  .income,
-  .expense {
-    font-size: 12px;
+  
+  .budget-tile{
+    font-size: 14px;
   }
 
+  .budget-amount{
+    font-size: 14px;
+  }
 }

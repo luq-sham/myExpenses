@@ -135,6 +135,7 @@ export class AddModalComponent implements OnInit {
           needs_percent: 50,
           wants_percent: 30,
           savings_percent: 20,
+          accounts: this.acc_id,
         };
         break;
     }
@@ -291,6 +292,7 @@ export class AddModalComponent implements OnInit {
 
       //add budget
       case 3:
+        //single budget
         if(this.selectedSegment == 'first') {
           if (this.params1.budget_name && this.params1.budget_type && this.params1.accounts && this.params1.amount) {
             param = {
@@ -336,6 +338,54 @@ export class AddModalComponent implements OnInit {
             );
           }
         }
+        
+        //split budget
+        if(this.selectedSegment == 'second') {
+          if (this.params2.prefix && this.params2.needs_percent && this.params2.wants_percent && this.params2.savings_percent && this.params2.accounts) {
+            param = {
+              ...this.params2,
+              user: localStorage.getItem('email'),
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            };
+            console.log(param);
+  
+            this.alert
+              .customComfirmationAlert(
+                'Create Budget',
+                'Are you sure to create this budget?'
+              )
+              .then((res) => {
+                if (res === 'confirm') {
+                  this.loading.showLoading();
+                  this.api.postAddSplitBudget(param).subscribe((res) => {
+                    this.loading.hide();
+                    if (res.status_code === 200) {
+                      this.toast.customToast(
+                        'Budget successfully created.',
+                        4000,
+                        'success'
+                      );
+                      this.modalController.dismiss(true);
+                    } else {
+                      this.toast.customToast(
+                        res.msg || 'Something went wrong.',
+                        3000,
+                        'warning'
+                      );
+                    }
+                  });
+                }
+              });
+
+          }else {
+            this.alert.customAlert(
+              'Warning',
+              'Please enter all the required information'
+            );
+          }
+        }
+
         break;
       
       default:

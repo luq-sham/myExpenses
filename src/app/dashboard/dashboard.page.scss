@@ -1,6 +1,10 @@
+:host {
+  --card-border-radius: 16px;
+  --section-card-margin-horizontal: 12px;
+  --section-card-margin-vertical: 16px;
+}
 
 ion-content {
-  // Optional: Add a subtle background pattern or gradient
   --background: linear-gradient(
     to bottom,
     var(--ion-color-light-tint),
@@ -8,7 +12,6 @@ ion-content {
   );
 }
 
-/* General Card & Section Styling */
 .section-card {
   margin-left: var(--section-card-margin-horizontal);
   margin-right: var(--section-card-margin-horizontal);
@@ -16,17 +19,16 @@ ion-content {
   margin-bottom: var(--section-card-margin-vertical);
   border-radius: var(--card-border-radius);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  overflow: hidden; // Ensure content respects border-radius
+  overflow: hidden;
 
   &.accounts-card {
-    margin-top: 0; // First card attached to top
+    margin-top: 0;
   }
 }
 
 .section-header {
   padding-top: 16px;
-  padding-bottom: 8px; // Less padding than content
-  // border-bottom: 1px solid var(--ion-color-step-150, rgba(0, 0, 0, 0.05));
+  padding-bottom: 8px;
 
   ion-card-title {
     font-size: 1.3rem;
@@ -34,7 +36,6 @@ ion-content {
   }
 }
 
-// Ensure card color cascades to header title
 ion-card[color="fav"] .section-header ion-card-title {
   --header-title-color: var(--ion-color-fav-contrast);
 }
@@ -51,30 +52,28 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
   opacity: 0.7;
 }
 
-/* Ripple Effect */
 .ripple-parent {
   position: relative;
   overflow: hidden;
 }
 
-/* Accounts Section */
 .accounts-card ion-card-content {
   padding-top: 16px;
   padding-bottom: 16px;
 }
 
 .account-card {
-  --border-radius: 12px; // Slightly smaller radius for inner cards
-  margin: 4px 0; // Minimal margin
-  background: var(--ion-color-light-tint); // Use a light background
+  --border-radius: 12px;
+  margin: 4px 0;
+  background: var(--ion-color-light-tint);
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  min-height: 130px; // Ensure cards have a minimum height
-  display: flex; // Use flexbox for centering
-  flex-direction: column; // Stack content vertically
-  justify-content: center; // Center vertically
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   ion-card-content {
-    padding: 12px 8px; // Adjust padding
+    padding: 12px 8px;
   }
 
   &:hover {
@@ -84,9 +83,9 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
 }
 
 .account-icon {
-  font-size: 2.2rem; // Larger icon
+  font-size: 2.2rem;
   margin-bottom: 8px;
-  display: block; // Center properly
+  display: block;
   margin-left: auto;
   margin-right: auto;
 }
@@ -99,7 +98,7 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 4px; // Prevent text touching edges
+  padding: 0 4px;
 }
 
 .account-balance {
@@ -115,19 +114,19 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column; // Stack icon and text
+  flex-direction: column;
 
   ion-card-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%; // Ensure content fills card for centering
-    padding: 8px; // Less padding needed
+    height: 100%;
+    padding: 8px;
   }
 
   .add-icon {
-    font-size: 2.5rem; // Prominent icon
+    font-size: 2.5rem;
     margin-bottom: 6px;
   }
 
@@ -137,16 +136,15 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
   }
 }
 
-/* Transactions (Expenses) Section */
 .transaction-list {
   margin: 0px 12px;
-  // padding-bottom: 8px; // Add padding at the bottom of the list
-  background: transparent; // Inherit card background
+
+  background: transparent;
 }
 
 .transaction-item {
-  --inner-padding-end: 8px; // Reduce default padding
-  --min-height: 70px; // Ensure enough height
+  --inner-padding-end: 8px;
+  --min-height: 70px;
 
   .transaction-avatar {
     width: 45px;
@@ -154,24 +152,18 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%; // Make it circular
-    margin-right: 12px; // Space from text
+    border-radius: 50%;
+    margin-right: 12px;
 
     &.income {
-      background-color: rgba(
-        var(--ion-color-success-rgb),
-        0.15
-      ); // Lighter background
+      background-color: rgba(var(--ion-color-success-rgb), 0.15);
       .transaction-icon {
         color: var(--ion-color-success-shade);
       }
     }
 
     &.expense {
-      background-color: rgba(
-        var(--ion-color-danger-rgb),
-        0.1
-      ); // Lighter background
+      background-color: rgba(var(--ion-color-danger-rgb), 0.1);
       .transaction-icon {
         color: var(--ion-color-danger-shade);
       }
@@ -219,26 +211,25 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
   }
 }
 
-/* Budget Section */
 .budget-list {
   background: transparent;
 }
 
 .budget-item {
   --inner-padding-end: 8px;
-  --min-height: 90px; // Enough space for progress bar etc.
-  align-items: flex-start; // Align icon to top
+  --min-height: 90px;
+  align-items: flex-start;
   border-radius: 20px;
 
   .budget-icon {
     font-size: 2rem;
-    margin-top: 4px; // Align with title
+    margin-top: 4px;
     margin-right: 12px;
   }
 
   ion-label {
-    width: 100%; // Take full width for layout
-    // padding-right: 8px; // Space before amount
+    width: 100%;
+
     padding: 10px;
   }
 
@@ -259,15 +250,15 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
   .budget-amount {
     font-size: 1rem;
     font-weight: bold;
-    color: var(--ion-color-primary); // Match icon color
-    white-space: nowrap; // Prevent wrapping
+    color: var(--ion-color-primary);
+    white-space: nowrap;
     margin: 0;
   }
 
   .budget-type {
     font-size: 0.85rem;
     color: var(--ion-color-medium-shade);
-    margin-bottom: 10px; // Space before summary
+    margin-bottom: 10px;
     text-transform: capitalize;
   }
 
@@ -295,13 +286,9 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
   .budget-progress {
     height: 8px;
     border-radius: 4px;
-    margin: 8px 0; // Add vertical spacing
-    --background: var(
-      --ion-color-step-200,
-      #e0e0e0
-    ); // Lighter background for progress
+    margin: 8px 0;
+    --background: var(--ion-color-step-200, #e0e0e0);
 
-    // Ensure progress bar itself is rounded
     &::part(progress) {
       border-radius: 4px;
     }
@@ -317,30 +304,29 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
     .update-icon {
       font-size: 0.9rem;
       margin-right: 4px;
-      vertical-align: middle; // Align icon properly
+      vertical-align: middle;
     }
   }
 }
 
-/* Skeleton Loader Refinements */
 .placeholder-avatar {
   border-radius: 50%;
-  background-color: var(--ion-color-light-shade); // Give it a base color
+  background-color: var(--ion-color-light-shade);
   ion-skeleton-text {
     border-radius: 50%;
   }
 }
 
 .placeholder-amount ion-skeleton-text {
-  margin-left: auto; // Align to right
+  margin-left: auto;
 }
 
 .placeholder-budget {
   .budget-summary-placeholder ion-skeleton-text {
-    margin-left: 0; // Align left
+    margin-left: 0;
   }
   .budget-progress-placeholder {
-    border-radius: 4px; // Match progress bar
+    border-radius: 4px;
   }
 }
 
@@ -348,16 +334,12 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
   margin: 24px 16px 16px 16px;
 
   a {
-      font-weight: bold;
-      text-decoration: none;
-      cursor: pointer;
-    }
-  
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+  }
 }
 
-/* Responsive Adjustments */
-
-// Small screens (Phones)
 @media (max-width: 576px) {
   .account-title {
     font-size: 0.85rem;
@@ -425,9 +407,3 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
     }
   }
 }
-
-// Medium screens (Tablets) - Adjust based on the sizeMd/sizeLg values used
-// Example: Add specific styles if needed between 768px and 991px
-// @media (min-width: 768px) and (max-width: 991px) {
-//    /* Add tablet-specific overrides here */
-// }

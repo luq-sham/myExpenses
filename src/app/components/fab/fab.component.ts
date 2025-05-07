@@ -3,6 +3,7 @@ import { IonFab, IonFabButton, IonIcon, IonFabList } from "@ionic/angular/standa
 import { ModalController } from '@ionic/angular/standalone'
 import { AddModalComponent } from '../add-modal/add-modal.component';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-fab',
@@ -14,6 +15,7 @@ export class FabComponent  implements OnInit {
 
   constructor(
     private modal: ModalController,
+    private alert: AlertService,
     private router: Router
   ) {}
 
@@ -39,11 +41,11 @@ export class FabComponent  implements OnInit {
   }
 
   async manageRecord(){
-
+    this.alert.customAlert('Manage Record', 'This feature is not available yet. Kindly check back later.');
   }
 
   async manageAccount(){
-    
+    this.alert.customAlert('Manage Account', 'This feature is not available yet. Kindly check back later.');
   }
 
 }

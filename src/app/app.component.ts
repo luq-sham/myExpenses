@@ -70,6 +70,11 @@ export class AppComponent implements OnInit {
       this.router.navigateByUrl('/login', { replaceUrl: true });
     }
   }
+
+  settings() {
+    this.alert.customAlert('Settings', 'This feature is not available yet. Kindly check back later.');
+  }
+    
   
   
 

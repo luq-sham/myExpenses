@@ -96,7 +96,7 @@
         <ion-list *ngIf="transactions.length > 0; else noTransactions" lines="full" class="transaction-list">
           <ion-item *ngFor="let record of transactions" button detail="false" class="transaction-item">
              <ion-avatar slot="start" class="transaction-avatar" [ngClass]="record.type">
-                <ion-icon [name]="record.icon || (record.type === 'income' ? 'arrow-down' : 'arrow-up')" class="transaction-icon"></ion-icon>
+                <ion-icon [name]="record.icon || (record.type === 'income' ? 'arrow-up' : 'arrow-down')" class="transaction-icon"></ion-icon>
               </ion-avatar>
             <ion-label>
               <h2 class="transaction-category">{{ record.category | titlecase }}</h2>

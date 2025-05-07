@@ -22,7 +22,7 @@
 
           <div class="menu-footer">
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection="root" [routerLink]="'/login'" lines="none" detail="false" routerLinkActive="selected" >
+              <ion-item routerDirection="root" (click)="settings()" lines="none" detail="false" routerLinkActive="selected" >
                 <ion-icon aria-hidden="true" slot="start" name="settings"></ion-icon>
                 <ion-label>Setting</ion-label>
               </ion-item>

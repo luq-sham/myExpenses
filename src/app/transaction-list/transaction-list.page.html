@@ -20,8 +20,12 @@
      </ng-container>
 
      <ng-template #transactionContent>
-       <ion-list *ngIf="transactions.length > 0; else noTransactions" lines="full" class="transaction-list">
-         <ion-item *ngFor="let record of transactions" button detail="false" class="transaction-item">
+       <ion-list *ngIf="transactions.length > 0; else noTransactions" lines="full" class="ion-no-padding">
+        @for (records of transactions; track $index) {
+        <ion-item detail="false" color="light">
+          {{ records.date | date: 'dd-MM-yyyy' }}
+        </ion-item>  
+         <ion-item *ngFor="let record of records.transactions" button detail="false" class="transaction-item">
             <ion-avatar slot="start" class="transaction-avatar" [ngClass]="record.type">
                <ion-icon [name]="record.icon || (record.type === 'income' ? 'arrow-up' : 'arrow-down')" class="transaction-icon"></ion-icon>
              </ion-avatar>
@@ -33,13 +37,14 @@
              <p class="transaction-amount" [ngClass]="record.type">
                {{ record.type === 'income' ? '+' : '-' }}{{ record.amount | currency: 'MYR ' }}
              </p>
-             <p class="transaction-date">{{ record.date | date: 'MMM d, h:mm a' }}</p>
+             <p class="transaction-date">{{ record.date | date: 'h:mm a' }}</p>
            </div>
           </ion-item>
-          <ion-button fill="clear" (click)="getTransactionsData(true)" *ngIf="displayMore" style="display: flex;justify-content: center;">
-           Load More
-         </ion-button>
-        </ion-list>
+        }
+        <ion-button fill="clear" (click)="getTransactionsData(true)" *ngIf="displayMore" style="display: flex;justify-content: center;">
+         Load More
+       </ion-button>
+      </ion-list>
 
        <ng-template #noTransactions>
          <div class="ion-padding ion-text-center text-muted">

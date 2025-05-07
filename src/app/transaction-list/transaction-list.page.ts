@@ -44,7 +44,7 @@ export class TransactionListPage implements OnInit {
       last_date: loadMore ? this.nextLastDate : null
     };
   
-    this.api.getTransaction(token).subscribe({
+    this.api.getTransactionFilter(token).subscribe({
       next: (res) => {
         if (res.status_code === 200) {
           this.transactions = res.return_data;
@@ -58,10 +58,6 @@ export class TransactionListPage implements OnInit {
         this.alert.customAlert('Loading Failed', 'An error has occurred. Kindly try again.(transaction)');
       },
     });
-  }
-
-  loadTransactions(loadMore = false) {
-    
   }
 
 }

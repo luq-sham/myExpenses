@@ -56,8 +56,8 @@ export class ApiService {
     return this.http.post(api, data);
   }
 
-  getTransactionsByUser(data: any): Observable<any> {
-    const api = this.url + 'api/get_transaction_by_user';
+  getTransactionFilter(data: any): Observable<any> {
+    const api = this.url + 'api/get_transaction_filter';
     return this.http.post(api, data);
   }
 

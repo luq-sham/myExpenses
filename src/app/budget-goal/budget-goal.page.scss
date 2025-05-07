@@ -1,6 +1,6 @@
 .option-card {
   margin: 20px 16px;
-  border: none;
+  border: 1px solid var(--ion-color-step-200, #e0e0e0);
   border-radius: 16px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;

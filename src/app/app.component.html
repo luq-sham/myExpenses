@@ -3,34 +3,36 @@
     <ion-menu contentId="main-content" type="overlay" *ngIf="display">
       <ion-content>
         <div class="menu-container">
-          <img src="assets/icon/icon.png" id="custom-img" alt="Ionic Logo" />
-          <div class="profile-card">
-            <ion-label class="ion-text-capitalize"><strong>{{ name }}</strong></ion-label>
-            <ion-label>User</ion-label>
+          <div class="profile-section ion-padding-horizontal ion-padding-top">
+            <img src="assets/icon/icon.png" id="custom-img" alt="User Avatar" />
+            <img src="https://thumb.ac-illust.com/51/51e1c1fc6f50743937e62fca9b942694_t.jpeg" id="custom-img" class="profile-avatar" style="margin-top: 12px;" alt="User Avatar" />
+            <div class="profile-info ion-text-center ion-padding-top">
+              <ion-label class="profile-name ion-text-capitalize"><strong>{{ name }}</strong></ion-label>
+              <ion-label class="profile-role">User</ion-label>
+            </div>
           </div>
 
-          <ion-list id="inbox-list">
+          <ion-list id="inbox-list" class="ion-padding-top">
             @for (p of appPages; track p; let i = $index) {
               <ion-menu-toggle auto-hide="false">
-                <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" >
-                  <ion-icon aria-hidden="true" slot="start" [name]="p.icon"></ion-icon>
-                  <ion-label>{{ p.title }}</ion-label>
+                <ion-item button routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" class="menu-item">
+                  <ion-icon aria-hidden="true" slot="start" [name]="p.icon" class="menu-item-icon"></ion-icon>
+                  <ion-label class="menu-item-label">{{ p.title }}</ion-label>
                 </ion-item>
               </ion-menu-toggle>
             }
           </ion-list>
 
-          <div class="menu-footer">
+          <div class="menu-footer ion-padding-bottom">
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection="root" (click)="settings()" lines="none" detail="false" routerLinkActive="selected" >
-                <ion-icon aria-hidden="true" slot="start" name="settings"></ion-icon>
-                <ion-label>Setting</ion-label>
+              <ion-item button routerDirection="root" (click)="settings()" lines="none" detail="false" routerLinkActive="selected" class="menu-item">
+                <ion-icon aria-hidden="true" slot="start" name="settings-outline" class="menu-item-icon"></ion-icon> <ion-label class="menu-item-label">Settings</ion-label>
               </ion-item>
             </ion-menu-toggle>
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection="root" (click)="logout()" lines="none" detail="false" class="logout" >
-                <ion-icon aria-hidden="true" slot="start" name="log-out-outline"></ion-icon>
-                <ion-label>Logout</ion-label>
+              <ion-item button routerDirection="root" (click)="logout()" lines="none" detail="false" class="menu-item logout-item">
+                <ion-icon aria-hidden="true" slot="start" name="log-out-outline" class="menu-item-icon"></ion-icon>
+                <ion-label class="menu-item-label">Logout</ion-label>
               </ion-item>
             </ion-menu-toggle>
           </div>
@@ -38,6 +40,5 @@
       </ion-content>
     </ion-menu>
 
-    <ion-router-outlet id="main-content" type="overlay"></ion-router-outlet>
-  </ion-split-pane>
+    <ion-router-outlet id="main-content"></ion-router-outlet> </ion-split-pane>
 </ion-app>

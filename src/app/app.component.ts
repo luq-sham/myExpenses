@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonLabel, IonList, IonMenuToggle, IonIcon, IonItem, IonRouterOutlet } from '@ionic/angular/standalone'
 import { addIcons } from 'ionicons';
-import { paperPlaneOutline, paperPlaneSharp, statsChartOutline, statsChartSharp, logOutOutline, settings } from 'ionicons/icons';
+import { paperPlaneOutline, paperPlaneSharp, statsChartOutline, statsChartSharp, logOutOutline, settings, settingsOutline } from 'ionicons/icons';
 import { AlertService } from './services/alert.service';
 import { filter } from 'rxjs/operators';
 import { Printer } from '@awesome-cordova-plugins/printer/ngx';
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private alert: AlertService
   ) {
-    addIcons({ paperPlaneOutline, paperPlaneSharp, statsChartOutline, statsChartSharp, logOutOutline, settings });
+    addIcons({settingsOutline,logOutOutline,paperPlaneOutline,paperPlaneSharp,statsChartOutline,statsChartSharp,settings});
   }
 
   ngOnInit() {

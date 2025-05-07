@@ -96,7 +96,7 @@
         <ion-list *ngIf="transactions.length > 0; else noTransactions" lines="full" class="transaction-list">
           <ion-item *ngFor="let record of transactions" button detail="false" class="transaction-item">
              <ion-avatar slot="start" class="transaction-avatar" [ngClass]="record.type">
-                <ion-icon [name]="record.icon || (record.type === 'income' ? 'arrow-up' : 'arrow-down')" class="transaction-icon"></ion-icon>
+                <ion-icon [name]="record.icon + '-outline' || (record.type === 'income' ? 'arrow-up' : 'arrow-down')" class="transaction-icon"></ion-icon>
               </ion-avatar>
             <ion-label>
               <h2 class="transaction-category">{{ record.category | titlecase }}</h2>
@@ -167,12 +167,12 @@
                          <b>{{ budget.amount | currency: 'MYR ' }}</b>
                       </ion-note>
                    </div>
-                   <p class="budget-type">{{ budget.budget_type }} Budget</p>
+                   <p class="budget-type">{{ budget.accounts }}</p>
                    <div class="budget-summary">
-                      <div class="budget-row">
+                      <!-- <div class="budget-row">
                          <span>Used:</span>
                          <span>{{ budget.used_amount | currency: 'MYR ' }}</span>
-                      </div>
+                      </div> -->
                       <div class="budget-row">
                          <span>Remaining:</span>
                          <span [ngClass]="{'low-balance': (budget.balance_budget / budget.amount) < 0.1}">

@@ -1,44 +1,70 @@
 .option-card {
-  margin: 18px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  background: var(--ion-color-light);
+  margin: 20px 16px;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
 }
 
 .option-card:hover {
-  transform: scale(1.01);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px) scale(1.01);
+}
+
+.option-card:hover .arrow-icon {
+  transform: translateX(5px);
 }
 
 .card-item {
-  border-radius: 12px;
   --background: transparent;
   --padding-start: 16px;
   --padding-end: 16px;
+  --inner-padding-top: 18px;
+  --inner-padding-bottom: 18px;
   align-items: center;
+  border-radius: 16px;
+}
+
+.icon-background {
+  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  border-radius: 50%;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.option-card:hover .icon-background {
+  background-color: rgba(var(--ion-color-primary-rgb), 0.15);
 }
 
 .card-icon {
-  font-size: 28px;
+  font-size: 26px;
   color: var(--ion-color-primary);
 }
 
 .arrow-icon {
-  font-size: 20px;
-  color: var(--ion-color-medium);
+  font-size: 22px;
+  color: var(--ion-color-medium-shade);
+  transition: transform 0.3s ease;
 }
 
 ion-label h2 {
-  margin: 0;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--ion-color-dark);
+  margin: 0 0 4px 0;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ion-color-dark-shade);
 }
 
 ion-label p {
-  margin: 4px 0 0;
-  font-size: 0.9rem;
-  color: var(--ion-color-medium);
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ion-color-medium-shade);
+  line-height: 1.4;
+}
+
+ion-list {
+  background: transparent;
 }

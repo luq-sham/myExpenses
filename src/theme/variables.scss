@@ -20,6 +20,19 @@
 	--ion-color-login-contrast-rgb: 0,0,0;
 	--ion-color-login-shade: #d3dae0;
 	--ion-color-login-tint: #f2f9ff;
+
+	--menu-background: #264653; /* Dark Slate Blue */
+	--menu-text-color: #e2e8f0; /* Light Slate Gray (for text) */
+	--menu-icon-color: #94a3b8; /* Medium Slate Gray (for icons) */
+	--menu-item-hover-background: #334155; /* Slightly Lighter Dark Slate */
+	--menu-item-selected-background: #33658a; /* Or your primary color */
+	--menu-item-selected-text-color: var(--ion-color-primary-contrast); /* Contrast for selected background */
+	--menu-item-selected-icon-color:#06d6a0;
+	--menu-logout-background: #ef4444; /* Red for logout */
+	--menu-logout-text-color: #ffffff;
+	--menu-profile-name-color: #ffffff;
+	--menu-profile-role-color: #cbd5e1; /* Lighter than general text */
+	--menu-border-radius: 12px; /* Consistent border radius */
 }   
 
 .ion-color-fav {

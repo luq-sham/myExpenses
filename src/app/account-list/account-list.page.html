@@ -39,6 +39,9 @@
     </ion-list>
 
     <ng-template #accountsList>
+      <div *ngIf="type === 'budget'" class="budget-label">
+        Select the budget account :
+      </div>
       <ion-card *ngFor="let account of accounts" button (click)="openAccount(type, account.id)" class="account-card ion-activated" >
         <ion-item lines="none" color="light">
           <ion-avatar slot="start">

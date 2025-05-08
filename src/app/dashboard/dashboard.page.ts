@@ -28,11 +28,15 @@ export class DashboardPage implements OnInit {
   email: string = '';
   param: any = {};
   dataCerdencial: any;
+
+  loading_account: boolean = true;
+  loading_transaction: boolean = true;
+  loading_budget: boolean = true;
+  
   account_list: any[] = [];
   transactions: any[] = [];
-  loadings: boolean = true;
-
   budgets: any[] = [];
+  
   acc_id: any = '';
 
 
@@ -56,50 +60,53 @@ export class DashboardPage implements OnInit {
       user: localStorage.getItem('email'),
     };
     
-    this.loadings = true;
+    // Accounts API
     this.api.postAccountByUser(token).subscribe({
       next: async (res) => {
-        if (res.status_code == 200) {
-          this.api.getTransaction(token).subscribe({
-            next: async (res2) => {
-              if (res.status_code == 200) {
-                this.api.getBudgetByUser(token).subscribe({
-                  next: async (res3) => {
-                    if (res.status_code == 200) {
-                      this.account_list = res.return_data;
-                      this.transactions = res2.return_data;
-                      this.budgets = res3.return_data;
-                    }
-                    this.loadings = false;
-                  },
-                  error: async () => {
-                    await this.loading.hide();
-                    this.alert.customAlert(
-                      'Loading Failed',
-                      'An error has occurred. Kindly try again.(budget)'
-                    );
-                  },
-                })
-              }
-            },
-            error: async () => {
-              await this.loading.hide();
-              this.alert.customAlert(
-                'Loading Failed',
-                'An error has occurred. Kindly try again.(transaction)'
-              );
-            },
-          });
+        if (res.status_code == 200){
+          this.loading_account = false;
+          this.account_list = res.return_data;
         }
       },
       error: async () => {
-        await this.loading.hide();
         this.alert.customAlert(
           'Loading Failed',
           'An error has occurred. Kindly try again.(account)'
         );
+      }
+    })
+
+    // Transactions API
+    this.api.getTransaction(token).subscribe({
+      next: async (res) => {
+        if (res.status_code == 200) {
+          this.loading_transaction = false;
+          this.transactions = res.return_data;
+        }
       },
-    });
+      error: async () => {
+        this.alert.customAlert(
+          'Loading Failed',
+          'An error has occurred. Kindly try again.(transaction)'
+        );
+      },
+    })
+
+    // Budgets API
+    this.api.getBudgetByUser(token).subscribe({
+      next: async (res) => {
+        if (res.status_code == 200) {
+          this.loading_budget = false;
+          this.budgets = res.return_data;
+        }
+      },
+      error: async () => {
+        this.alert.customAlert(
+          'Loading Failed',
+          'An error has occurred. Kindly try again.(budget)'
+        );
+      },
+    })
   }
 
   openBudget(budget: any) {
@@ -171,5 +178,10 @@ export class DashboardPage implements OnInit {
 
   transactionsList(){
     this.router.navigate(['/transaction-list']);
+  }
+  budgetsList(){
+    this.router.navigate(['/account-list'], {
+      queryParams: { type: 'budget' },
+    });;
   }
 }

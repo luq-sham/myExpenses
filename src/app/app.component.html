@@ -1,17 +1,19 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay" *ngIf="display">
+      <ion-header>
+        <div class="profile-section ion-padding-horizontal ion-padding-top">
+          <img src="assets/icon/icon.png" id="custom-img" alt="User Avatar" />
+          <img src="https://thumb.ac-illust.com/51/51e1c1fc6f50743937e62fca9b942694_t.jpeg" id="custom-img" class="profile-avatar" style="margin-top: 12px;" alt="User Avatar" />
+          <div class="profile-info ion-text-center ion-padding-top">
+            <ion-label class="profile-name ion-text-capitalize"><strong>{{ name }}</strong></ion-label>
+            <ion-label class="profile-role">User</ion-label>
+          </div>
+        </div>
+      </ion-header>
       <ion-content>
         <div class="menu-container">
-          <div class="profile-section ion-padding-horizontal ion-padding-top">
-            <img src="assets/icon/icon.png" id="custom-img" alt="User Avatar" />
-            <img src="https://thumb.ac-illust.com/51/51e1c1fc6f50743937e62fca9b942694_t.jpeg" id="custom-img" class="profile-avatar" style="margin-top: 12px;" alt="User Avatar" />
-            <div class="profile-info ion-text-center ion-padding-top">
-              <ion-label class="profile-name ion-text-capitalize"><strong>{{ name }}</strong></ion-label>
-              <ion-label class="profile-role">User</ion-label>
-            </div>
-          </div>
-
+        
           <ion-list id="inbox-list" class="ion-padding-top">
             @for (p of appPages; track p; let i = $index) {
               <ion-menu-toggle auto-hide="false">

@@ -24,7 +24,7 @@ export class FabComponent  implements OnInit {
   async addExpensesModal(){
     const param = {
       add_id: 2,
-      title: 'New Record',
+      title: 'New Transaction',
     }
 
     const modal = await this.modal.create({
@@ -40,8 +40,8 @@ export class FabComponent  implements OnInit {
     }
   }
 
-  async manageRecord(){
-    this.alert.customAlert('Manage Record', 'This feature is not available yet. Kindly check back later.');
+  async manageTransaction(){
+    this.alert.customAlert('Manage Transaction', 'This feature is not available yet. Kindly check back later.');
   }
 
   async manageAccount(){

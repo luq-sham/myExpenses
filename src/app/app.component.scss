@@ -11,8 +11,13 @@
 
 ion-menu {
   @media (min-width: 992px) {
-    width: 280px;
+    width: 300px;
   }
+}
+ion-header{
+  background-color: var(--menu-background);
+  box-shadow: none;
+  border-bottom: 1px solid #eee;
 }
 
 ion-menu ion-content {

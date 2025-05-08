@@ -45,8 +45,10 @@ export class AccountListPage implements OnInit {
   }
 
   openAccount(type: any, account: any) {
-    this.router.navigate(['/', type], {
-      queryParams: { id: account },
-    });
+    if (type == 'budget'){
+      this.router.navigate(['/', type], {
+        queryParams: { id: account },
+      });
+    }
   }
 }

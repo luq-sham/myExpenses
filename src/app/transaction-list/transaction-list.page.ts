@@ -37,7 +37,6 @@ export class TransactionListPage implements OnInit {
     if(loadMore){
       this.limit += 5;
     }
-    this.loadings = true;
     const token = {
       user: localStorage.getItem('email'),
       limit: this.limit,

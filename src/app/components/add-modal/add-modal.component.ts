@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, IonSegment, IonSegmentButton, IonSegmentView, IonSegmentContent, IonToggle, IonNote } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, IonSegment, IonSegmentButton, IonSegmentView, IonSegmentContent, IonToggle, IonNote, IonGrid } from '@ionic/angular/standalone';
 import { ModalController } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -13,24 +13,28 @@ import { ToastService } from 'src/app/services/toast.service';
   templateUrl: './add-modal.component.html',
   styleUrls: ['./add-modal.component.scss'],
   standalone: true,
-  imports: [IonNote, IonToggle, IonSegment, IonSegmentButton, IonSegmentView, IonSegmentContent, IonIcon, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, IonContent, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, CommonModule, FormsModule,],
+  imports: [IonGrid, IonNote, IonToggle, IonSegment, IonSegmentButton, IonSegmentView, IonSegmentContent, IonIcon, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, IonContent, IonCol, IonRow, IonFooter, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, IonTextarea, IonPopover, IonDatetime, CommonModule, FormsModule,],
 })
 export class AddModalComponent implements OnInit {
   add_id = 0;
   title = '';
+
   types: any[] = [];
   categories: any[] = [];
   income: any[] = [];
   expense: any[] = [];
+  accountUser: any[] = [];
+
   params: any = {};
   params1: any = {};
   params2: any = {};
-  disabled: boolean = true;
+
   label: any;
-  accountUser: any[] = [];
-  maxDate: string = '';
+  disabled: boolean = true;
 
   acc_id: any = '';
+  maxDate: string = '';
+
 
   selectedSegment = 'first';
   percent_disabled = true;
@@ -47,7 +51,6 @@ export class AddModalComponent implements OnInit {
     this.getData();
     this.modalInput();
     this.maxDate = new Date().toISOString().split('T')[0];
-    console.log(this.acc_id);
   }
 
   getData() {
@@ -65,7 +68,6 @@ export class AddModalComponent implements OnInit {
       this.api.getRecordCategories().subscribe((res) => {
         this.income = res.income;
         this.expense = res.expense;
-        this.categories = this.income;
       });
 
       this.api.postAccountByUser(token).subscribe({
@@ -114,6 +116,7 @@ export class AddModalComponent implements OnInit {
           transaction_category: '',
           accounts: "",
           transaction_description: '',
+          sub_category: '',
           user: localStorage.getItem('email') || '',
           transaction_date: this.getLocalIsoString(),
           transaction_type: '',
@@ -246,7 +249,7 @@ export class AddModalComponent implements OnInit {
 
       //add record
       case 2:
-        if ( this.params.transaction_amount && this.params.transaction_category && this.params.accounts && this.params.transaction_type ) {
+        if ( this.params.transaction_amount && this.params.sub_category && this.params.transaction_category && this.params.accounts && this.params.transaction_type ) {
           param = {
             ...this.params,
             user: localStorage.getItem('email'),
@@ -430,5 +433,10 @@ export class AddModalComponent implements OnInit {
     const tzOffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
     const localISOTime = (new Date(Date.now() - tzOffset)).toISOString().slice(0, 19);
     return localISOTime;
+  }
+
+  setNature(event:any){
+    this.params.sub_category = event.detail.value.sub_category
+    console.log(this.params.sub_category)
   }
 }

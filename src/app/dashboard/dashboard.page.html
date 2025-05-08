@@ -8,7 +8,7 @@
       <ion-card-title>Your Accounts</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ng-container *ngIf="loadings; else accountContent">
+      <ng-container *ngIf="loading_account; else accountContent">
         <ion-grid fixed>
           <ion-row class="ion-justify-content-center">
             <ion-col *ngFor="let i of [1, 2, 3]" size="6" size-sm="4" size-md="3" size-lg="2">
@@ -74,7 +74,7 @@
       <ion-card-title>Recent Transactions</ion-card-title>
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
-      <ng-container *ngIf="loadings; else transactionContent">
+      <ng-container *ngIf="loading_transaction; else transactionContent">
         <ion-list lines="none">
           <ion-item *ngFor="let i of [1, 2, 3]">
              <ion-avatar slot="start" class="transaction-avatar placeholder-avatar">
@@ -96,7 +96,7 @@
         <ion-list *ngIf="transactions.length > 0; else noTransactions" lines="full" class="transaction-list">
           <ion-item *ngFor="let record of transactions" button detail="false" class="transaction-item">
              <ion-avatar slot="start" class="transaction-avatar" [ngClass]="record.type">
-                <ion-icon [name]="record.icon + '-outline' || (record.type === 'income' ? 'arrow-up' : 'arrow-down')" class="transaction-icon"></ion-icon>
+                <ion-icon [name]="record.icon || (record.type === 'income' ? 'arrow-up' : 'arrow-down')" class="transaction-icon"></ion-icon>
               </ion-avatar>
             <ion-label>
               <h2 class="transaction-category">{{ record.category | titlecase }}</h2>
@@ -110,7 +110,7 @@
             </div>
           </ion-item>
         </ion-list>
-        <div class="signup-link">
+        <div class="show-link">
           <a (click)="transactionsList()">Show More</a>
         </div>
 
@@ -129,7 +129,7 @@
       <ion-card-title>Budget Overview</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ng-container *ngIf="loadings; else loadedBudgets">
+      <ng-container *ngIf="loading_budget; else loadedBudgets">
         <ion-list lines="none" class="ion-no-padding budget-list">
            <ion-item *ngFor="let i of [1, 2]" class="budget-item">
              <ion-icon name="wallet-outline" slot="start" color="medium" size="large"></ion-icon>
@@ -159,7 +159,7 @@
         <ng-template #budgetList>
           <ion-list lines="full" class="budget-list">
              <ion-item *ngFor="let budget of budgets" (click)="openBudget(budget)" class="budget-item" button detail="false">
-                <ion-icon name="wallet-outline" slot="start" color="primary" class="budget-icon" style="padding-top: 12px ;"></ion-icon>
+                <ion-icon name="wallet" slot="start" color="secondary" class="budget-icon" style="padding-top: 12px ;"></ion-icon>
                 <ion-label>
                    <div class="budget-header">
                       <h2 class="budget-title">{{ budget.budget_name | titlecase }}</h2>
@@ -191,7 +191,10 @@
                    </div>
                 </ion-label>
              </ion-item>
-          </ion-list>
+            </ion-list>
+            <div style="font-weight: bold;margin-top: 24px;margin-bottom: 4px;">
+              <a (click)="budgetsList()">Show More</a>
+            </div>
         </ng-template>
       </ng-template>
     </ion-card-content>

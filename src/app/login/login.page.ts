@@ -154,8 +154,8 @@ export class LoginPage implements OnInit {
 
         if (res.status_code === 200) {
           localStorage.clear();
-          localStorage.setItem('token', res.return_data.user_id);
-          localStorage.setItem('userDetails', JSON.stringify(res.return_data));
+          localStorage.setItem('email', res.userData.email);
+          localStorage.setItem('userDetails', JSON.stringify(res.userData));
           
           await this.presentToast('Login successful!', 'success');
           this.loginForm.reset();

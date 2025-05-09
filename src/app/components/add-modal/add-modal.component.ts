@@ -65,7 +65,7 @@ export class AddModalComponent implements OnInit {
         user: localStorage.getItem('email'),
       };
 
-      this.api.getRecordCategories().subscribe((res) => {
+      this.api.getTransactionCategories().subscribe((res) => {
         this.income = res.income;
         this.expense = res.expense;
       });
@@ -92,7 +92,7 @@ export class AddModalComponent implements OnInit {
         user: localStorage.getItem('email'),
       };
 
-      this.api.getRecordCategories().subscribe((res) => {
+      this.api.getTransactionCategories().subscribe((res) => {
         this.expense = res.expense;
       });
     }
@@ -109,7 +109,7 @@ export class AddModalComponent implements OnInit {
         };
         break;
 
-      //add record
+      //add Transaction
       case 2:
         this.params = {
           transaction_amount: 0,
@@ -150,147 +150,64 @@ export class AddModalComponent implements OnInit {
     switch (this.add_id) {
       //add account
       case 1:
-        if (this.selectedSegment == 'first') {
-          if (this.params.account_name && this.params.account_type) {
-            this.params.account_name = this.params.account_name
-              .trim()
-              .toLowerCase();
-
-            param = {
-              ...this.params,
-              user: localStorage.getItem('email'),
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString(),
-            };
-
-            this.alert
-              .customComfirmationAlert(
-                'Create Account',
-                'Are you sure to create this account?'
-              )
-              .then((res) => {
-                if (res === 'confirm') {
-                  this.loading.showLoading();
-                  this.api.postAddAccount(param).subscribe((res) => {
-                    this.loading.hide();
-                    if (res.status_code === 200) {
-                      this.toast.customToast(
-                        'Account successfully created.',
-                        4000,
-                        'success'
-                      );
-                      this.modalController.dismiss(true);
-                    } else {
-                      this.toast.customToast(
-                        res.msg || 'Something went wrong.',
-                        3000,
-                        'warning'
-                      );
-                    }
-                  });
-                }
-              });
-          } else {
-            this.alert.customAlert(
-              'Warning',
-              'Please enter all the required information'
-            );
-          }
-        } else if (this.selectedSegment == 'second') {
-          if (
-            this.params.amount &&
-            this.params.prefix &&
-            this.params.needs_percent &&
-            this.params.wants_percent &&
-            this.params.savings_percent
-          ) {
-            this.alert
-              .customComfirmationAlert(
-                'Create Split Accounts',
-                'Are you sure to create this split accounts?'
-              )
-              .then((res) => {
-                if (res === 'confirm') {
-                  param = {
-                    ...this.params,
-                    user: localStorage.getItem('email'),
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString(),
-                  };
-
-                  this.loading.showLoading();
-                  this.api.postAddSplitAmount(param).subscribe((res) => {
-                    this.loading.hide();
-                    if (res.status_code === 200) {
-                      this.toast.customToast(
-                        'Budget successfully created.',
-                        4000,
-                        'success'
-                      );
-                      this.modalController.dismiss(true);
-                    } else {
-                      this.toast.customToast(
-                        res.msg || 'Something went wrong.',
-                        3000,
-                        'warning'
-                      );
-                    }
-                  });
-                }
-              });
-          } else {
-            this.alert.customAlert(
-              'Warning',
-              'Please enter all the required information'
-            );
-          }
+        if (this.params.account_name && this.params.account_type) {
+          this.params.account_name = this.params.account_name.trim().toLowerCase();
+          param = {
+            ...this.params,
+            user: localStorage.getItem('email'),
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          };
+          this.alert
+            .customComfirmationAlert('Create Account','Are you sure to create this account?')
+            .then((res) => {
+              if (res === 'confirm') {
+                this.loading.showLoading();
+                this.api.postAddAccount(param).subscribe((res) => {
+                  this.loading.hide();
+                  if (res.status_code === 200) {
+                    this.toast.customToast('Account successfully created.',4000,'success');
+                    this.modalController.dismiss(true);
+                  } else {
+                    this.toast.customToast(res.msg || 'Something went wrong.',3000,'warning');
+                  }
+                });
+              }
+            });
+        } else {
+          this.alert.customAlert('Warning','Please enter all the required information');
         }
         break;
 
-      //add record
+      //add transaction
       case 2:
-        if ( this.params.transaction_amount && this.params.sub_category && this.params.transaction_category && this.params.accounts && this.params.transaction_type ) {
+        if ( this.params.transaction_amount && this.params.transaction_category && this.params.accounts && this.params.transaction_type ) {
+          this.params.transaction_category = this.params.transaction_category.name
           param = {
             ...this.params,
             user: localStorage.getItem('email'),
           };
-          console.log(param);
 
-          this.alert
-            .customComfirmationAlert(
-              'Create Record',
-              'Are you sure to create this record?'
-            )
-            .then((res) => {
+          this.alert.customComfirmationAlert('Create Record','Are you sure to create this record?').then((res) => {
               if (res === 'confirm') {
                 this.loading.showLoading();
-                this.api.postAddRecord(param).subscribe((res) => {
+                this.api.postAddTransaction(param).subscribe((res) => {
                   this.loading.hide();
                   if (res.status_code === 200) {
-                    this.toast.customToast(
-                      'Account successfully created.',
-                      4000,
-                      'success'
+                    this.toast.customToast('Account successfully created.',4000,'success'
                     );
                     this.modalController.dismiss(true);
                   } else {
-                    this.toast.customToast(
-                      res.msg || 'Something went wrong.',
-                      3000,
-                      'warning'
+                    this.toast.customToast(res.msg || 'Something went wrong.',3000,'warning'
                     );
                   }
                 });
               }
             });
         } else {
-          this.alert.customAlert(
-            'Warning',
-            'Please enter all the required information'
-          );
+          this.toast.customToast('Please enter all the required information',1000,'warning',)
         }
 
-        // this.modalController.dismiss(true)
         break;
 
       //add budget
@@ -437,6 +354,6 @@ export class AddModalComponent implements OnInit {
 
   setNature(event:any){
     this.params.sub_category = event.detail.value.sub_category
-    console.log(this.params.sub_category)
+    console.log(this.params.sub_category,this.params.transaction_category)
   }
 }

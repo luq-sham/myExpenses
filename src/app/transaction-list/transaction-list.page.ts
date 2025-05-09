@@ -6,6 +6,7 @@ import { HeaderComponent } from '../components/header/header.component';
 import { ApiService } from '../services/api.service';
 import { AlertService } from '../services/alert.service';
 import { ToastService } from '../services/toast.service';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'app-transaction-list',
@@ -21,12 +22,10 @@ export class TransactionListPage implements OnInit {
   limit: number = 5;
   displayMore: boolean = true;
 
-  nextLastDate: string | null = null;
-
   constructor(
     private api: ApiService,
     private alert: AlertService,
-    private toast: ToastService
+    private loading: LoadingService
   ) { }
 
   ngOnInit() {
@@ -36,11 +35,11 @@ export class TransactionListPage implements OnInit {
   getTransactionsData(loadMore = false) {
     if(loadMore){
       this.limit += 5;
+      this.loading.showLoading()
     }
     const token = {
       user: localStorage.getItem('email'),
       limit: this.limit,
-      last_date: loadMore ? this.nextLastDate : null
     };
   
     this.api.getTransactionFilter(token).subscribe({
@@ -50,6 +49,7 @@ export class TransactionListPage implements OnInit {
           if(this.limit >= res.totalCount){
             this.displayMore = false;
           }
+          this.loading.hide()
         }
         this.loadings = false;
       },

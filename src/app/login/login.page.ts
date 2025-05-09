@@ -154,13 +154,15 @@ export class LoginPage implements OnInit {
 
         if (res.status_code === 200) {
           localStorage.clear();
-          localStorage.setItem('email', res.userData.email);
-          localStorage.setItem('userDetails', JSON.stringify(res.userData));
+          localStorage.setItem('token', res.return_data.user_id);
+          localStorage.setItem('userDetails', JSON.stringify(res.return_data));
+          
           await this.presentToast('Login successful!', 'success');
           this.loginForm.reset();
+          
           this.router.navigate(['dashboard']);
         } else {
-          this.alert.customAlert('Try Again', res.error || 'Unexpected error.');
+          await this.presentToast(res.error, 'warning');
         }
       },
       error: async () => {

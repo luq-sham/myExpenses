@@ -41,12 +41,12 @@ export class ApiService {
     return this.http.post(api, data);
   }
 
-  getRecordCategories(): Observable<any> {
+  getTransactionCategories(): Observable<any> {
     const api = this.url + 'api/get_categories';
     return this.http.get(api);
   }
 
-  postAddRecord(data: any): Observable<any> {
+  postAddTransaction(data: any): Observable<any> {
     const api = this.url + 'api/post_add_transaction';
     return this.http.post(api, data);
   }

@@ -1,34 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import {
-  MenuController,
-  AlertController,
-  LoadingController,
-  ToastController,
-  IonContent,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonCard,
-  IonCardContent,
-  IonItem,
-  IonIcon,
-  IonInput,
-  IonSelect,
-  IonSelectOption,
-  IonButton,
-  IonFooter,
-  IonToolbar,
-  IonTitle,
-  IonCheckbox,
-} from '@ionic/angular/standalone';
+import {FormBuilder,FormGroup,ReactiveFormsModule,Validators} from '@angular/forms';
+import {MenuController,AlertController,LoadingController,ToastController,IonContent,IonGrid,IonRow,IonCol,IonCard,IonCardContent,IonItem,IonIcon,IonInput,IonSelect,IonSelectOption,IonButton,IonFooter,IonToolbar,IonTitle,IonCheckbox} from '@ionic/angular/standalone';
 import * as CryptoJS from 'crypto-js';
 
 import { ApiService } from '../services/api.service';
@@ -38,26 +12,7 @@ import { ApiService } from '../services/api.service';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [
-    IonTitle,
-    IonToolbar,
-    IonFooter,
-    IonButton,
-    IonIcon,
-    IonItem,
-    IonCardContent,
-    IonCard,
-    IonCol,
-    IonRow,
-    IonGrid,
-    IonContent,
-    IonInput,
-    IonSelect,
-    IonSelectOption,
-    IonCheckbox,
-    CommonModule,
-    ReactiveFormsModule,
-  ],
+  imports: [IonTitle,IonToolbar,IonFooter,IonButton,IonIcon,IonItem,IonCardContent,IonCard,IonCol,IonRow,IonGrid,IonContent,IonInput,IonSelect,IonSelectOption,IonCheckbox,CommonModule,ReactiveFormsModule,],
 })
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
@@ -81,7 +36,8 @@ export class RegisterPage implements OnInit {
   private initForm() {
     this.registerForm = this.formBuilder.group(
       {
-        name: ['', [Validators.required]],
+        fname: ['', [Validators.required]],
+        lname: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
         phone: [
           '',
@@ -112,8 +68,11 @@ export class RegisterPage implements OnInit {
     return null;
   }
 
-  get name() {
-    return this.registerForm.get('name');
+  get fname() {
+    return this.registerForm.get('fname');
+  }
+  get lname() {
+    return this.registerForm.get('lname');
   }
   get email() {
     return this.registerForm.get('email');
@@ -166,7 +125,8 @@ export class RegisterPage implements OnInit {
     await loading.present();
 
     const userData = {
-      name: this.name?.value,
+      first_name: this.fname?.value,
+      last_name: this.lname?.value,
       email: this.email?.value,
       phone: this.phone?.value,
       currency: this.currency?.value,
@@ -177,21 +137,13 @@ export class RegisterPage implements OnInit {
       next: async (res) => {
         await loading.dismiss();
 
-        if (res.status_code === 200) {
-          const toast = await this.toastController.create({
-            message: 'Registration successful!',
-            duration: 2000,
-            color: 'success',
-            position: 'bottom',
-          });
-          this.registerForm.reset();
+        if (res.status_code == 200) {
+          const toast = await this.toastController.create({message: 'Registration successful!',duration: 2000,color: 'success',position: 'bottom',});
           await toast.present();
+          this.registerForm.reset();
           this.router.navigate(['/login']);
         } else {
-          this.showErrorAlert(
-            'Registration Failed',
-            res.error || 'Unexpected error.'
-          );
+          await this.presentToast(res.error, 'warning');
         }
       },
       error: async () => {
@@ -225,6 +177,15 @@ export class RegisterPage implements OnInit {
 
   goToLogin() {
     this.router.navigate(['/login']);
+  }
+  async presentToast(message: string, color: string = 'primary') {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'bottom',
+      color,
+    });
+    await toast.present();
   }
 
   ionViewDidEnter() {

@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router)
-  const hasToken = localStorage.getItem('email');
+  const hasToken = localStorage.getItem('token');
 
   if(hasToken){
     return true
@@ -15,7 +15,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
 export const loginGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-  const hasToken = localStorage.getItem('email');
+  const hasToken = localStorage.getItem('token');
 
   if (hasToken) {
     // If already logged in, redirect to dashboard

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  // url = "http://127.0.0.1:8000/"
-  url = 'https://data-myexpenses.vercel.app/';
+  url = environment.url;
 
   constructor(private http: HttpClient) {}
 

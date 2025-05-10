@@ -62,7 +62,7 @@ export class AddModalComponent implements OnInit {
 
     if (this.add_id == 2) {
       const token = {
-        user: localStorage.getItem('email'),
+        user_id: localStorage.getItem('token'),
       };
 
       this.api.getTransactionCategories().subscribe((res) => {
@@ -89,7 +89,7 @@ export class AddModalComponent implements OnInit {
 
     if (this.add_id == 3) {
       const token = {
-        user: localStorage.getItem('email'),
+        user_id: localStorage.getItem('token'),
       };
 
       this.api.getTransactionCategories().subscribe((res) => {
@@ -112,12 +112,11 @@ export class AddModalComponent implements OnInit {
       //add Transaction
       case 2:
         this.params = {
-          transaction_amount: 0,
+          transaction_amount: null,
           transaction_category: '',
           accounts: "",
           transaction_description: '',
           sub_category: '',
-          user: localStorage.getItem('email') || '',
           transaction_date: this.getLocalIsoString(),
           transaction_type: '',
         };
@@ -154,7 +153,7 @@ export class AddModalComponent implements OnInit {
           this.params.account_name = this.params.account_name.trim().toLowerCase();
           param = {
             ...this.params,
-            user: localStorage.getItem('email'),
+            user_id: localStorage.getItem('token'),
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
           };
@@ -182,28 +181,30 @@ export class AddModalComponent implements OnInit {
       //add transaction
       case 2:
         if ( this.params.transaction_amount && this.params.transaction_category && this.params.accounts && this.params.transaction_type ) {
-          this.params.transaction_category = this.params.transaction_category.name
-          param = {
-            ...this.params,
-            user: localStorage.getItem('email'),
-          };
-
+          const temp = this.params.transaction_category
           this.alert.customComfirmationAlert('Create Record','Are you sure to create this record?').then((res) => {
-              if (res === 'confirm') {
-                this.loading.showLoading();
-                this.api.postAddTransaction(param).subscribe((res) => {
-                  this.loading.hide();
-                  if (res.status_code === 200) {
-                    this.toast.customToast('Account successfully created.',4000,'success'
-                    );
-                    this.modalController.dismiss(true);
-                  } else {
-                    this.toast.customToast(res.msg || 'Something went wrong.',3000,'warning'
-                    );
-                  }
-                });
-              }
-            });
+            if (res == 'confirm') {
+              this.params.transaction_category = this.params.transaction_category.name
+              param = {
+                ...this.params,
+                user_id: localStorage.getItem('token'),
+              };
+
+              this.loading.showLoading();
+              this.api.postAddTransaction(param).subscribe((res) => {
+                this.loading.hide();
+                if (res.status_code === 200) {
+                  this.toast.customToast('Account successfully created.',4000,'success'
+                  );
+                  this.modalController.dismiss(true);
+                } else {
+                  this.params.transaction_category = temp
+                  this.toast.customToast(res.msg || 'Something went wrong.',3000,'warning'
+                  );
+                }
+              });
+            }
+          });
         } else {
           this.toast.customToast('Please enter all the required information',1000,'warning',)
         }
@@ -217,7 +218,7 @@ export class AddModalComponent implements OnInit {
           if (this.params1.budget_name && this.params1.budget_type && this.params1.accounts && this.params1.amount) {
             param = {
               ...this.params1,
-              user: localStorage.getItem('email'),
+              user_id: localStorage.getItem('token'),
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
             };
@@ -264,7 +265,7 @@ export class AddModalComponent implements OnInit {
           if (this.params2.prefix && this.params2.amount &&this.params2.needs_percent && this.params2.wants_percent && this.params2.savings_percent && this.params2.accounts) {
             param = {
               ...this.params2,
-              user: localStorage.getItem('email'),
+              user_id: localStorage.getItem('token'),
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
             };

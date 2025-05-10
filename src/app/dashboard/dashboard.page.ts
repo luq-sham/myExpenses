@@ -57,7 +57,7 @@ export class DashboardPage implements OnInit {
 
   getData() {
     const token = {
-      user: localStorage.getItem('email'),
+      user_id: localStorage.getItem('token'),
     };
     
     // Accounts API

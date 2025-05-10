@@ -36,7 +36,7 @@ export class AccountListPage implements OnInit {
   getAccounts() {
     this.loading = true;
     const token = {
-      user: localStorage.getItem('email'),
+      user_id: localStorage.getItem('token'),
     };
     this.api.postAccountByUser(token).subscribe((res: any) => {
       this.accounts = res.return_data;

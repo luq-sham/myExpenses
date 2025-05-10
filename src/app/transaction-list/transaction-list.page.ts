@@ -38,7 +38,7 @@ export class TransactionListPage implements OnInit {
       this.loading.showLoading()
     }
     const token = {
-      user: localStorage.getItem('email'),
+      user_id: localStorage.getItem('token'),
       limit: this.limit,
     };
   

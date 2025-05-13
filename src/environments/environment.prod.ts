@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url:"https://myexpense-api.onrender.com/"
+  url:"https://data-myexpenses.vercel.app/"
 };
